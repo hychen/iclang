@@ -58,7 +58,7 @@ The control logic is denoted in a json file like abstract syntax tree as below:
 
 This file is called Hyper Script and represents the following relationships.
 
-#BEGIN_SRC ditaa :file iclang-hyper-process.png :cmdline -r
+#+BEGIN_SRC ditaa :file images/tim-berners-lee-computer-hyper-memory.png :cmdline -r -E
                         +--------------------+   +--------------------+
 "data" -->  Inport []-->|[]in Process A out[]|-->|[]in Process B out[]|-->[] Export
                         +--------------------+   +--------------------+
@@ -68,7 +68,7 @@ This file is called Hyper Script and represents the following relationships.
   
                         -- connection
                         [] port
-#END_SRC
+#+END_SRC
 
 *** Component
 
