@@ -1,6 +1,6 @@
 #+TITLE: Internet Combinator Language
 #+AUTHOR:Hsin-Yi Chen (hychen)
-#+OPTIONS: H:2 num:t toc:nil
+#+OPTIONS: H:2 num:t toc:t
 #+OPTIONS: ^:nil
 #+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
 
@@ -16,7 +16,7 @@ It is designed to run on Tim Berners Lee computer.
 * Tim Berners Lee Computer
 
 Luca Cardelli 與 Rowan Davies 認為 Internet 上所有電腦可被視為一抽象電腦，
-相對於 John von Neumann Unit 模型，並建議稱之為 Tim-Berners Lee 電腦。
+相對於 John von Neumann Unit 模型，並建議稱之為 Tim-Berners Lee 電腦。[1]
 
 隨者時代的演進，不同 Web Services 之間的存取，權限管理介面漸漸一致，因此本文基於前者的想法，
 延伸其完整的電腦架構與定義。
@@ -29,8 +29,7 @@ Luca Cardelli 與 Rowan Davies 認為 Internet 上所有電腦可被視為一抽
 - 不一致的值(inconsist)
 - 須考慮容錯(High Faliure)
 
-*** 與 John von Neumann 模型的比較
-
+#+TBLNAME: 與 John von Neumann 模型的比較
 | John von Neumann Unit | Tim Berners Lee Unit |
 |-----------------------+----------------------|
 | CPU                   | Processing Unit      |
@@ -58,7 +57,7 @@ Luca Cardelli 與 Rowan Davies 認為 Internet 上所有電腦可被視為一抽
   +--------+         
 #+END_SRC
 
-*** Hyper Memory
+** Hyper Memory
 
 #+BEGIN_SRC ditaa :file images/tim-berners-lee-computer-hyper-memory.png :cmdline -r -E
 +-----------------+---------------+   
@@ -81,28 +80,28 @@ Luca Cardelli 與 Rowan Davies 認為 Internet 上所有電腦可被視為一抽
 | Data                  | Value                |
 | Process               | Hyper Process        |
 
-** Reference
+*** Reference
 
 URL 是某種網路上的索引，只是每次讀取得值不總是一致，除此之外讀取還可能會失敗，有延遲。
 
-** Value
-*** Atomic
+*** Value
+***** Atomic
 
 像是圖檔，影像，音樂等等。
 
-*** Compund 
+***** Compund 
 
 像是HTML, Markdown, JSON, XML等等。
 
-*** Script
+***** Script
 
 一般的程式語言，像是 JavaScript, CoffeScript 之類的。
 
-*** Hyper Script
+***** Hyper Script
 
 Cordination Language, 像是 FBP。
 
-* Hyper Process
+*** Hyper Process
 
 執行中的 Hyper Script，用來讀寫, 轉換 Web Services 的資料之類的操作。
 
@@ -227,3 +226,5 @@ A process can have mutiple input/output sockets.
 
 connection between an outport of a Process, and inport of another Process
 * Models and Calculus Corresponding
+
+[1]: [[http://research.microsoft.com/apps/pubs/default.aspx?id%3D67566][Luca Cardelli and Rowan Davies, 1997, Service Combinators for Web Computing]]
