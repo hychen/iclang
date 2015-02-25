@@ -1,0 +1,8 @@
+#+TITLE: Internet Combinator Language
+#+AUTHOR:Hsin-Yi Chen (hychen)
+#+OPTIONS: H:2 num:t toc:nil
+#+OPTIONS: ^:nil
+#+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
+
+Internet Combinator Language, iclang in short, is a cordination language 
+which has configurable modularity for compositing things of internet.
