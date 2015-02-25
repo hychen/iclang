@@ -4,12 +4,135 @@
 #+OPTIONS: ^:nil
 #+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
 
+#+SETUPFILE:  bigblow-local.setup
+
 * Introduction
 
 Internet Combinator Language, iclang in short, is a cordination language 
 which has [[en.wikipedia.org/wiki/Configurable_modularity][configurable modularity]] for compositing things of internet.
 
 It is designed to run on Tim Berners Lee computer.
+
+* Tim Berners Lee Computer
+
+Luca Cardelli 與 Rowan Davies 認為 Internet 上所有電腦可被視為一抽象電腦，
+相對於 John von Neumann Unit 模型，並建議稱之為 Tim-Berners Lee 電腦。
+
+隨者時代的演進，不同 Web Services 之間的存取，權限管理介面漸漸一致，因此本文基於前者的想法，
+延伸其完整的電腦架構與定義。
+
+由於其極度分散式的架構，資料讀取的特性為
+
+- 並發(concurency)
+- 平行(parallelism)
+- 有延遲(delay)
+- 不一致的值(inconsist)
+- 須考慮容錯(High Faliure)
+
+*** 與 John von Neumann 模型的比較
+
+| John von Neumann Unit | Tim Berners Lee Unit |
+|-----------------------+----------------------|
+| CPU                   | Processing Unit      |
+| Memory                | Hyper Memory         |
+| Bus                   | Hyper Bus            |
+| Input Device          | Input Service        |
+| Output Device         | Ouput Service        |
+
+#+BEGIN_SRC ditaa :file images/tim-berners-lee-computer-arch.png :cmdline -r -E
+  +----------------------------+            
+  |      Hyper Memory          |
+  |        {d}cRED             |
+  | o managed web services     |
+  | o managed hyper processes  |
+  +----------------------------+
+               |    
+               |    +-----------+      +---------+      
+               +--->| Processing|      | Output  |     
+                    |    Unit   |<---->| Service |
+               +--->|    cYEL   |      |{io}c707 |     
+  +--------+   |    +-----------+      +---------+
+  | Input  |   |
+  | Service|---+
+  |{io}cBLU|         ------ Hyper Bus -------
+  +--------+         
+#+END_SRC
+
+*** Hyper Memory
+
+#+BEGIN_SRC ditaa :file images/tim-berners-lee-computer-hyper-memory.png :cmdline -r -E
++-----------------+---------------+   
+| Reference(URL)  |    Value      |  | 
+|    cYEL         |     cYEL      |  |
++-----------------+---------------+  +-> Allocated Page(Web Service)
+| Reference(URL)  |    Value      |  | 
+|    cYEL         |     cYEL      |  |
++-----------------+---------------+
+| Reference(URL)  | Hyper Process |  |
+|    cBLU         |     cBLU      |  +-> Executed Hyper Script  
++-----------------+---------------+  |
+         Hyper Memory
+#+END_SRC
+
+| John von Neumann Unit | Tim Berners Lee Unit |
+|-----------------------+----------------------|
+| Memory Page           | Web Service          |
+| Memory Address        | URL                  |
+| Data                  | Value                |
+| Process               | Hyper Process        |
+
+** Reference
+
+URL 是某種網路上的索引，只是每次讀取得值不總是一致，除此之外讀取還可能會失敗，有延遲。
+
+** Value
+*** Atomic
+
+像是圖檔，影像，音樂等等。
+
+*** Compund 
+
+像是HTML, Markdown, JSON, XML等等。
+
+*** Script
+
+一般的程式語言，像是 JavaScript, CoffeScript 之類的。
+
+*** Hyper Script
+
+Cordination Language, 像是 FBP。
+
+* Hyper Process
+
+執行中的 Hyper Script，用來讀寫, 轉換 Web Services 的資料之類的操作。
+
+** Processing Unit
+
+Internet 裏的某一台電腦均可當成處理單元，執行 Hyper Script 而其檔案系統跟記憶體可看做成這一抽象電腦的快取。
+
+** Hyper Bus
+
+#+BEGIN_SRC ditaa :file images/tim-berners-lee-computer-hyper-bus.png :cmdline -r -E
++------------+--------+---------+---------+
+| Processing | Hyper  | Input   | Output  | |
+|   Unit     | Memory | Service | Service | |-> Communicated Units
+|   cYEL     | cRED   |  cBLU   |  c707   | |
++---------+--+--------+---------+---------+
+| RESTful | WebSocket | Web RTC | OAuth   | |
+|  c505   |   c505    |   c505  |  c505   | +-> Hyper Bus           
++---------+-----------+---------+---------+ |                
+#+END_SRC
+
+** Input Service
+
+A web service like a shell.
+
+** Output Service
+
+A target service that user want to have.
+
+- production service.
+- management service.
 
 * Models
 ** Static Phase
@@ -58,7 +181,7 @@ The control logic is denoted in a json file like abstract syntax tree as below:
 
 This file is called Hyper Script and represents the following relationships.
 
-#+BEGIN_SRC ditaa :file images/tim-berners-lee-computer-hyper-memory.png :cmdline -r -E
+#+BEGIN_SRC ditaa :file images/tim-berners-lee-computer-hyper-process.png :cmdline -r -E
                         +--------------------+   +--------------------+
 "data" -->  Inport []-->|[]in Process A out[]|-->|[]in Process B out[]|-->[] Export
                         +--------------------+   +--------------------+
@@ -103,4 +226,4 @@ A process can have mutiple input/output sockets.
 *** Connection
 
 connection between an outport of a Process, and inport of another Process
-* Model and Calculus Corresponding
+* Models and Calculus Corresponding
