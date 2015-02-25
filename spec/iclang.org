@@ -103,12 +103,4 @@ A process can have mutiple input/output sockets.
 *** Connection
 
 connection between an outport of a Process, and inport of another Process
-* Syntax
-** Reference
-** Value
-** Variable
-** Component as Function
-** Component as Module
-** Recursive
-* Type Checking
-* Evaluation
+* Model and Calculus Corresponding
