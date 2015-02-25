@@ -180,10 +180,10 @@ The control logic is denoted in a json file like abstract syntax tree as below:
 
 This file is called Hyper Script and represents the following relationships.
 
-#+BEGIN_SRC ditaa :file images/tim-berners-lee-computer-hyper-process.png :cmdline -r -E
-                        +--------------------+   +--------------------+
-"data" -->  Inport []-->|[]in Process A out[]|-->|[]in Process B out[]|-->[] Export
-                        +--------------------+   +--------------------+
+#+BEGIN_SRC ditaa :file images/tim-berners-lee-computer-hyper-script.png :cmdline -r -E
+                        +----------------------+   +----------------------+
+"data" -->  Inport []-->|[]in Component A out[]|-->|[]in Component B out[]|-->[] Export
+                        +----------------------+   +----------------------+
                                   ^                       ^
                                   |                       |
                               options A               options B
@@ -225,6 +225,33 @@ A process can have mutiple input/output sockets.
 *** Connection
 
 connection between an outport of a Process, and inport of another Process
-* Models and Calculus Corresponding
+* Componets, HyperScript are functions
 
+** Componets generate Process as Function
+** Connections
+** HyperScript 
+
+A hyperscript can be descrbied in functional mindset, here is a example in JavaScript.
+
+#+BEGIN_SRC javascript
+  function hyperscript(inports){
+      options1 = {};
+      options2 = {};
+      process1 = component1(options1);
+      process2 = component2(options2);
+      exports['out'] = process2({"in": process1({"in": inports['in']})}['out']);
+      return exports
+  }
+#+END_SRC
+
+A hyperscript can be used like a component.
+
+#+BEGIN_SRC javascript
+  function(inports){
+      options3 = {};
+      process3 = component3(options3);
+      exports['out'] = hyperscript({'in': process3({'in': inports['in'])['out']);
+      return exports;
+  }
+#+END_SRC
 [1]: [[http://research.microsoft.com/apps/pubs/default.aspx?id%3D67566][Luca Cardelli and Rowan Davies, 1997, Service Combinators for Web Computing]]
