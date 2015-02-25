@@ -76,7 +76,7 @@ Individual, pluggable and reusable piece of software.
 
 *** Port
     
-** Evaluation Phase
+** Dynamic Phase
 *** Information Stream
 
 An entity that packed data, state passed throw the process pipeline.
