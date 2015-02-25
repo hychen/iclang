@@ -1,0 +1,114 @@
+#+TITLE: Internet Combinator Language
+#+AUTHOR:Hsin-Yi Chen (hychen)
+#+OPTIONS: H:2 num:t toc:nil
+#+OPTIONS: ^:nil
+#+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
+
+* Introduction
+
+Internet Combinator Language, iclang in short, is a cordination language 
+which has [[en.wikipedia.org/wiki/Configurable_modularity][configurable modularity]] for compositing things of internet.
+
+It is designed to run on Tim Berners Lee computer.
+
+* Models
+** Static Phase
+
+The control logic is denoted in a json file like abstract syntax tree as below:
+
+#+BEGIN_SRC javascript
+  {
+      "properties":{
+          "name":"The hyper script name"
+      },
+      "inports":[],
+      "exports":[],
+      "processes":{
+          "the process id":{
+              "component":"which componet will be used",
+              "options":{
+                  "opt1": "the value of option1"
+              }
+          },
+          "second process id":{
+              "....":"...."
+          }
+      },
+      "connections:":[
+          {
+              "data":"data",
+              "tgt":{
+                  "process":"the process id",
+                  "port":"in"
+              }
+          },
+          {
+              "src":{
+                  "process":"the process id",
+                  "port":"out"
+              },
+              "tgt":{
+                  "process":"second process id"
+                  "port":"in"
+              }
+          }
+      ]
+  }
+#+END_SRC
+
+This file is called Hyper Script and represents the following relationships.
+
+#BEGIN_SRC ditaa :file iclang-hyper-process.png :cmdline -r
+                        +--------------------+   +--------------------+
+"data" -->  Inport []-->|[]in Process A out[]|-->|[]in Process B out[]|-->[] Export
+                        +--------------------+   +--------------------+
+                                  ^                       ^
+                                  |                       |
+                              options A               options B
+  
+                        -- connection
+                        [] port
+#END_SRC
+
+*** Component
+
+Individual, pluggable and reusable piece of software. 
+
+*** Port
+    
+** Evaluation Phase
+*** Information Stream
+
+An entity that packed data, state passed throw the process pipeline.
+
+*** Initial Information Stream
+
+predefined data stream sent to a defined inport of a Process
+
+*** Hyper Process
+
+An instance of a Hyper Script.
+
+*** Process
+
+An instance of a component that is running as part of Hyper Process, to
+recive Information Streams and then do someting and then pass to next process.
+
+*** Socket
+
+The place in a process that another process could attach, in order to send or recive information stream.
+
+A process can have mutiple input/output sockets.
+
+*** Connection
+
+connection between an outport of a Process, and inport of another Process
+* Syntax
+** Reference
+** Value
+** Variable
+** Component as Function
+** Component as Module
+** Recursive
+* Type Checking
+* Evaluation
