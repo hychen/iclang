@@ -13,6 +13,44 @@ which has [[en.wikipedia.org/wiki/Configurable_modularity][configurable modulari
 
 It is designed to run on Tim Berners Lee computer.
 
+#+BEGIN_SRC dot :file images/tim-berners-lee-computer-values.png :cmdline -Kdot -Tpng
+  digraph G {
+    nodesep=0.5
+    size="8,5"
+    node [color=Red,fontname=Courier,shape=box] //All nodes will this shape and colour
+    "browsing"       -> "resources"
+    "browsing"       -> "behavior"
+    "browsing"       -> "service"
+    "browsing"       -> "service rate"
+    "browsing"       -> "service status"
+    "resources"      -> "atomic"
+    "atomic"         -> "image"
+    "atomic"         -> "video"
+    "resources"      -> "compound"
+    "HTML"           -> "compound"
+    "forms"          -> "compound"
+    "tables"         -> "compound"
+    "multipart data" -> "compound"
+    "behavior"       -> "sequential"
+    "behavior"       -> "concurent"
+    "behavior"       -> "repetition"
+    "behavior"       -> "time limit"
+    "service"        -> "URL pointer"
+    "service"        -> "gateway"
+    "gateway"        -> "get"
+    "gateway"        -> "post"
+    "gateway"        -> "put"
+    "gateway"        -> "delete"
+    "service status" -> "succeeded"
+    "service status" -> "failed"
+    "service status" -> "nonterminating"
+
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:images/tim-berners-lee-computer-values.png]]
+
 * Tim Berners Lee Computer
 
 Luca Cardelli 與 Rowan Davies 認為 Internet 上所有電腦可被視為一抽象電腦，
@@ -57,6 +95,9 @@ Luca Cardelli 與 Rowan Davies 認為 Internet 上所有電腦可被視為一抽
   +--------+         
 #+END_SRC
 
+#+RESULTS:
+[[file:images/tim-berners-lee-computer-arch.png]]
+
 ** Hyper Memory
 
 #+BEGIN_SRC ditaa :file images/tim-berners-lee-computer-hyper-memory.png :cmdline -r -E
@@ -73,6 +114,9 @@ Luca Cardelli 與 Rowan Davies 認為 Internet 上所有電腦可被視為一抽
          Hyper Memory
 #+END_SRC
 
+#+RESULTS:
+[[file:images/tim-berners-lee-computer-hyper-memory.png]]
+
 | John von Neumann Unit | Tim Berners Lee Unit |
 |-----------------------+----------------------|
 | Memory Page           | Web Service          |
@@ -85,6 +129,7 @@ Luca Cardelli 與 Rowan Davies 認為 Internet 上所有電腦可被視為一抽
 URL 是某種網路上的索引，只是每次讀取得值不總是一致，除此之外讀取還可能會失敗，有延遲。
 
 *** Value
+
 ***** Atomic
 
 像是圖檔，影像，音樂等等。
@@ -122,6 +167,9 @@ Internet 裏的某一台電腦均可當成處理單元，執行 Hyper Script 而
 +---------+-----------+---------+---------+ |                
 #+END_SRC
 
+#+RESULTS:
+[[file:images/tim-berners-lee-computer-hyper-bus.png]]
+
 ** Input Service
 
 A web service like a shell.
@@ -138,7 +186,7 @@ A target service that user want to have.
 
 The control logic is denoted in a json file like abstract syntax tree as below:
 
-#+BEGIN_SRC javascript
+#+BEGIN_SRC js
   {
       "properties":{
           "name":"The hyper script name"
@@ -178,6 +226,8 @@ The control logic is denoted in a json file like abstract syntax tree as below:
   }
 #+END_SRC
 
+#+RESULTS:
+
 This file is called Hyper Script and represents the following relationships.
 
 #+BEGIN_SRC ditaa :file images/tim-berners-lee-computer-hyper-script.png :cmdline -r -E
@@ -191,6 +241,9 @@ This file is called Hyper Script and represents the following relationships.
                         -- connection
                         [] port
 #+END_SRC
+
+#+RESULTS:
+[[file:images/tim-berners-lee-computer-hyper-script.png]]
 
 *** Component
 
@@ -228,12 +281,31 @@ connection between an outport of a Process, and inport of another Process
 * Componets, HyperScript are functions
 
 ** Componets generate Process as Function
+
+#+BEGIN_SRC js
+    function componentA(options){
+        return function(inports){
+            if(options["ignore"]){
+                return {"out": ""};
+            }else{
+                return {"out":"world!"};
+            }          
+        }
+    }
+  processA = componentA({"ignore":false});
+  result = processA();
+  return "hello " + result['out']
+#+END_SRC
+
+#+RESULTS:
+: hello
+
 ** Connections
 ** HyperScript 
 
 A hyperscript can be descrbied in functional mindset, here is a example in JavaScript.
 
-#+BEGIN_SRC javascript
+#+BEGIN_SRC js
   function hyperscript(inports){
       options1 = {};
       options2 = {};
@@ -246,7 +318,7 @@ A hyperscript can be descrbied in functional mindset, here is a example in JavaS
 
 A hyperscript can be used like a component.
 
-#+BEGIN_SRC javascript
+#+BEGIN_SRC js
   function(inports){
       options3 = {};
       process3 = component3(options3);
