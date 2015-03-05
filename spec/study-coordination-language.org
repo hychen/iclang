@@ -20,6 +20,33 @@
 *** Asynchronous Dataflow
 *** Synchronous Dataflow
 *** Dynamic Dataflow Implementation
+** Flow-Based Programming - 2nd Edition, J. Paul Morrison, 2011
+*** Basic Concepts 
+*** Reuse of Components
+*** Parametrization of Reusable Components 
+*** First Applications using Precoded Components
+*** Composite Components
+*** Building Components & Some More Simple Applications
+*** Substreams and Control IPs
+*** Some More Components and Simple Applications
+*** The Structures
+*** Scheduling Rules
+*** Loop-Type Networks
+*** Network Splitting and Client Server
+*** Deadlocks: Their Causes and Prevention
+*** Problem-Oriented Mini-Languages
+*** A Bussiness Oriented Very High Level Language
+*** Synchronication and Checkpoints
+*** General Framwork for Interactive Applications
+*** Performance Considerations
+*** Defining Networks
+*** Related Compiler Theory Concepts
+*** Streams and Recursive Function Definitions
+*** Bomparison between FBP and Object-Oriented Programming
+*** Related Concepts and Forerunners
+*** The FBP Explosion
+*** Ending and Beginnings
+
 * Related Papers
 ** Coordination models and languages, GA Papadopoulos, F Arbab, 1999
 *** The concept of coordination is by no means limited to Computer Science. 
