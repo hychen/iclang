@@ -1,0 +1,49 @@
+#+TITLE: Study Of Coordination Language And Models
+#+AUTHOR:Hsin-Yi Chen (hychen)
+#+OPTIONS: H:2 num:t toc:nil
+#+OPTIONS: ^:nil
+#+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
+
+* Related Papers
+** Coordination models and languages, GA Papadopoulos, F Arbab, 1999
+*** The concept of coordination is by no means limited to Computer Science. 
+Malone and Crowston characterise coordination as an emerging research area with an interdisciplinary focus, 
+playing a key issue in many diverse disciplines such as economics and operational  research,  organisation theory  and  biology. 
+*** What is Coordination Model
+- the glue that binds separate activities into an ensemble.
+- The need of Multilingual and Heterogeneous Systems
+***  Coordination works well  on distributed/parallel programming.
+Programming a distributed or parallel system can be seen as the combination of two distinct activities: the actual 
+computing part comprising a number of processes involved in manipulating data and a coordination part responsible for 
+the communication and cooperation between the processes. Thus, coordination can be used to distinguish the computational 
+concerns of some distributed or parallel application from the communication ones, allowing the separate development but also
+the eventual amalgamation of the these two major development phases.
+*** Data-Driven
+- The main characteristic of the data-driven coordination models and languages is the fact that the state of the computation at any moment 
+  in time is defined in terms of both the values of the data being received or sent and the actual configuration of the coordinated components.
+- A data-driven coordination language typically offers some coordination primitives (coupled with a coordination metaphor) which are mixed within
+  the purely computational part of  the  code.  These  primitives  do  encapsulate  in  a  useful  way  the  communication  and configurational 
+  aspects of some computation, but must be used in conjunction with the purely computational manipulation of data associated with some process. 
+  This means that processes cannot easily be distinguished as either coordination or computational processes. 
+**** Data-Driven Model - Shared Data Space
+- Almost all coordination models belonging to this category have evolved around the notion of a *Shared Dataspace*.
+- A *Shared  Dataspace* is a common, content-addressable  data structure. All processes involved in some computation can communicate among themselves only indirectly via this medium. 
+  this metaphor achieves decoupling of processes in both space and time.
+**** Data-Driven Model - Message-passing
+
+*** Control-Driven
+*** Comparision Between Data-Driven and Control-Driven
+- In the case of the data-driven category, the coordination component is usually a set of primitives with predefined functionality which is used in connection with 
+  some “host” computational language, in the control-driven category the coordination component is usually a fully-fledged language.
+- The data-driven category tends to be used mostly for parallelising computational problems. The control-driven category tends to be used primarily for modelling systems. 
+- the data- vs. control-driven separation is by no means a clear cut one. 
+*** Major Dimensions Of Coordination Model
+- the entities being coordinated
+- the mechanism of coordination
+- the coordination medium or architecture
+- the semantics, rules of protocols of coordination employed
+- whether a model supports a different (from the computational component) coordination language or involves the use of “add-on” primitives
+- whether a model supports and encourages the use of many computational languages
+- what is the most relevant application domain for each  model
+- what is the implementation status of the proposed framework.
+** Models and Issues in Data Stream Systems, Brian Babcock Shivnath Babu Mayur Datar Rajeev Motwani Jennifer Widom, 2002
