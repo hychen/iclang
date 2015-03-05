@@ -4,52 +4,10 @@
 #+OPTIONS: ^:nil
 #+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
 
-#+SETUPFILE:  bigblow-local.setup
-
 * Introduction
 
 Internet Combinator Language, iclang in short, is a cordination language 
 which has [[en.wikipedia.org/wiki/Configurable_modularity][configurable modularity]] for compositing things of internet.
-
-It is designed to run on Tim Berners Lee computer.
-
-#+BEGIN_SRC dot :file images/tim-berners-lee-computer-values.png :cmdline -Kdot -Tpng
-  digraph G {
-    nodesep=0.5
-    size="8,5"
-    node [color=Red,fontname=Courier,shape=box] //All nodes will this shape and colour
-    "browsing"       -> "resources"
-    "browsing"       -> "behavior"
-    "browsing"       -> "service"
-    "browsing"       -> "service rate"
-    "browsing"       -> "service status"
-    "resources"      -> "atomic"
-    "atomic"         -> "image"
-    "atomic"         -> "video"
-    "resources"      -> "compound"
-    "HTML"           -> "compound"
-    "forms"          -> "compound"
-    "tables"         -> "compound"
-    "multipart data" -> "compound"
-    "behavior"       -> "sequential"
-    "behavior"       -> "concurent"
-    "behavior"       -> "repetition"
-    "behavior"       -> "time limit"
-    "service"        -> "URL pointer"
-    "service"        -> "gateway"
-    "gateway"        -> "get"
-    "gateway"        -> "post"
-    "gateway"        -> "put"
-    "gateway"        -> "delete"
-    "service status" -> "succeeded"
-    "service status" -> "failed"
-    "service status" -> "nonterminating"
-
-  }
-#+END_SRC
-
-#+RESULTS:
-[[file:images/tim-berners-lee-computer-values.png]]
 
 * Tim Berners Lee Computer
 
