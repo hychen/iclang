@@ -10,6 +10,16 @@
   A Petri net is a directed bipartite graph, in which the nodes represent transitions (i.e. events that may occur, 
   signified by bars) and places (i.e. conditions, signified by circles). 
 
+* Related Books
+** Dataflow and Reactive Programming Systems, Matt Carkci, 2014
+*** Dataflow Explained
+*** Actor Model
+*** Flow-Based Programming
+*** Communicating Sequential Process
+*** Implicit Dataflow
+*** Asynchronous Dataflow
+*** Synchronous Dataflow
+*** Dynamic Dataflow Implementation
 * Related Papers
 ** Coordination models and languages, GA Papadopoulos, F Arbab, 1999
 *** The concept of coordination is by no means limited to Computer Science. 
