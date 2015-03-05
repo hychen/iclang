@@ -31,7 +31,33 @@ the eventual amalgamation of the these two major development phases.
   this metaphor achieves decoupling of processes in both space and time.
 **** Data-Driven Model - Message-passing
 
+**** Data-Driven Model - Compositional Programming
+- A compositional programming system is one in which properties of program
+  components are preserved when those components are composed in parallel 
+  with other program components. 
+  Thus, it is possible to define in a compositional way recurring patterns 
+  of parallel computation, whether configuration ones (such as mapping techniques) 
+  or communication ones (such as streamers  and  mergers),  as  building  blocks  
+  and  combine  them  together  to  form  bigger programs. 
+- 2 approachs
+  - *concurrent logic programming*
+  - *functional programming*
 *** Control-Driven
+- the coordinated framework evolves by means of observing state changes in processes
+  and, possibly, broadcast of events. Contrary to the case of the data-driven family 
+  where coordinators directly handle and examine data values, here processes 
+  (whether coordination or computational ones) are treated as black boxes; data handled 
+  within a  process is of no concern to the environment of the process. 
+- Processes communicate with their environment by means of clearly defined interfaces, 
+  usually referred to as input or output ports. Producer-consumer relationships are formed
+  by means of setting up stream or channel connections between output ports of producers 
+  and input ports of consumers. By nature, these connections are point-to-point, although 
+  limited  broadcasting functionality  is  usually  allowed  by  forming  1-n  
+  relationships  between  a  producer  and  n consumers and vice versa. 
+- Most of the coordination languages to be described in this section realise in one way or 
+  another the above *CSP*- or *Occam-like* formalism.
+- *static reconfiguration* v.s. *dynamic reconfiguration*
+- [[http://projects.cwi.nl/manifold/][MANIFOLD]] 
 *** Comparision Between Data-Driven and Control-Driven
 - In the case of the data-driven category, the coordination component is usually a set of primitives with predefined functionality which is used in connection with 
   some “host” computational language, in the control-driven category the coordination component is usually a fully-fledged language.
@@ -46,4 +72,8 @@ the eventual amalgamation of the these two major development phases.
 - whether a model supports and encourages the use of many computational languages
 - what is the most relevant application domain for each  model
 - what is the implementation status of the proposed framework.
+*** Concerned Issues
+- flat unstructured communication medium v.s. hierarchical levels of their communication medium
+- port-to-port connections via streams with static/dymaic reconfiguration support.
+- channnled-based v.s. medium-based 
 ** Models and Issues in Data Stream Systems, Brian Babcock Shivnath Babu Mayur Datar Rajeev Motwani Jennifer Widom, 2002
