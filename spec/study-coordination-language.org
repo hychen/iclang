@@ -4,6 +4,12 @@
 #+OPTIONS: ^:nil
 #+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
 
+* Related Formal Language
+- [[https://en.wikipedia.org/wiki/Communicating_sequential_processes][Communicating sequential processes]] :: is a formal language for describing patterns of interaction in concurrent systems.
+- [[https://en.wikipedia.org/wiki/Petri_net][Petri net]] :: one of several mathematical modeling languages for the description of distributed systems. 
+  A Petri net is a directed bipartite graph, in which the nodes represent transitions (i.e. events that may occur, 
+  signified by bars) and places (i.e. conditions, signified by circles). 
+
 * Related Papers
 ** Coordination models and languages, GA Papadopoulos, F Arbab, 1999
 *** The concept of coordination is by no means limited to Computer Science. 
