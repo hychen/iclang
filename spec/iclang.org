@@ -208,6 +208,12 @@ This file is called Hyper Script and represents the following relationships.
 Individual, pluggable and reusable piece of software. 
 
 *** Port
+
+A port descrbies the type of incoming data or outcoming data of a component.
+
+*** Component Library 
+
+A component is a NPM module that the *package.json* contains a *components manifest*.
     
 ** Dynamic Phase
 *** Information Stream
