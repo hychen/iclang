@@ -77,7 +77,12 @@ the eventual amalgamation of the these two major development phases.
 - flat unstructured communication medium v.s. hierarchical levels of their communication medium
 - port-to-port connections via streams with static/dymaic reconfiguration support.
 - channnled-based v.s. medium-based 
+  
 
+* Web Services Compositions 
+** Papers
+*** van der Aalst, W.M.P, Dumas, M. ; ter Hofstede, A.H.M..  (2003). Web Service Composition Languages: Old Wine in New Bottles?. IEEE.
+***  Luca Cardelli and Rowan Davies. . (1997). Service Combinators for Web Computing. IEEE.
 
 * Data Flow
 ** Books
