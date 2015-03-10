@@ -4,6 +4,10 @@
 #+OPTIONS: ^:nil
 #+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
 
+* Patterns
+- [[http://workflowpatterns.com][Workflow Patterns]]
+- [[http://communicationtheory.org/patterns-of-communication/][Communication Patters]]
+
 * Coordination Language And Models
 ** Papers
 *** Coordination models and languages, GA Papadopoulos, F Arbab, 1999
