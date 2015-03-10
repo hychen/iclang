@@ -9,9 +9,8 @@
 *** 定義
 HyperScript File 是一個裡面只有一個有 object 的 JSON 檔，用來描述一個HyperScript。
 *** 特性
-1. 所有的 HyperScript File 都包含 grammar 欄位，且其值為 iclang。
-2. 所有的 HyperScript File 都包含 properties 欄位, procesess 欄位, connections 欄位。
-3. inports, exports, comment 欄位為 optional。
+1. 所有的 HyperScript File 都包含 properties 欄位, procesess 欄位, connections 欄位。
+2. inports, exports, comment 欄位為 optional。
 *** 範例
 #+BEGIN_SRC javascript
   {
