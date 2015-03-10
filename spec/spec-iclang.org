@@ -5,7 +5,49 @@
 #+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
 
 * 介紹
-* 基本概念
+** HyperScript File
+*** 定義
+HyperScript File 是一個裡面只有一個有 object 的 JSON 檔，用來描述一個HyperScript。
+*** 特性
+1. 所有的 HyperScript File 都包含 grammar 欄位，且其值為 iclang。
+2. 所有的 HyperScript File 都包含 properties 欄位, procesess 欄位, connections 欄位。
+3. inports, exports, comment 欄位為 optional。
+*** 範例
+#+BEGIN_SRC javascript
+  {
+      "comment":"this for comment.
+      "properties":{
+          "name":"first hyper script",
+      },
+      "inports": [],
+      "exports": [],
+      "processes":{
+          "process_a":{
+              "component":"ReadComponentId",
+          },
+          "process_b":{
+              "component":"WriteComponentId"
+          }
+      }
+      "connections":[        
+          {
+              "src":{
+                  "process":"process_a"
+                  "port":"out"                
+              },
+              "tgt":{
+                  "process":"process_b"
+                  "port":"in"
+              }
+          },
+      ]
+  }
+#+END_SRC
+*** Properties 欄位
+*** Processes 欄位
+*** Connections 欄位
+*** Inports, Exports 欄位
+* 概念
 ** Static Time
 TBD
 ** Dynamic Time
@@ -86,3 +128,5 @@ HyperScript 在 dynamic time 時的 instance。
 2. 所有的 HyperProcess, 只有在 terminated 狀態下，才能修改裡面的 connection。
 3. 所有的 HyperProcess, 只有在 terminated 狀態下，才能修改裡面的 process。
 4. 所有的 HyperProcess 都有執行狀態，處於 init, ready, running, terminating, terminated 這五種狀態中。
+
+
