@@ -1,0 +1,88 @@
+#+TITLE: IClang Specification
+#+AUTHOR: Hsin-Yi Chen (hychen)
+#+OPTIONS: H:2 num:t toc:nil
+#+OPTIONS: ^:nil
+#+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
+
+* 介紹
+* 基本概念
+** Static Time
+TBD
+** Dynamic Time
+TBD
+* 型別
+** Value
+TBD
+** Identifier
+*** 定義
+由字母，數字，底線組，反斜線合成的字串。
+*** 特性
+- 所有的 Identifier 裏的反斜線是用來標示命名空間。taiwan/taipei 表示 taipei 屬於 taiwan。
+- 所有的 Identifier 長度最少為3個字元，最多為255個字元。
+** Stream
+TBD
+** Port
+*** 定義
+有方向的點，用來傳送接收*Stream*，方向為接收(In)的稱為*Inport*，方向為傳送(Out)的稱為*Outport*。
+*** 特性
+1. 所有的 Port 都有一個型別為*Identifier*的名稱。
+2. 所有的 Port 都有方向性，不是In, 就是 Out
+3. 所有的 Port 都可以被連接，其狀態不是 Connected 就是 Disconnected。
+4. 所以的 Port 都可以預先設定一個預設值，其型別為*Value*。
+** Component
+*** 定義
+實際進行資料運算，或流程控制的基本單元，其行為可以在Static Time時用Option改變。
+*** 特性
+1. 所有的 Component 都有一個型別為*Identifier*的名稱。
+2. 所有的 Component 都有一個 Option Port，用來接收 Option。Option Port是Inport。
+3. 所有的 Component 可以有最少一個，最多無限多個的Inport。
+4. 所有的 Component 可以有最少一個，最多無限多個的Outport。
+5. 所有的 Component 是/functional/，/無狀態的/。
+** Link
+*** 定義
+兩個 Port 連接在一起稱為 Link。
+*** 特性
+1. 只有不同 Component 或是 HyperScript 的 Port 可以互相連接。
+2. 所有的 Inport 只能跟 Outport 連接，反之亦然。
+** HyperScript 
+*** 定義
+以流程圖方式定義資料運算相依性的dataflow程式，由 Component，Link 構成，且能像 Component 一樣有Inport或Outport。
+HyperScript裏的Outport通常稱為Export。
+*** 特性
+1. 所有的 HyperScript 都有一個型別為Identifier的名稱。
+2. 所有的 HyperScript 都有最少一個，最多無限多個Component。
+3. 所有的 HyperScript 都有最少一個，最多無限多個Link。
+4. 所有的 HyperScript 都是 directed graph，且不能有loop。
+5. 所有的 HyperScript 可以有零到無限個Inport。
+6. 所有的 HyperScript 可以有零到無限個Export。
+7. 所有的 HyperScript 可以如同 Component 一樣，能與其他 Component 或是 HyperScript 組合。
+** Socket
+*** 定義
+Port 在 dynamic time 時的 instance。方向為 In 的稱為 In Socket, 方向為 Out 稱為Out Socket。
+*** 特性
+1. 所有的 Socket 都有一個型別為UUID的識別碼。
+2. 所有的 Socket 都有方向性，不是In就是Out。
+3. 所有的 Socket 都處於 connecting, connected, disconnecting, disconnected 這四種其中一種狀態。
+4. 所有的 Socket 連接後，除非 Process 進入 terminating 狀態，否則不能被 disconnect。
+4. 所有的 Socket 如果沒有被連接，則回傳的值是其Port的預設值。
+** Process
+*** 定義
+Component 在 dynamic time 時的 instance。
+*** 特性
+1. 所有的 Process 都有一個型別為字串的名稱。
+2. 所有的 Process 都有執行狀態，處於 init, ready, running, terminating, terminated 這五種狀態中。
+3. 所有的 Process 都有零到無限多個的In Socket或是 Out Socket。
+** Connection
+*** 定義
+兩個 Socket 連在一起稱為 Connection。
+*** 特性
+1. 只有不同 Process 或是 HyperProcess 的 Socket 可以互相連結。
+2. 所有的 In Socket 只能跟 Out Socket 連接，反之亦然。
+** HyperProcess
+*** 定義
+HyperScript 在 dynamic time 時的 instance。
+*** 特性
+1. 所有的 HyperProcess 都有一個UUID。 
+2. 所有的 HyperProcess, 只有在 terminated 狀態下，才能修改裡面的 connection。
+3. 所有的 HyperProcess, 只有在 terminated 狀態下，才能修改裡面的 process。
+4. 所有的 HyperProcess 都有執行狀態，處於 init, ready, running, terminating, terminated 這五種狀態中。
