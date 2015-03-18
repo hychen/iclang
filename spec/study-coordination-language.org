@@ -9,6 +9,8 @@
 - [[http://communicationtheory.org/patterns-of-communication/][Communication Patters]]
 - Dsitrubuted Computing Software Architecture Pattern 
   - [[http://www.cs.wustl.edu/~schmidt/POSA/POSA4/][Pattern-Oriented Software Architecture: A Pattern Language for Distributed Computing]]
+- Enterprise Intergration Patterns
+  - [[http://www.enterpriseintegrationpatterns.com/toc.html][Messaging Patterns]]
 * Coordination Language And Models
 ** Papers
 *** Coordination models and languages, GA Papadopoulos, F Arbab, 1999
