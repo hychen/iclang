@@ -14,9 +14,17 @@ HyperScript File 是一個能被符合下列[[http://json-schema.org/][JSON Sche
       "$schema": "http://json-schema.org/schema#",
       "title": "ICLang HyperScript JSON Schema",
       "type": "object",
+      "required":["properties", "processes", "connections"],
       "properties": {
+          "comment": {"$ref":"#/difinitions/comment"},
+          "properties": {"$ref":"#/difinitions/propertiest"},
+          "processes": {"$ref":"#/difinitions/processes"},
+          "connections": {"$ref":"#/difinitions/connections"},
+          "inports": {"$ref":"#/difinitions/inports"},
+          "exports": {"$ref":"#/difinitions/exports"}
+      },
+      "difinitions":{        
           "properties":{
-              "required": true,
               "type":"object",
               "properties":{
                   "name":{
@@ -30,11 +38,9 @@ HyperScript File 是一個能被符合下列[[http://json-schema.org/][JSON Sche
               }
           },
           "processes":{
-              "required":true,
               "type":"object"
           },
           "connections":{
-              "required":true,
               "type":"array"
           },
           "inports":{
@@ -45,7 +51,7 @@ HyperScript File 是一個能被符合下列[[http://json-schema.org/][JSON Sche
           },
           "comment":{
               "type":"string"
-          }
+          }        
       }
   }
 #+END_SRC

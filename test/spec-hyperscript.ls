@@ -21,4 +21,11 @@ describe 'HyperScript File', ->
           inports: []
           exports: []
         validate valid_script .should.be.ok
+
+        script_missing_properties = do
+          processes: {}
+          connections: []
+          inports: []
+          exports: []
+        validate script_missing_properties .should.not.be.ok        
         done!
