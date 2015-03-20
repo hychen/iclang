@@ -12,36 +12,75 @@ HyperScript File 是一個裡面只有一個有 object 的 JSON 檔，用來描�
 1. 所有的 HyperScript File 都包含 properties 欄位, procesess 欄位, connections 欄位。
 2. inports, exports, comment 欄位為 optional。
 *** 範例
+
+假設現在我們有一個 HyperScript，它的功能是讀取一個字串然後顯示在終端機，有一個輸入端口`str`,
+一個輸出端口`status`，由Read, Print兩個 Component 組成，Read Component 有一個輸入口`in`，
+用來輸入字串，一個輸出口`out`用來把獨進來的字串傳遞到另一個Component。 
+
+Print Component 有一個輸入口`in`, 用來從另一個Component接收一個字串，在終端機顯示該字串後，
+若成功`out`輸出端口為0, 失敗則為1。
+
+而這個 HyperScript `str`輸入端口所接受到的任何東西會傳到內部 Read 的輸入口`in`, Print的`out`的輸出會傳到`status`。
+
+#+BEGIN_SRC ditaa
+   +-----------------------------------------------+
+   |      +-------------+     +--------------+     |
+   |      |             |     |              |     |
+str|[]--->[]in Read out[]---->[]in Print out[]--->[]status
+   |      |             |     |              |     |
+   |      +-------------+     +--------------+     |
+   +-----------------------------------------------+      
+#+END_SRC
+
+其 HyperScript 的內容可以如此定義
+
 #+BEGIN_SRC javascript
   {
-      "comment":"this for comment.
       "properties":{
-          "name":"first hyper script",
+          "name":"read a string and print"
+          "description": "read a string then print it to console."
       },
-      "inports": [],
-      "exports": [],
       "processes":{
-          "process_a":{
+          "Read":{
               "component":"ReadComponentId",
           },
-          "process_b":{
-              "component":"WriteComponentId"
+          "Print":{
+              "component":"PrintComponentId"
           }
       }
-      "connections":[        
+      "connections":[
           {
               "src":{
-                  "process":"process_a"
+                  "process":"Read"
                   "port":"out"                
               },
-              "tgt":{
-                  "process":"process_b"
+              "dest":{
+                  "process":"Print",
                   "port":"in"
               }
-          },
+          }
+      ],
+      "inports":[
+          {
+              "name":"str",          
+              "dest":{
+                  "process":"Read",
+                  "port":"in"
+              }
+          }
+      ],
+      "exports":[
+          {
+              "name":"status",
+              "src":{
+                  "process":"Print",
+                  "port":"out"
+              }
+          }    
       ]
   }
 #+END_SRC
+
 *** Properties 欄位
 *** Processes 欄位
 *** Connections 欄位
