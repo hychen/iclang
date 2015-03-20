@@ -1,0 +1,36 @@
+
+{
+    "$schema": "http://json-schema.org/schema#",
+    "title": "ICLang HyperScript JSON Schema",
+    "type": "object",
+    "properties": {
+        "properties":{
+            "required": true,
+            "type":"object",
+            "properties":{
+                "name":{
+                    "type":"string",
+                    "required": true
+                },
+                "description":{
+                    "type":"string",
+                    "required": true
+                }
+            }
+        },
+        "processes":{
+            "required":true,
+            "type":"object"
+        },
+        "connections":{
+            "required":true,
+            "type":"array"
+        },
+        "inports":{
+            "type":"array"
+        },
+        "exports":{
+            "type":"array"
+        }
+    }
+}

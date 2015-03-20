@@ -24,5 +24,6 @@ scripts:
 engines: {node: '*'}
 devDependencies:
   mocha: '2.2.x'
-  chai: '2.1.x'
+  chai: '1.10.x'
+  'is-my-json-valid':'2.10.x'
   LiveScript: '1.3.x'

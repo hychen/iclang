@@ -11,17 +11,39 @@ HyperScript File 是一個裡面只有一個有 object 的 JSON 檔，用來描�
 
 #+BEGIN_SRC javascript :tangle ../schema/hyperscript-schema.json
   {
-      "$schema":"http://json-schema.org/schema#",
-      "title": "ICLang HyperScript File Schema",
-      "type":"object",
-      "properties":{
-          "properties": {"type":"object"},
-          "processes": {"type":"object"},
-          "connections": [{"type":"object"}],
-          "inports": [{"type":"object"}],
-          "exports": [{"type":"object"}]
-      },
-      "required":["properties", "processes", "connections"]
+      "$schema": "http://json-schema.org/schema#",
+      "title": "ICLang HyperScript JSON Schema",
+      "type": "object",
+      "properties": {
+          "properties":{
+              "required": true,
+              "type":"object",
+              "properties":{
+                  "name":{
+                      "type":"string",
+                      "required": true
+                  },
+                  "description":{
+                      "type":"string",
+                      "required": true
+                  }
+              }
+          },
+          "processes":{
+              "required":true,
+              "type":"object"
+          },
+          "connections":{
+              "required":true,
+              "type":"array"
+          },
+          "inports":{
+              "type":"array"
+          },
+          "exports":{
+              "type":"array"
+          }
+      }
   }
 #+END_SRC
 *** 特性
@@ -50,7 +72,7 @@ str|[]--->[]in Read out[]---->[]in Print out[]--->[]status
 
 其 HyperScript 的內容可以如此定義
 
-#+BEGIN_SRC javascript :tangle simple-hyperscript.json
+#+BEGIN_SRC javascript :tangle ../example/simple-hyperscript.json
   {
       "properties":{
           "name":"read a string and print",
