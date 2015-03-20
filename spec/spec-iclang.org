@@ -8,6 +8,22 @@
 ** HyperScript File
 *** 定義
 HyperScript File 是一個裡面只有一個有 object 的 JSON 檔，用來描述一個HyperScript。
+
+#+BEGIN_SRC javascript :tangle ../schema/hyperscript-schema.json
+  {
+      "$schema":"http://json-schema.org/schema#",
+      "title": "ICLang HyperScript File Schema",
+      "type":"object",
+      "properties":{
+          "properties": {"type":"object"},
+          "processes": {"type":"object"},
+          "connections": [{"type":"object"}],
+          "inports": [{"type":"object"}],
+          "exports": [{"type":"object"}]
+      },
+      "required":["properties", "processes", "connections"]
+  }
+#+END_SRC
 *** 特性
 1. 所有的 HyperScript File 都包含 properties 欄位, procesess 欄位, connections 欄位。
 2. inports, exports, comment 欄位為 optional。
