@@ -1,0 +1,45 @@
+
+{
+    "properties":{
+        "name":"read a string and print",
+        "description": "read a string then print it to console."
+    },
+    "processes":{
+        "Read":{
+            "component":"ReadComponentId"
+        },
+        "Print":{
+            "component":"PrintComponentId"
+        }
+    },
+    "connections":[
+        {
+            "src":{
+                "process":"Read",
+                "port":"out"                
+            },
+            "dest":{
+                "process":"Print",
+                "port":"in"
+            }
+        }
+    ],
+    "inports":[
+        {
+            "name":"str",          
+            "dest":{
+                "process":"Read",
+                "port":"in"
+            }
+        }
+    ],
+    "exports":[
+        {
+            "name":"status",
+            "src":{
+                "process":"Print",
+                "port":"out"
+            }
+        }    
+    ]
+}

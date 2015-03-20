@@ -34,24 +34,24 @@ str|[]--->[]in Read out[]---->[]in Print out[]--->[]status
 
 其 HyperScript 的內容可以如此定義
 
-#+BEGIN_SRC javascript
+#+BEGIN_SRC javascript :tangle simple-hyperscript.json
   {
       "properties":{
-          "name":"read a string and print"
+          "name":"read a string and print",
           "description": "read a string then print it to console."
       },
       "processes":{
           "Read":{
-              "component":"ReadComponentId",
+              "component":"ReadComponentId"
           },
           "Print":{
               "component":"PrintComponentId"
           }
-      }
+      },
       "connections":[
           {
               "src":{
-                  "process":"Read"
+                  "process":"Read",
                   "port":"out"                
               },
               "dest":{
