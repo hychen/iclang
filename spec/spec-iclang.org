@@ -7,7 +7,7 @@
 * 介紹
 ** HyperScript File
 *** 定義
-HyperScript File 是一個裡面只有一個有 object 的 JSON 檔，用來描述一個HyperScript。
+HyperScript File 是一個能被符合下列[[http://json-schema.org/][JSON Schema]]的[[http://json.org/][JSON]]檔。
 
 #+BEGIN_SRC javascript :tangle ../schema/hyperscript-schema.json
   {
@@ -42,6 +42,9 @@ HyperScript File 是一個裡面只有一個有 object 的 JSON 檔，用來描�
           },
           "exports":{
               "type":"array"
+          },
+          "comment":{
+              "type":"string"
           }
       }
   }
