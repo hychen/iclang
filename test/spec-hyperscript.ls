@@ -29,3 +29,11 @@ describe 'HyperScript File', ->
           exports: []
         validate script_missing_properties .should.not.be.ok        
         done!
+    describe 'must has connections field that', -> ``it``
+      .. 'indicates each connection between a source port and a destination port.', (done) ->
+        base = do
+          properties: {name:'', description:''}
+          processes: {}
+        script_conn_record_wrong_type = connections: ["bad_connection_record"] <<< base
+        validate script_conn_record_wrong_type .should.be.not.ok
+        done!

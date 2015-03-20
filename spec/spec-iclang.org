@@ -41,7 +41,15 @@ HyperScript File 是一個能被符合下列[[http://json-schema.org/][JSON Sche
               "type":"object"
           },
           "connections":{
-              "type":"array"
+              "type":"array",
+              "items":{
+                  "type":"object",
+                  "required": ["src", "dest"],
+                  "properties":{
+                      "src":{},
+                      "dest":{}
+                  }
+              }
           },
           "inports":{
               "type":"array"

@@ -30,7 +30,15 @@
             "type":"object"
         },
         "connections":{
-            "type":"array"
+            "type":"array",
+            "items":{
+                "type":"object",
+                "required": ["src", "dest"],
+                "properties":{
+                    "src":{},
+                    "dest":{}
+                }
+            }
         },
         "inports":{
             "type":"array"
