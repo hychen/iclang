@@ -15,6 +15,9 @@ pprint = ->
   else
     "expected some erros but none."
 
+err-ref-nmatch = ->
+  [{field: it,'message':'referenced schema does not match'}]
+
 var schema, validate
 describe 'HyperScript File', ->
   before (done) ->
@@ -24,6 +27,7 @@ describe 'HyperScript File', ->
     done!
   describe 'is a JSON file which follows the HyperScript JSON schema and', ->
     describe 'must has properties field that', -> ``it``
+      err = err-ref-nmatch 'data.properties'    
       test-data = ({name, desc, placeholder}={})->
         o = do
           processes: {}
@@ -42,24 +46,25 @@ describe 'HyperScript File', ->
       .. 'name and description are required.', (done) ->
         s = test-data name:'', desc:''
         ok s
-
+        
         s = test-data name:''
-        nok s, [{field:'data.properties','message':'referenced schema does not match'}]
+        nok s, err
 
         s = test-data desc:''
-        nok s, [{field:'data.properties','message':'referenced schema does not match'}]
+        nok s, err
         done!
       .. 'name and description are string type.', (done) ->
         s = test-data name:1, desc:1
-        nok s, [{field:'data.properties','message':'referenced schema does not match'}]
+        nok s, err
 
         s = test-data name:'', desc:1
-        nok s, [{field:'data.properties','message':'referenced schema does not match'}]
+        nok s, err
 
         s = test-data name:1, desc:''
-        nok s, [{field:'data.properties','message':'referenced schema does not match'}]        
+        nok s, err
         done!
     describe 'must has connections field that', -> ``it``
+      err = err-ref-nmatch 'data.connections'
       test-script = (conn) ->
         properties:
           name: ''
@@ -83,9 +88,9 @@ describe 'HyperScript File', ->
       .. 'connection field is required but the value can be a empty connection record list',  (done) ->
         ok test-script []
         s = test-script ['wrong-type']
-        nok s, [{field:'data.connections','message':'referenced schema does not match'}]
+        nok s, err
         done!
-      describe 'could have port to port connections', -> ``it``
+      describe 'could have port to port connections', -> ``it``      
         .. 'each connection includes a source port and destination port.', (done) ->        
           bad-port = test-port process:1, port:1
           src-port = test-port process:'processA', port:'out'
@@ -94,14 +99,14 @@ describe 'HyperScript File', ->
           ok s
 
           s = test-script test-conn null, null
-          nok s, [{field:'data.connections','message':'referenced schema does not match'}]
+          nok s, err
 
           s = test-script test-conn bad-port, dest-port
-          nok s, [{field:'data.connections','message':'referenced schema does not match'}]
+          nok s, err
 
           s = test-script test-conn src-port, bad-port
-          nok s, [{field:'data.connections','message':'referenced schema does not match'}]
+          nok s, err
 
           s = test-script test-conn bad-port, bad-port
-          nok s, [{field:'data.connections','message':'referenced schema does not match'}]        
+          nok s, err
           done!      
