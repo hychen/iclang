@@ -4,7 +4,7 @@ should = require 'chai' .should!
 
 ok = (s) ->
   validate s .should.be.ok
-  
+
 nok = (s, e) ->
   validate s .should.eq false, pprint validate.errors
   validate.errors.should.deep.eq e, pprint validate.errors
@@ -27,7 +27,7 @@ describe 'HyperScript File', ->
     done!
   describe 'is a JSON file which follows the HyperScript JSON schema and', ->
     describe 'must has properties field that', -> ``it``
-      err = err-ref-nmatch 'data.properties'    
+      err = err-ref-nmatch 'data.properties'
       test-data = ({name, desc, placeholder}={})->
         o = do
           processes: {}
@@ -38,15 +38,15 @@ describe 'HyperScript File', ->
           o.properties.name = name
         if desc?
           o.properties.description = desc
-        return o    
+        return o
       .. 'properties field is required.', (done) ->
         s = test-data!
         nok s, [{field:'data.properties','message':'is required'}]
-        done!          
+        done!
       .. 'name and description are required.', (done) ->
         s = test-data name:'', desc:''
         ok s
-        
+
         s = test-data name:''
         nok s, err
 
@@ -90,8 +90,8 @@ describe 'HyperScript File', ->
         s = test-script ['wrong-type']
         nok s, err
         done!
-      describe 'could have port to port connections', -> ``it``      
-        .. 'each connection includes a source port and destination port.', (done) ->        
+      describe 'could have port to port connections', -> ``it``
+        .. 'each connection includes a source port and destination port.', (done) ->
           bad-port = test-port process:1, port:1
           src-port = test-port process:'processA', port:'out'
           dest-port = test-port process: 'processB', port: 'in'
@@ -109,4 +109,4 @@ describe 'HyperScript File', ->
 
           s = test-script test-conn bad-port, bad-port
           nok s, err
-          done!      
+          done!
