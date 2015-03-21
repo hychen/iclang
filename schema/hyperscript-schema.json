@@ -44,7 +44,7 @@
                 "required": ["src", "dest"],
                 "properties":{
                     "src":{"$ref":"#/definitions/process_port"},
-                    "dest":{}
+                    "dest":{"$ref":"#/definitions/process_port"}
                 }
             }
         },

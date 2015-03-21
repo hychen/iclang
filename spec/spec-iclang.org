@@ -55,7 +55,7 @@ HyperScript File 是一個能被符合下列[[http://json-schema.org/][JSON Sche
                   "required": ["src", "dest"],
                   "properties":{
                       "src":{"$ref":"#/definitions/process_port"},
-                      "dest":{}
+                      "dest":{"$ref":"#/definitions/process_port"}
                   }
               }
           },

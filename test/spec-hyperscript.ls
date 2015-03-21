@@ -86,7 +86,7 @@ describe 'HyperScript File', ->
         nok s, [{field:'data.connections','message':'referenced schema does not match'}]
         done!
       describe 'could have port to port connections', -> ``it``
-        .. 'each connection includes a source port and destination port.', (done) ->
+        .. 'each connection includes a source port and destination port.', (done) ->        
           bad-port = test-port process:1, port:1
           src-port = test-port process:'processA', port:'out'
           dest-port = test-port process: 'processB', port: 'in'
@@ -95,4 +95,13 @@ describe 'HyperScript File', ->
 
           s = test-script test-conn null, null
           nok s, [{field:'data.connections','message':'referenced schema does not match'}]
+
+          s = test-script test-conn bad-port, dest-port
+          nok s, [{field:'data.connections','message':'referenced schema does not match'}]
+
+          s = test-script test-conn src-port, bad-port
+          nok s, [{field:'data.connections','message':'referenced schema does not match'}]
+
+          s = test-script test-conn bad-port, bad-port
+          nok s, [{field:'data.connections','message':'referenced schema does not match'}]        
           done!      
