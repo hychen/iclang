@@ -60,10 +60,39 @@ describe 'HyperScript File', ->
         nok s, [{field:'data.properties','message':'referenced schema does not match'}]        
         done!
     describe 'must has connections field that', -> ``it``
-      .. 'indicates each connection between a source port and a destination port.', (done) ->
-        base = do
-          properties: {name:'', description:''}
-          processes: {}
-        script_conn_record_wrong_type = connections: ["bad_connection_record"] <<< base
-        validate script_conn_record_wrong_type .should.be.not.ok
+      test-script = (conn) ->
+        properties:
+          name: ''
+          description: ''
+        processes:{}
+        connections: conn
+      test-conn = (src, dest) ->
+        o = {}
+        if src?
+          o.src = src
+        if dest?
+          o.dest = dest
+        return [o]
+      test-port = ({process,port}={}) ->
+        o = {}
+        if process?
+          o.process = process
+        if port?
+          o.port = port
+        return o
+      .. 'connection field is required but the value can be a empty connection record list',  (done) ->
+        ok test-script []
+        s = test-script ['wrong-type']
+        nok s, [{field:'data.connections','message':'referenced schema does not match'}]
         done!
+      describe 'could have port to port connections', -> ``it``
+        .. 'each connection includes a source port and destination port.', (done) ->
+          bad-port = test-port process:1, port:1
+          src-port = test-port process:'processA', port:'out'
+          dest-port = test-port process: 'processB', port: 'in'
+          s = test-script test-conn src-port, dest-port
+          ok s
+
+          s = test-script test-conn null, null
+          nok s, [{field:'data.connections','message':'referenced schema does not match'}]
+          done!      
