@@ -6,7 +6,7 @@
     "required":["properties", "processes", "connections"],
     "properties": {
         "comment": {"$ref":"#/difinitions/comment"},
-        "properties": {"$ref":"#/difinitions/propertiest"},
+        "properties": {"$ref":"#/difinitions/properties"},
         "processes": {"$ref":"#/difinitions/processes"},
         "connections": {"$ref":"#/difinitions/connections"},
         "inports": {"$ref":"#/difinitions/inports"},

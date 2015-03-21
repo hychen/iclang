@@ -28,7 +28,7 @@ describe 'HyperScript File', ->
         o = do
           processes: {}
           connections: []
-        if placeholder? or (name? or name?)
+        if placeholder? or (name? or desc?)
           o.properties = {}
         if name?
           o.properties.name = name
@@ -36,9 +36,6 @@ describe 'HyperScript File', ->
           o.properties.description = desc
         return o    
       .. 'properties field is required.', (done) ->
-        s = test-data placeholder:ok
-        ok s
-        
         s = test-data!
         nok s, [{field:'data.properties','message':'is required'}]
         done!          
@@ -47,10 +44,20 @@ describe 'HyperScript File', ->
         ok s
 
         s = test-data name:''
-        nok s, []
+        nok s, [{field:'data.properties','message':'referenced schema does not match'}]
 
         s = test-data desc:''
-        nok s, []       
+        nok s, [{field:'data.properties','message':'referenced schema does not match'}]
+        done!
+      .. 'name and description are string type.', (done) ->
+        s = test-data name:1, desc:1
+        nok s, [{field:'data.properties','message':'referenced schema does not match'}]
+
+        s = test-data name:'', desc:1
+        nok s, [{field:'data.properties','message':'referenced schema does not match'}]
+
+        s = test-data name:1, desc:''
+        nok s, [{field:'data.properties','message':'referenced schema does not match'}]        
         done!
     describe 'must has connections field that', -> ``it``
       .. 'indicates each connection between a source port and a destination port.', (done) ->
