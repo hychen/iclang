@@ -2,6 +2,19 @@ require! 'fs'
 validator = require 'is-my-json-valid'
 should = require 'chai' .should!
 
+ok = (s) ->
+  validate s .should.be.ok
+  
+nok = (s, e) ->
+  validate s .should.eq false, pprint validate.errors
+  validate.errors.should.deep.eq e, pprint validate.errors
+
+pprint = ->
+  if it
+    ["#{e.field}:#{e.message}" for e in it]
+  else
+    "expected some erros but none."
+
 var schema, validate
 describe 'HyperScript File', ->
   before (done) ->
@@ -11,23 +24,33 @@ describe 'HyperScript File', ->
     done!
   describe 'is a JSON file which follows the HyperScript JSON schema and', ->
     describe 'must has properties field that', -> ``it``
-      .. 'indicates name and description of the hyperscript.', (done) ->
-        valid_script = do
-          properties: do
-            name: "script-name"
-            description: "script-desc"
+      test-data = ({name, desc, placeholder}={})->
+        o = do
           processes: {}
           connections: []
-          inports: []
-          exports: []
-        validate valid_script .should.be.ok
+        if placeholder? or (name? or name?)
+          o.properties = {}
+        if name?
+          o.properties.name = name
+        if desc?
+          o.properties.description = desc
+        return o    
+      .. 'properties field is required.', (done) ->
+        s = test-data placeholder:ok
+        ok s
+        
+        s = test-data!
+        nok s, [{field:'data.properties','message':'is required'}]
+        done!          
+      .. 'name and description are required.', (done) ->
+        s = test-data name:'', desc:''
+        ok s
 
-        script_missing_properties = do
-          processes: {}
-          connections: []
-          inports: []
-          exports: []
-        validate script_missing_properties .should.not.be.ok        
+        s = test-data name:''
+        nok s, []
+
+        s = test-data desc:''
+        nok s, []       
         done!
     describe 'must has connections field that', -> ``it``
       .. 'indicates each connection between a source port and a destination port.', (done) ->
