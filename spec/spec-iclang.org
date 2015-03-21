@@ -16,14 +16,14 @@ HyperScript File 是一個能被符合下列[[http://json-schema.org/][JSON Sche
       "type": "object",
       "required":["properties", "processes", "connections"],
       "properties": {
-          "comment": {"$ref":"#/difinitions/comment"},
-          "properties": {"$ref":"#/difinitions/properties"},
-          "processes": {"$ref":"#/difinitions/processes"},
-          "connections": {"$ref":"#/difinitions/connections"},
-          "inports": {"$ref":"#/difinitions/inports"},
-          "exports": {"$ref":"#/difinitions/exports"}
+          "comment": {"$ref":"#/definitions/comment"},
+          "properties": {"$ref":"#/definitions/properties"},
+          "processes": {"$ref":"#/definitions/processes"},
+          "connections": {"$ref":"#/definitions/connections"},
+          "inports": {"$ref":"#/definitions/inports"},
+          "exports": {"$ref":"#/definitions/exports"}
       },
-      "difinitions":{        
+      "definitions":{        
           "properties":{
               "type":"object",
               "properties":{
@@ -42,6 +42,7 @@ HyperScript File 是一個能被符合下列[[http://json-schema.org/][JSON Sche
           },
           "process_port":{
               "type":"object",
+              "required":["process", "port"],
               "properties":{
                   "process":{"type":"string"},
                   "port":{"type":"string"}
