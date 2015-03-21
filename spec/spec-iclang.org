@@ -40,13 +40,20 @@ HyperScript File 是一個能被符合下列[[http://json-schema.org/][JSON Sche
           "processes":{
               "type":"object"
           },
+          "process_port":{
+              "type":"object",
+              "properties":{
+                  "process":{"type":"string"},
+                  "port":{"type":"string"}
+              }
+          },
           "connections":{
               "type":"array",
               "items":{
                   "type":"object",
                   "required": ["src", "dest"],
                   "properties":{
-                      "src":{},
+                      "src":{"$ref":"#/definitions/process_port"},
                       "dest":{}
                   }
               }
