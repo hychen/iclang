@@ -18,7 +18,7 @@ pprint = ->
 err-ref-nmatch = ->
   [{field: it,'message':'referenced schema does not match'}]
 
-test-script = (conn) ->
+test-script-from-conn = (conn) ->
   properties:
     name: ''
     description: ''
@@ -90,8 +90,8 @@ describe 'HyperScript File', ->
     describe 'must has connections field that', -> ``it``
       err = err-ref-nmatch 'data.connections'
       .. 'connection field is required but the value can be a empty connection record list',  (done) ->
-        ok test-script []
-        s = test-script ['wrong-type']
+        ok test-script-from-conn []
+        s = test-script-from-conn ['wrong-type']
         nok s, err
         done!
       describe 'could have port to port connections', -> ``it``
@@ -99,18 +99,19 @@ describe 'HyperScript File', ->
           bad-port = test-port process:1, port:1
           src-port = test-port process:'processA', port:'out'
           dest-port = test-port process: 'processB', port: 'in'
-          s = test-script test-conn src-port, dest-port
+          
+          s = test-script-from-conn test-conn src-port, dest-port
           ok s
 
-          s = test-script test-conn null, null
+          s = test-script-from-conn test-conn null, null
           nok s, err
 
-          s = test-script test-conn bad-port, dest-port
+          s = test-script-from-conn test-conn bad-port, dest-port
           nok s, err
 
-          s = test-script test-conn src-port, bad-port
+          s = test-script-from-conn test-conn src-port, bad-port
           nok s, err
 
-          s = test-script test-conn bad-port, bad-port
+          s = test-script-from-conn test-conn bad-port, bad-port
           nok s, err
           done!
