@@ -18,6 +18,41 @@ pprint = ->
 err-ref-nmatch = ->
   [{field: it,'message':'referenced schema does not match'}]
 
+test-script = (conn) ->
+  properties:
+    name: ''
+    description: ''
+  processes:{}
+  connections: conn
+
+test-data = ({name, desc, placeholder}={})->
+  o = do
+    processes: {}
+    connections: []
+  if placeholder? or (name? or desc?)
+    o.properties = {}
+  if name?
+    o.properties.name = name
+  if desc?
+    o.properties.description = desc
+  return o
+
+test-conn = (src, dest) ->
+  o = {}
+  if src?
+    o.src = src
+  if dest?
+    o.dest = dest
+  return [o]
+
+test-port = ({process,port}={}) ->
+  o = {}
+  if process?
+    o.process = process
+  if port?
+    o.port = port
+  return o
+
 var schema, validate
 describe 'HyperScript File', ->
   before (done) ->
@@ -28,17 +63,6 @@ describe 'HyperScript File', ->
   describe 'is a JSON file which follows the HyperScript JSON schema and', ->
     describe 'must has properties field that', -> ``it``
       err = err-ref-nmatch 'data.properties'
-      test-data = ({name, desc, placeholder}={})->
-        o = do
-          processes: {}
-          connections: []
-        if placeholder? or (name? or desc?)
-          o.properties = {}
-        if name?
-          o.properties.name = name
-        if desc?
-          o.properties.description = desc
-        return o
       .. 'properties field is required.', (done) ->
         s = test-data!
         nok s, [{field:'data.properties','message':'is required'}]
@@ -65,26 +89,6 @@ describe 'HyperScript File', ->
         done!
     describe 'must has connections field that', -> ``it``
       err = err-ref-nmatch 'data.connections'
-      test-script = (conn) ->
-        properties:
-          name: ''
-          description: ''
-        processes:{}
-        connections: conn
-      test-conn = (src, dest) ->
-        o = {}
-        if src?
-          o.src = src
-        if dest?
-          o.dest = dest
-        return [o]
-      test-port = ({process,port}={}) ->
-        o = {}
-        if process?
-          o.process = process
-        if port?
-          o.port = port
-        return o
       .. 'connection field is required but the value can be a empty connection record list',  (done) ->
         ok test-script []
         s = test-script ['wrong-type']
