@@ -37,6 +37,14 @@ test-script-from-properties = ({name, desc}={})->
     o.properties.description = desc
   return o
 
+test-script-from-inexports = ({inports,exports} = {}) ->
+  o = test-script-from-conn []
+  if inports?
+    o.inports = inports
+  if exports?
+    o.exports = exports
+  return o
+
 test-conn = (src, dest) ->
   o = {}
   if src?
@@ -52,6 +60,12 @@ test-port = ({process,port}={}) ->
   if port?
     o.port = port
   return o
+
+test-inports = (n, p) ->
+    [name:n, dest:p]
+
+test-exports = (n, p) ->
+    [name:n, src:p]
 
 var schema, validate
 describe 'HyperScript File', ->
@@ -115,3 +129,36 @@ describe 'HyperScript File', ->
           s = test-script-from-conn test-conn bad-port, bad-port
           nok s, err
           done!
+    describe 'could have inports or exports field', -> ``it``
+      err-in = err-ref-nmatch 'data.inports'
+      err-exp = err-ref-nmatch 'data.exports'
+      bad-process-port = test-port process:1, port:2
+      process-port = test-port process:'processA', port:'out'        
+      .. 'each inport has a name and destination process port.', (done) ->
+        s = test-script-from-inexports inports: test-inports 'inport', process-port
+        ok s
+
+        s = test-script-from-inexports inports: test-inports 1, process-port
+        nok s, err-in
+        
+        s = test-script-from-inexports inports: test-inports 'inport', bad-process-port
+        nok s, err-in
+
+        s = test-script-from-inexports inports: {}
+        nok s, err-in
+                
+        done!
+      .. 'each exports has a name and source process port.', (done) ->
+        s = test-script-from-inexports exports: test-exports 'export', process-port
+        ok s
+
+        s = test-script-from-inexports exports: test-exports 1, process-port
+        nok s, err-exp
+
+        s = test-script-from-inexports exports: test-exports 'export', bad-process-port
+        nok s, err-exp
+
+        s = test-script-from-inexports exports: {}
+        nok s, err-exp
+        
+        done!

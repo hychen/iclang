@@ -49,10 +49,26 @@
             }
         },
         "inports":{
-            "type":"array"
+            "type":"array",
+            "items":{
+                "type":"object",
+                "required":["name","dest"],
+                "properties":{
+                    "name":{"type":"string"},
+                    "dest":{"$ref":"#/definitions/process_port"}
+                }
+            }
         },
         "exports":{
-            "type":"array"
+            "type":"array",
+            "items":{
+                "required":["name", "src"],
+                "type":"object",
+                "properties":{
+                    "name":{"type":"string"},
+                    "src":{"$ref":"#/definitions/process_port"}
+                }
+            }
         },
         "comment":{
             "type":"string"
