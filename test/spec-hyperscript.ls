@@ -25,7 +25,7 @@ test-script = (conn) ->
   processes:{}
   connections: conn
 
-test-data = ({name, desc, placeholder}={})->
+test-script-from-properties = ({name, desc}={})->
   o = do
     processes: {}
     connections: []
@@ -64,27 +64,27 @@ describe 'HyperScript File', ->
     describe 'must has properties field that', -> ``it``
       err = err-ref-nmatch 'data.properties'
       .. 'properties field is required.', (done) ->
-        s = test-data!
+        s = test-script-from-properties!
         nok s, [{field:'data.properties','message':'is required'}]
         done!
       .. 'name and description are required.', (done) ->
-        s = test-data name:'', desc:''
+        s = test-script-from-properties name:'', desc:''
         ok s
 
-        s = test-data name:''
+        s = test-script-from-properties name:''
         nok s, err
 
-        s = test-data desc:''
+        s = test-script-from-properties desc:''
         nok s, err
         done!
       .. 'name and description are string type.', (done) ->
-        s = test-data name:1, desc:1
+        s = test-script-from-properties name:1, desc:1
         nok s, err
 
-        s = test-data name:'', desc:1
+        s = test-script-from-properties name:'', desc:1
         nok s, err
 
-        s = test-data name:1, desc:''
+        s = test-script-from-properties  name:1, desc:''
         nok s, err
         done!
     describe 'must has connections field that', -> ``it``
