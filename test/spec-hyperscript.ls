@@ -18,6 +18,16 @@ pprint = ->
 err-ref-nmatch = ->
   [{field: it,'message':'referenced schema does not match'}]
 
+test-script-from-proc = (n, proc) ->
+  o = do
+    properties:
+      name: ''
+      description: ''
+    processes: {}
+    connections: []
+  o.processes[n] = proc
+  return o
+
 test-script-from-conn = (conn) ->
   properties:
     name: ''
@@ -43,6 +53,14 @@ test-script-from-inexports = ({inports,exports} = {}) ->
     o.inports = inports
   if exports?
     o.exports = exports
+  return o
+
+test-proc = (c, opt) ->
+  o = {}
+  if c
+    o.component = c
+  if opt
+    o.option = opt
   return o
 
 test-conn = (src, dest) ->
@@ -100,6 +118,26 @@ describe 'HyperScript File', ->
 
         s = test-script-from-properties  name:1, desc:''
         nok s, err
+        done!
+    describe 'must have processes field', -> ``it``
+      err = err-ref-nmatch 'data.processes'
+      .. 'each process record indicats each process belongs to which component.', (done) ->
+        s = test-script-from-proc 'Process', test-proc 'repo/proj', {}
+        ok s
+
+        #@FIXME: the hyperscript validation does not handle this case.
+        #s = test-script-from-proc {}, test-proc 'repo/proj', {}
+        #nok s, err
+
+        s = test-script-from-proc 'Process', test-proc 'repo/proj', {x:1,y:2}
+        ok s
+
+        s = test-script-from-proc 'Process', test-proc 'repo/proj', 1
+        nok s, err
+
+        s = test-script-from-proc 'Process', test-proc 1, {x:1, 2}
+        nok s, err
+                                                                        
         done!
     describe 'must has connections field that', -> ``it``
       err = err-ref-nmatch 'data.connections'

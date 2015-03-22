@@ -38,7 +38,18 @@ HyperScript File 是一個能被符合下列[[http://json-schema.org/][JSON Sche
               }
           },
           "processes":{
-              "type":"object"
+              "type":"object",
+              "addtionalProperties":false,
+              "patternProperties":{
+                  "^[a-zA-Z]([a-zA-Z0-9]*?)":{
+                      "type":"object",
+                      "required":["component", "option"],
+                      "properties":{
+                          "component":{"type":"string"},
+                          "option":{"type":"object"}
+                      }
+                  }
+              }
           },
           "process_port":{
               "type":"object",
