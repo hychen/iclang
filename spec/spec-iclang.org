@@ -87,9 +87,10 @@ HyperScript File 是一個能被符合下列[[http://json-schema.org/][JSON Sche
       }
   }
 #+END_SRC
-*** 特性
-1. 所有的 HyperScript File 都包含 properties 欄位, procesess 欄位, connections 欄位。
-2. inports, exports, comment 欄位為 optional。
+**** Properties 欄位
+**** Processes 欄位
+**** Connections 欄位
+**** Inports, Exports 欄位
 *** 範例
 
 假設現在我們有一個 HyperScript，它的功能是讀取一個字串然後顯示在終端機，有一個輸入端口`str`,
@@ -160,10 +161,6 @@ str|[]--->[]in Read out[]---->[]in Print out[]--->[]status
   }
 #+END_SRC
 
-*** Properties 欄位
-*** Processes 欄位
-*** Connections 欄位
-*** Inports, Exports 欄位
 * 概念
 ** Static Time
 TBD
