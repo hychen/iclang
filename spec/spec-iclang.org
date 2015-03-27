@@ -234,11 +234,14 @@ Port 在 dynamic time 時的 instance。方向為 In 的稱為 In Socket, 方向
 4. 所有的 Socket 如果沒有被連接，則回傳的值是其Port的預設值。
 ** Process
 *** 定義
-Component 在 dynamic time 時的 instance。
+Process 是 Component 在 dyanmic time 的 instance.
+
+一個 Process 包含一個 Component 以及多個方向為 in 或 out 的 Sockets, 且 Component 內的 Ports 與 Sockets 一一對應, 換言之，有多少組Port就有多少組Socket。
 *** 特性
 1. 所有的 Process 都有一個型別為字串的名稱。
 2. 所有的 Process 都有執行狀態，處於 init, ready, running, terminating, terminated 這五種狀態中。
 3. 所有的 Process 都有零到無限多個的In Socket或是 Out Socket。
+4. 所有的 Process 在方向為 In 的 Sockets 蒐集到 Component 的 Function 所需要的輸入參數後，會執行該 Function，並將執行結果轉送的 Out Socekts。
 ** Connection
 *** 定義
 兩個 Socket 連在一起稱為 Connection。
