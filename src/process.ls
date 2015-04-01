@@ -94,9 +94,15 @@ export class Process extends events.EventEmitter
     if @_component.fn? and typeof @_component.fn is 'function'
       results = @_component.fn!
 
+    #@TODO: should we need to check each values of results 
+    # returned from component function does not be tagged?
+    # it would be useful for debugging if we throw a error 
+    # or warring here.
+
     # send the results to outports if possible.
-    if @ports.out?
-      @ports.out.send results
+    for port-name, value of results
+      if @ports[port-name]?
+        @ports[port-name].send value
 
   has-component: ->
     @_component?

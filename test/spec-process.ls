@@ -64,13 +64,13 @@ describe 'Process Firing', ->
         p1 = new Process do
           inports: []
           fn: ->
-            'hello'
+            {out:'hello'}
           outports: [{name:'out'}]
         p2 = new Process do          
           inports: [{name: 'in'}]
           outports: []
         <- p1.start          
         <- p2.start
-        p2.ports.in.on 'message', -> console.log it
+        p2.ports.in.on 'message', -> it.should.be.eq 'hello'
         p2.ports.in.connect p1.ports.out.addr
         done!
