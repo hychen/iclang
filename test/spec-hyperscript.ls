@@ -139,7 +139,7 @@ describe 'HyperScript File', ->
         nok s, err
                                                                         
         done!
-    describe 'must has connections field that', -> ``it``
+    describe 'must have connections field that', -> ``it``
       err = err-ref-nmatch 'data.connections'
       .. 'connection field is required but the value can be a empty connection record list',  (done) ->
         ok test-script-from-conn []

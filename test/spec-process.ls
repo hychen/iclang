@@ -21,7 +21,7 @@ describe 'Process', ->
       p = new Process 
       p.is-ready!.should.not.ok
       done!
-  describe 'is ready iff required environment is prepared.', -> ``it``
+  describe 'should be ready iff required environment is prepared.', -> ``it``
     .. 'should have a given component and runtime directory.', (done) ->
       p = new Process fake-comp
       p.is-ready!.should.be.not.ok
