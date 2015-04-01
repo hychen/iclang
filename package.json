@@ -14,7 +14,7 @@
     "url": "git://github.com/hychen/iclang"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "npm run prepublish && mocha",
     "prepublish": "lsc -cj package.ls &&\nlsc -bc -o lib src",
     "postinstall": "if [ ! -e ./lib ]; then npm i LiveScript@1.2.x; lsc -bc -o lib src; fi"
   },

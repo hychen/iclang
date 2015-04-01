@@ -11,7 +11,7 @@ repository:
   url: 'git://github.com/hychen/iclang'
 scripts:
   test: """
-    mocha
+    npm run prepublish && mocha
   """
   prepublish: """
     lsc -cj package.ls &&
