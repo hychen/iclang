@@ -1,9 +1,16 @@
 should = require 'chai' .should!
 expect = require 'chai' .expect
 
+require! mkdirp
+require! rimraf
+
 Socket = require '../lib/socket' .Socket
 
 describe 'Socket', ->
+  before ->
+    <- mkdirp '/tmp/iclang'
+  after ->
+    <- rimraf '/tmp/iclang'
   describe 'is directional.', -> ``it``
     .. 'should be `in` or `out` direction.', (done) ->
       new Socket 'in', {name: 'in'}
