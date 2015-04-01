@@ -21,15 +21,20 @@ export class Process extends events.EventEmitter
 
   ->
     @_status = null
+    @_component = null
     @id = uuid.v4!
     @set-status 'init'
 
-    # check required environement is ready.
-    if is-runtime-env-ready!
-      @set-status 'ready'
-    # otherwise the process status is stopped.
-    else
-      @set-status 'stopped'
+    # registed event handler which checks the process
+    # is in properly status or not.
+    @on 'check-status', ->
+      # check required environement is ready.
+      if @has-component! and is-runtime-env-ready!
+        @set-status 'ready'
+      # otherwise the process status is stopped.
+      else
+        @set-status 'stopped'
+    @emit 'check-status'
 
   is-ready: ->
     @_status is 'ready'
@@ -42,3 +47,17 @@ export class Process extends events.EventEmitter
 
   status: ->
     @_status
+
+  has-component: ->
+    @_component?
+
+  set-component: (component) ->
+    if @is-ready!
+      throw 'try to set a component on a process which is ready.'
+    else
+      @_component = component
+      @emit 'set-component', component
+      @emit 'check-status'
+
+  component: ->
+    @_component
