@@ -73,4 +73,6 @@ describe 'Process Firing', ->
         <- p2.start
         p2.ports.in.on 'message', -> it.should.be.eq 'hello'
         p2.ports.in.connect p1.ports.out.addr
+        <- p1.stop!
+        <- p2.stop!
         done!
