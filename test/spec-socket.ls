@@ -35,12 +35,15 @@ class Socket
 
   send: (data) ->
     if @direction is 'out'
-      @sock.send data
+      @sock.send JSON.stringify data
     else 
       throw new Error 'try to send data on in socket.'
 
   on: (event-name, handler) ->
-    @sock.on event-name, handler
+    @sock.on event-name, (msg) -> 
+      data = JSON.parse msg
+      throw new Error 
+      handler 1
 
 describe 'Socket', ->
   describe 'is directional.', -> ``it``
@@ -55,8 +58,18 @@ describe 'Socket', ->
       s2 = new Socket 'out', {name: 'out'}
       s1.id.should.not.eq s2.id 
       done!
-  describe 'is communicated iff it is connected with another soskcet', ->
+  describe 'is communicatable iff it is connected with another soskcet', ->
     describe 'a in socket can recive a message sent from a out socket.', -> ``it``
+      .. 'should be able send/recive JSON.', (done) ->
+        insock = new Socket 'in', {name: 'in'}
+        outsock = new Socket 'out', {name: 'out'}
+        insock.connect outsock.addr
+        #@FIXME: false asserstion does not work
+        #@FIXME: on message callback cant throw error.
+        insock.on 'message', -> it.should.be.not.deep.eq {obj:1}
+        outsock.send {obj:1}
+        false.should.be.ok
+        done!
       .. 'should not be able send on in socket.', (done) ->
         insock = new Socket 'in', {name: 'in'}
         outsock = new Socket 'out', {name: 'out'}
