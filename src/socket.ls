@@ -1,6 +1,10 @@
 require! zmq
 require! uuid
 
+{conf} = require '../lib/config'
+
+RUNTIME_SOCKETS_DIR = conf.get 'RUNTIME_SOCKETS_DIR'
+
 export class Socket 
 
   (direction, port) ->
@@ -16,7 +20,7 @@ export class Socket
         @sock = zmq.socket 'pull'
       | 'out' => 
         @sock = zmq.socket 'push'
-        @addr = "ipc:///tmp/iclang/#{@id}"
+        @addr = "ipc://#{RUNTIME_SOCKETS_DIR}/#{@id}"
         @sock.bindSync @addr
       | _ => throw new Error 'invalid direction'
 

@@ -1,16 +1,24 @@
 should = require 'chai' .should!
 expect = require 'chai' .expect
 
+# Change RUNTIME_SOCKETS_DIR before loading Socket class 
+# for testing, so that spec-process test cases won't get wired 
+# runtime environment.
+TESTRUNTIME_SOCKETS_DIR = '/tmp/iclang'
+
+conf = require '../lib/config' .conf
+conf.overrides do
+  RUNTIME_SOCKETS_DIR: TESTRUNTIME_SOCKETS_DIR
+
 require! mkdirp
 require! rimraf
-
 Socket = require '../lib/socket' .Socket
 
 describe 'Socket', ->
   before ->
-    <- mkdirp '/tmp/iclang'
+    <- mkdirp TESTRUNTIME_SOCKETS_DIR
   after ->
-    <- rimraf '/tmp/iclang'
+    <- rimraf TESTRUNTIME_SOCKETS_DIR
   describe 'is directional.', -> ``it``
     .. 'should be `in` or `out` direction.', (done) ->
       new Socket 'in', {name: 'in'}
