@@ -19,7 +19,7 @@ export function is-runtime-env-ready()
 
 export class Process extends events.EventEmitter
 
-  ->
+  (component) ->
     @_status = null
     @_component = null
     @id = uuid.v4!
@@ -34,7 +34,8 @@ export class Process extends events.EventEmitter
       # otherwise the process status is stopped.
       else
         @set-status 'stopped'
-    @emit 'check-status'
+
+    @set-component component
 
   is-ready: ->
     @_status is 'ready'

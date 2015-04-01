@@ -23,16 +23,14 @@ describe 'Process', ->
       done!
   describe 'is ready iff required environment is prepared.', -> ``it``
     .. 'should have a given component and runtime directory.', (done) ->
-      p = new Process
+      p = new Process fake-comp
       p.is-ready!.should.be.not.ok
       <- init-runtime-env
-      p = new Process
-      p.set-component fake-comp
+      p = new Process fake-comp
       p.is-ready!.should.be.ok
       done!
     .. 'should throw error if trying set a component on a process which is ready.', (done) ->
-      p = new Process
       <- init-runtime-env
-      p.set-component fake-comp
+      p = new Process fake-comp
       (-> p.set-component fake-comp).should.throw /try to set a component on a process which is ready./
       done!
