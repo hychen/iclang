@@ -7,10 +7,10 @@ describe 'Process', ->
     err <- clean-runtime-env
   describe 'has a unique identifier.', -> ``it``
     .. 'should be UUID.', (done) ->
-     p1 = new Process 
-     p2 = new Process
-     p1.id.should.not.eq p2.id
-     done!
+      p1 = new Process 
+      p2 = new Process
+      p1.id.should.not.eq p2.id
+      done!
   describe 'is ready iff required environment is prepared.', -> ``it``
     .. 'should have a runtime directory.', (done) ->
       p = new Process
