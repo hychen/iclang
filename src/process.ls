@@ -67,9 +67,6 @@ export class Process extends events.EventEmitter
       @_init-sockets!
       @set-status 'running'
       done @id
-      while @is-running!
-        # polling codes here.
-        console.log 'running'
     else
       throw new Error "process is not ready yet."
 
@@ -84,9 +81,22 @@ export class Process extends events.EventEmitter
     for port in @_component.outports
       @ports[port.name] = new Socket 'out', {name:port.name}
 
+    # just fire if the component does not have any inports,
+    # but its function may have output.    
+    if @_component.inports.length == 0  
+      @fire!
+
   _deinit-sockets: ->
     for _, port of @ports
       port.sock.close!
+
+  fire: -> 
+    if @_component.fn? and typeof @_component.fn is 'function'
+      results = @_component.fn!
+
+    # send the results to outports if possible.
+    if @ports.out?
+      @ports.out.send results
 
   has-component: ->
     @_component?

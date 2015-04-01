@@ -55,3 +55,22 @@ describe 'Process', ->
       p.ports.out.should.be.ok
       <- p.stop
       done!
+
+describe 'Process Firing', ->
+  describe 'is executing the function of the component with recievied arguments on in sockets.', -> ``it``
+    describe 'the component function without arguments.', ->
+      .. 'should send the returned values of the function to outports.', (done) ->
+        <- init-runtime-env 
+        p1 = new Process do
+          inports: []
+          fn: ->
+            'hello'
+          outports: [{name:'out'}]
+        p2 = new Process do          
+          inports: [{name: 'in'}]
+          outports: []
+        <- p1.start          
+        <- p2.start
+        p2.ports.in.on 'message', -> console.log it
+        p2.ports.in.connect p1.ports.out.addr
+        done!
