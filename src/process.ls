@@ -30,9 +30,15 @@ export class Process extends events.EventEmitter
     @id = uuid.v4!
     @set-status 'init'
     @set-component component
-    
+
   is-ready: ->
     @_status is 'ready'
+
+  is-running: ->  
+    @_status is 'running'
+
+  is-stopped: ->
+    @_status is 'stopped'
 
   check-status: ->
     # ready iff required runtime environement is prepared
@@ -61,14 +67,26 @@ export class Process extends events.EventEmitter
       @_init-sockets!
       @set-status 'running'
       done @id
+      while @is-running!
+        # polling codes here.
+        console.log 'running'
     else
       throw new Error "process is not ready yet."
+
+  stop: (done) ->
+    @_deinit-sockets!
+    @set-status 'stopped'
+    done!
 
   _init-sockets: ->
     for port in @_component.inports
       @ports[port.name] = new Socket 'in', {name:port.name}
     for port in @_component.outports
       @ports[port.name] = new Socket 'out', {name:port.name}
+
+  _deinit-sockets: ->
+    for _, port of @ports
+      port.sock.close!
 
   has-component: ->
     @_component?

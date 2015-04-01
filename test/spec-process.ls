@@ -41,6 +41,7 @@ describe 'Process', ->
       pid <- p.start
       pid.should.be.ok
       p.status!.should.eq 'running'
+      <- p.stop
       done!
     .. 'may be running with sockets.', (done) ->
       <- init-runtime-env
@@ -52,4 +53,5 @@ describe 'Process', ->
       pid.should.be.ok
       p.ports.in.should.be.ok
       p.ports.out.should.be.ok
+      <- p.stop
       done!
