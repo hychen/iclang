@@ -42,8 +42,7 @@ class Socket
   on: (event-name, handler) ->
     @sock.on event-name, (msg) -> 
       data = JSON.parse msg
-      throw new Error 
-      handler 1
+      handler data
 
 describe 'Socket', ->
   describe 'is directional.', -> ``it``
@@ -64,11 +63,14 @@ describe 'Socket', ->
         insock = new Socket 'in', {name: 'in'}
         outsock = new Socket 'out', {name: 'out'}
         insock.connect outsock.addr
+        insock.on 'message', -> 
+          it.should.be.deep.eq {obj:1}
+        outsock.send {obj:1}
         #@FIXME: false asserstion does not work
         #@FIXME: on message callback cant throw error.
-        insock.on 'message', -> it.should.be.not.deep.eq {obj:1}
+        insock.on 'message', -> 
+          it.should.be.eq 1
         outsock.send {obj:1}
-        false.should.be.ok
         done!
       .. 'should not be able send on in socket.', (done) ->
         insock = new Socket 'in', {name: 'in'}
