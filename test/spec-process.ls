@@ -34,3 +34,22 @@ describe 'Process', ->
       p = new Process fake-comp
       (-> p.set-component fake-comp).should.throw /try to set a component on a process which is ready./
       done!
+  describe 'should be running iff sockets is initializd.', -> ``it``
+    .. 'may be running with 0 sockets.', (done) ->
+      <- init-runtime-env
+      p = new Process fake-comp
+      pid <- p.start
+      pid.should.be.ok
+      p.status!.should.eq 'running'
+      done!
+    .. 'may be running with sockets.', (done) ->
+      <- init-runtime-env
+      comp = do
+        inports: [{name:'in'}]
+        outports: [{name:'out'}]
+      p = new Process comp
+      pid <- p.start
+      pid.should.be.ok
+      p.ports.in.should.be.ok
+      p.ports.out.should.be.ok
+      done!
