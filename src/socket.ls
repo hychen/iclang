@@ -34,6 +34,9 @@ export class Socket
   disconnect: ->
     @connected = false
 
+  close: ->
+    @sock.close!
+
   send: (data) ->
     if @direction is 'out'
       @sock.send JSON.stringify data
