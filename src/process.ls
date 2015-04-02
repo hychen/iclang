@@ -35,6 +35,7 @@ export class Process extends events.EventEmitter
   (component) ->
     @_status = null
     @_component = null
+    @_incoming = {}
     @ports = {}
     @id = uuid.v4!
     @set-status 'init'
@@ -85,14 +86,23 @@ export class Process extends events.EventEmitter
     done!
 
   _init-sockets: ->
-    for port in @_component.inports
+    for let port in @_component.inports
       @ports[port.name] = new Socket 'in', {name:port.name}
-    for port in @_component.outports
+      @ports[port.name].on 'message', (data) ~>
+        # collecting data.
+        @_incoming[port.name] = data
+        # fire iff all excpted data arrivied on sockets.
+        # and flush the incoming queue.
+        if Object.keys(@_incoming).length === @_component.inports.length
+          @fire!
+        else
+          throw new Error 'edge case: length of incomfing data is smaller or larger than the length inports.' 
+    for let port in @_component.outports
       @ports[port.name] = new Socket 'out', {name:port.name}
 
     # just fire if the component does not have any inports,
     # but its function may have output.    
-    if @_component.inports.length == 0  
+    if @_component.inports.length == 0  and @_component.outports.length != 0
       @fire!
 
   _deinit-sockets: ->
@@ -100,8 +110,12 @@ export class Process extends events.EventEmitter
       port.sock.close!
 
   fire: -> 
+    # flush incoming queue.
+    fnargv = @_incoming
+    @_incoming = {}
+
     if @_component.fn? and typeof @_component.fn is 'function'
-      results = @_component.fn!
+      results = @_component.fn fnargv
 
     #@TODO: should we need to check each values of results 
     # returned from component function does not be tagged?
