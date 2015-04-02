@@ -1,6 +1,6 @@
 should = require 'chai' .should!
 
-{Process, init-runtime-env, clean-runtime-env} = require '../lib/process'
+{Process, init-runtime-env, clean-runtime-env, connect-port} = require '../lib/process'
 
 describe 'Process Firing', ->
   describe 'is executing the function of the component with recievied arguments on in sockets.', -> ``it``
@@ -18,7 +18,7 @@ describe 'Process Firing', ->
         <- p1.start          
         <- p2.start
         p2.ports.in.on 'message', -> it.should.be.eq 'hello'
-        p2.ports.in.connect p1.ports.out.addr
+        connect-port p1, 'out', p2, 'in'
         <- p1.stop!
         <- p2.stop!
         done!
@@ -36,7 +36,7 @@ describe 'Process Firing', ->
           outports: []
         <- p1.start          
         <- p2.start
-        p2.ports.in.connect p1.ports.out.addr
+        connect-port p1, 'out', p2, 'a1'
         <- p1.stop!
         <- p2.stop!
         done!        

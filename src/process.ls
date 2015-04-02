@@ -18,6 +18,15 @@ export function clean-runtime-env(done)
 export function is-runtime-env-ready()
   fs.existsSync RUNTIME_SOCKETS_DIR
 
+export function connect-port(src-process, src-port-name, dest-process, dest-port-name)
+  throw 'source process is not valid.' unless src-process
+  throw 'destination process is not valid.' unless dest-process
+  src-port = src-process.ports[src-port-name]
+  dest-port = dest-process.ports[dest-port-name]
+  throw 'source port is not existed.' unless src-port
+  throw 'destination port is not existed.' unless dest-port
+  dest-port.connect src-port.addr 
+
 length-ports = (ports) ->  
   Object.keys ports .length
 
