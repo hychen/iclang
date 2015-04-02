@@ -63,7 +63,7 @@ export class Process extends events.EventEmitter
       @set-status 'stopped'
 
   set-status: (new-status) -> 
-    old-status = @status
+    old-status = @_status
     @_status = new-status
     @emit 'status-changed', old-status, new-status
     @emit "status:#{new-status}"
