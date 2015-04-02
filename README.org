@@ -9,7 +9,7 @@ WARNING: This is work in progress. The APIs will remain in flux until 1.0.0. Sug
 Internet Combinator Language, iclang in short, is a cordination language 
 which has configurable modularity for compositing things of internet.
 
-for more details, please check the [[file:spec/spec-iclang.org][specification] (in Chinese) in *spec* directory.
+for more details, please check the [[file:spec/spec-iclang.org][specification]] (in Chinese) in *spec* directory.
 
 ** Install
 The Node.JS implementation of IClang requires [[https://github.com/imatix/zguide][ØMQ]] for send/receive data between components.
