@@ -4,5 +4,7 @@
 #+OPTIONS: ^:nil
 #+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
 
+WARNING: This is work in progress. The APIs will remain in flux until 1.0.0. Suggestions welcome!
+
 Internet Combinator Language, iclang in short, is a cordination language 
 which has configurable modularity for compositing things of internet.
