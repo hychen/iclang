@@ -27,6 +27,9 @@ devDependencies:
   chai: '1.10.x'
   'is-my-json-valid':'2.10.x'
   LiveScript: '1.3.x'
+  nconf: '^0.7.1',
   uuid: '2.0.x'
-  zmq: '2.10.x'
   mkdirp: '0.5.x'
+dependencies:
+  rimraf: '^2.3.2'
+  zmq: '2.10.x'
