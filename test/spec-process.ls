@@ -8,6 +8,8 @@ fake-comp = do
 
 describe 'Process', ->
   beforeEach ->
+    err <- init-runtime-env
+  afterEach ->
     err <- clean-runtime-env
   describe 'has a unique identifier.', -> ``it``
     .. 'should be UUID.', (done) ->
@@ -17,26 +19,15 @@ describe 'Process', ->
       done!    
   describe 'is a instance of a component in the runtime.', -> ``it``
     .. 'should not be ready if the component isnt given.', (done) ->
-      <- init-runtime-env
       p = new Process 
       p.is-ready!.should.not.ok
       done!
-  describe 'should be ready iff required environment is prepared.', -> ``it``
-    .. 'should have a given component and runtime directory.', (done) ->
-      p = new Process fake-comp
-      p.is-ready!.should.be.not.ok
-      <- init-runtime-env
-      p = new Process fake-comp
-      p.is-ready!.should.be.ok
-      done!
     .. 'should throw error if trying set a component on a process which is ready.', (done) ->
-      <- init-runtime-env
       p = new Process fake-comp
       (-> p.set-component fake-comp).should.throw /try to set a component on a process which is ready./
       done!
   describe 'should be running iff sockets is initializd.', -> ``it``
     .. 'may be running with 0 sockets.', (done) ->
-      <- init-runtime-env
       p = new Process fake-comp
       pid <- p.start
       pid.should.be.ok
@@ -44,7 +35,6 @@ describe 'Process', ->
       <- p.stop
       done!
     .. 'may be running with sockets.', (done) ->
-      <- init-runtime-env
       comp = do
         inports: [{name:'in'}]
         outports: [{name:'out'}]
@@ -55,4 +45,3 @@ describe 'Process', ->
       p.ports.out.should.be.ok
       <- p.stop
       done!
-
