@@ -4,7 +4,7 @@ expect = require 'chai' .expect
 # Change RUNTIME_SOCKETS_DIR before loading Socket class 
 # for testing, so that spec-process test cases won't get wired 
 # runtime environment.
-TESTRUNTIME_SOCKETS_DIR = '/tmp/iclang'
+TESTRUNTIME_SOCKETS_DIR = '/tmp/testiclang-sockets'
 
 conf = require '../lib/config' .conf
 conf.overrides do
