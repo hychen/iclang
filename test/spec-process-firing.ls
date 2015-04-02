@@ -20,10 +20,11 @@ describe 'Process Firing', ->
           outports: []
         <- p1.start          
         <- p2.start
-        p2.ports.in.on 'message', -> it.should.be.eq 'hello'
+        p2.ports.in.on 'message', -> 
+          it.should.be.eq 'hello'
+          <- p1.stop
+          <- p2.stop
         connect-port p1, 'out', p2, 'in'
-        <- p1.stop!
-        <- p2.stop!
         done!
       .. 'should fire iff all data arrives in sockets.', (done) ->
         p1 = new Process do
