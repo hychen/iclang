@@ -8,3 +8,30 @@ WARNING: This is work in progress. The APIs will remain in flux until 1.0.0. Sug
 
 Internet Combinator Language, iclang in short, is a cordination language 
 which has configurable modularity for compositing things of internet.
+
+for more details, please check the [[specification][file:spec/spec-iclang.org]] (in Chinese) in *spec* directory.
+
+** Install
+The Node.JS implementation of IClang requires [[https://github.com/imatix/zguide][ØMQ]] for send/receive data between components.
+
+#+BEGIN_SRC shell
+$ brew install zmq
+#+END_SRC
+
+and then get recent version of Node.js and the IClang source code via Github.
+
+#+BEGIN_SRC shell
+$ git clone https://github.com/hychen/iclang.git
+#+END_SRC 
+
+then simply type
+
+#+BEGIN_SRC shell
+$ npm i 
+#+END_SRC
+
+now, you can run test.
+
+#+BEGIN_SRC shell
+$ npm run test
+#+END_SRC
