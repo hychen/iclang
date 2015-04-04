@@ -68,6 +68,8 @@ export definition = do
 # # connect out port of mysum process to in port of print2console 
 # # process.
 # connect mysum, 'out', print2console, 'in'
+# send list to mysum and print the result to console.
+# mysum.ports.list.send [1,2,3,4]
 # ```
 export function provide-component(options)
   return definition
