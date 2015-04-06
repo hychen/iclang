@@ -1,6 +1,7 @@
 require! 'fs'
-validator = require 'is-my-json-valid'
 should = require 'chai' .should!
+
+{syntax-validator} = require '../lib/syntax'
 
 ok = (s) ->
   validate s .should.be.ok
@@ -85,12 +86,10 @@ test-inports = (n, p) ->
 test-exports = (n, p) ->
     [name:n, src:p]
 
-var schema, validate
+var validate
 describe 'HyperScript File', ->
   before (done) ->
-    err, content <- fs.readFile 'schema/hyperscript-schema.json'
-    schema := JSON.parse content
-    validate := validator schema
+    validate := syntax-validator 'HyperScript'
     done!
   describe 'is a JSON file which follows the HyperScript JSON schema and', ->
     describe 'must has properties field that', -> ``it``
