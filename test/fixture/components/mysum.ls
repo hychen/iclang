@@ -13,7 +13,7 @@
 #    }
 #  }
 # ```
-export function my-sum(inputs, exists)
+export function mysum(inputs, exists)
   result = 0
   if not inputs.list.length == 0
     exists.emptyList!
@@ -42,7 +42,7 @@ export definition = do
   inputs: do
     list:
       description: 'list'
-      example: '[1,2,3,4]'
+      example: [1,2,3,4]
   outputs: do
     out:
       description: 'returned tagged values'
@@ -51,11 +51,11 @@ export definition = do
     emptyList:
       description: 'empty list.'
     success:
-      example: '{out:10}'
+      example: {out:10}
       description: 'Returns the sum nummber'
     error:
       description: 'Unexpected error occurred.'
-  fn: my-sum
+  fn: mysum
 
 # Component Provider
 #

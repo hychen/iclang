@@ -31,5 +31,6 @@ devDependencies:
   uuid: '2.0.x'
   mkdirp: '0.5.x'
 dependencies:
+  machine: '4.0.x'
   rimraf: '^2.3.2'
   zmq: '2.10.x'
