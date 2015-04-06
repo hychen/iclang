@@ -128,6 +128,9 @@ export class Process extends events.EventEmitter
     if @_component.fn? and typeof @_component.fn is 'function'
       results = @_component.fn fnargv, do
         success: dispath-result
+        #@TODO: add multiple exists handler here    
+        # how much handlers the process a user can register depends on
+        # component exits difinition. 
         error: console.error
 
   has-component: ->
