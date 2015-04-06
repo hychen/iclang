@@ -21,8 +21,8 @@ str|[]--->[]in Read out[]---->[]in Print out[]--->[]status
 
 *  Design Principle
 
-Writing a application in IClang is simple like building a  in electronic circuit by 
-wiring pins of a IC (integrated circuit chips).
+Writing a application in IClang is simple like building a electronic circuit by 
+wiring pins of integrated circuits.
 
 - All components in IClang should be independent and stateless.
 - All connections between component ports should be parallelism.
