@@ -12,8 +12,8 @@ describe 'Process Firing', ->
       .. 'should send the returned values of the function to outports.', (done) ->
         p1 = new Process do
           inports: []
-          fn: ->
-            {out:'hello'}
+          fn: (_, exists) ->
+            exists.success {out:'hello'}
           outports: [{name:'out'}]
         p2 = new Process do          
           inports: [{name: 'in'}]
@@ -30,18 +30,18 @@ describe 'Process Firing', ->
     .. 'should only be executed iff all wanted data arrived on in sockets.', (done) ->
         p1 = new Process do
           inports: []
-          fn: ->
-            {out: 'from-p1'}
+          fn: (_, exists) ->
+            exists.success {out: 'from-p1'}
           outports: [{name: 'out'}]
         p2 = new Process do
           inports: []
-          fn: ->
-            {out: 'from-p2'}
+          fn: (_, exists) ->
+            exists.success {out: 'from-p2'}
           outports: [{name: 'out'}]
         p3 = new Process do
           inports: [{name:'in1'}, {name:'in2'}]
-          fn: (inports) ->
-            inports.should.be.deep.eq {in:'from-p1', out:'from-p2'}
+          fn: (inputs) ->
+            inputs.should.be.deep.eq {in:'from-p1', out:'from-p2'}
             <- p1.stop
             <- p2.stop
             <- p3.stop
