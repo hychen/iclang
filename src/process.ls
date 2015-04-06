@@ -110,7 +110,7 @@ export class Process extends events.EventEmitter
       port.sock.close!
 
   fire: -> 
-    dispath-result = (results) ~>
+    dispath-results = (results) ~>
       #@TODO: should we need to check each values of results 
       # returned from component function does not be tagged?
       # it would be useful for debugging if we throw a error 
@@ -127,7 +127,7 @@ export class Process extends events.EventEmitter
 
     if @_component.fn? and typeof @_component.fn is 'function'
       results = @_component.fn fnargv, do
-        success: dispath-result
+        success: dispath-results
         #@TODO: add multiple exists handler here    
         # how much handlers the process a user can register depends on
         # component exits difinition. 
