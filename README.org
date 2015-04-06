@@ -9,7 +9,29 @@
 Internet Combinator Language, iclang in short, is a cordination language 
 which has configurable modularity for compositing things of internet.
 
+#+BEGIN_SRC ditaa
+   +-----------------------------------------------+
+   |      +-------------+     +--------------+     |
+   |      |             |     |              |     |
+str|[]--->[]in Read out[]---->[]in Print out[]--->[]status
+   |      |             |     |              |     |
+   |      +-------------+     +--------------+     |
+   +-----------------------------------------------+      
+#+END_SRC
+
+*  Design Principle
+
+Writing a application in IClang is simple like building a  in electronic circuit by 
+wiring pins of a IC (integrated circuit chips).
+
+- All components in IClang should be independent and stateless.
+- All connections between component ports should be parallelism.
+- All components are language-free and developers can write in their favor conventional 
+  programming language, such as JavaScript, Python, etc.
+
 for more details, please check the [[file:spec/spec-iclang.org][specification]] (in Chinese) in *spec* directory.
+
+* Get started
 
 ** Install
 The Node.JS implementation of IClang requires [[https://github.com/imatix/zguide][ØMQ]] for send/receive data between components.
