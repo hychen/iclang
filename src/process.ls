@@ -2,6 +2,7 @@ require! events
 require! uuid
 
 {Socket} = require '../lib/socket'
+{ensured-component} = require '../lib/component'
 {init-runtime-env, clean-runtime-env, is-runtime-env-ready} = require '../lib/runtime'
 
 export function connect-port(src-process, src-port-name, dest-process, dest-port-name)
@@ -129,7 +130,7 @@ export class Process extends events.EventEmitter
     if @is-ready!
       throw 'try to set a component on a process which is ready.'
     else
-      @_component = component
+      @_component = ensured-component component
       @check-status!
 
   component: ->
