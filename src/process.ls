@@ -73,7 +73,7 @@ export class Process extends events.EventEmitter
 
   _init-sockets: ->
     for let port in @_component.inports
-      @ports[port.name] = new Socket 'in', {name:port.name}
+      @ports[port.name] = new Socket 'in', port.name
       @ports[port.name].on 'message', (data) ~>
         # collecting data.
         @_incoming[port.name] = data
@@ -84,7 +84,7 @@ export class Process extends events.EventEmitter
         else
           throw new Error 'edge case: length of incomfing data is smaller or larger than the length inports.' 
     for let port in @_component.outports
-      @ports[port.name] = new Socket 'out', {name:port.name}
+      @ports[port.name] = new Socket 'out', port.name
 
     # just fire if the component does not have any inports,
     # but its function may have output.    

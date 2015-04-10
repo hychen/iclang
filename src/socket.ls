@@ -7,9 +7,9 @@ RUNTIME_SOCKETS_DIR = conf.get 'RUNTIME_SOCKETS_DIR'
 
 export class Socket 
 
-  (direction, port) ->
+  (direction, name) ->
     @id = uuid.v4!
-    @name = port.name
+    @name = name
     @direction = direction
     @addr = null
     @sock = null
@@ -17,9 +17,9 @@ export class Socket
 
     switch direction
       | 'in' => 
-        @sock = zmq.socket 'pull'
+        @sock = zmq.socket 'sub'
       | 'out' => 
-        @sock = zmq.socket 'push'
+        @sock = zmq.socket 'pub'
         @addr = "ipc://#{RUNTIME_SOCKETS_DIR}/#{@id}"
         @sock.bindSync @addr
       | _ => throw new Error 'invalid direction'
