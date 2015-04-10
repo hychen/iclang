@@ -14,9 +14,9 @@ describe 'Process Firing', ->
           inports: []
           fn: (_, exists) ->
             exists.success {out:'hello'}
-          outports: [{name:'out'}]
+          outports: {out:{}}
         p2 = new Process do          
-          inports: [{name: 'in'}]
+          inports: {in:{}}
           outports: []
         <- p1.start          
         <- p2.start
@@ -32,14 +32,14 @@ describe 'Process Firing', ->
           inports: []
           fn: (_, exists) ->
             exists.success {out: 'from-p1'}
-          outports: [{name: 'out'}]
+          outports: {out:{}}
         p2 = new Process do
           inports: []
           fn: (_, exists) ->
             exists.success {out: 'from-p2'}
-          outports: [{name: 'out'}]
+          outports: {out:{}}
         p3 = new Process do
-          inports: [{name:'in1'}, {name:'in2'}]
+          inports: {in1:{}, in2:{}}
           fn: (inputs) ->
             inputs.should.be.deep.eq {in:'from-p1', out:'from-p2'}
             <- p1.stop

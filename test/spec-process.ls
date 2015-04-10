@@ -4,8 +4,8 @@ should = require 'chai' .should!
 {init-runtime-env, clean-runtime-env} = require '../lib/runtime'
 
 fake-comp = do
-  inports: []
-  outports: []
+  inports: {}
+  outports: {}
 
 describe 'Process', ->
   beforeEach (done) ->
@@ -36,8 +36,8 @@ describe 'Process', ->
       done!
     .. 'may be running with sockets.', (done) ->
       comp = do
-        inports: [{name:'in'}]
-        outports: [{name:'out'}]
+        inports: {in:{}}
+        outports: {out:{}}
       p = new Process comp
       pid <- p.start
       pid.should.be.ok

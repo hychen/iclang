@@ -13,8 +13,11 @@ export function connect-port(src-process, src-port-name, dest-process, dest-port
   throw 'destination port is not existed.' unless dest-port
   dest-port.connect src-port.addr 
 
-length-ports = (ports) ->  
+ports-count = (ports) ->  
   Object.keys ports .length
+
+ports-names = (ports) ->
+  Object.keys ports
 
 export class Process extends events.EventEmitter
 
@@ -43,7 +46,7 @@ export class Process extends events.EventEmitter
       @set-status 'ready'
     # running if the sockets count is equal the count of components ports.
     # 0 sockets is valid case here.
-    else if @is-ready! and length-ports @ports == @_component.inports.length + @_component.outportst.length
+    else if @is-ready! and ports-count @ports == ports-count @_component.inports + ports-count @_component.outportst
       @set-status 'running'
     # otherwise the process status is stopped.
     else
@@ -72,23 +75,23 @@ export class Process extends events.EventEmitter
     done!
 
   _init-sockets: ->
-    for let port in @_component.inports
-      @ports[port.name] = new Socket 'in', port.name
-      @ports[port.name].on 'message', (data) ~>
+    for let port-name in ports-names @_component.inports
+      @ports[port-name] = new Socket 'in', port-name
+      @ports[port-name].on 'message', (data) ~>
         # collecting data.
-        @_incoming[port.name] = data
+        @_incoming[port-name] = data
         # fire iff all excpted data arrivied on sockets.
         # and flush the incoming queue.
-        if Object.keys(@_incoming).length === @_component.inports.length
+        if Object.keys(@_incoming).length === ports-count @_component.inports
           @fire!
         else
           throw new Error 'edge case: length of incomfing data is smaller or larger than the length inports.' 
-    for let port in @_component.outports
-      @ports[port.name] = new Socket 'out', port.name
+    for let port-name in ports-names @_component.outports
+      @ports[port-name] = new Socket 'out', port-name
 
     # just fire if the component does not have any inports,
     # but its function may have output.    
-    if @_component.inports.length == 0  and @_component.outports.length != 0
+    if (ports-count @_component.inports) == 0  and (ports-count @_component.outports) != 0
       @fire!
 
   _deinit-sockets: ->
