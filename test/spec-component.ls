@@ -1,7 +1,7 @@
 should = require 'chai' .should!
 expect = require 'chai' .expect
 
-{load-component, ensured-component-definition} = require '../lib/component'
+{load-component, ensured-component} = require '../lib/component'
 
 describe 'Component', ->
   describe 'is Node Machine compatable.', -> ``it``
@@ -16,17 +16,17 @@ describe 'Component', ->
           result.should.deep.eq {out:10}
           done!
   describe.skip 'ensured-component-options()', ->
-  describe 'ensured-component-definition()', -> ``it``
+  describe 'ensured-component()', -> ``it``
     .. 'should check the accepted object is valid with component deifition JSON Schema.', (done) ->
-      r = ensured-component-definition do
+      r = ensured-component do
         friendlyName: 'sum'
         description: 'sumup'
         fn: ->
       r.should.be.ok
-      expect (-> ensured-component-definition do
+      expect (-> ensured-component do
         friendlyName: 'sum'
         description: 'sumup'
-        fn: 1) .to.throw /definition.fn is not a function./
+        fn: 1) .to.throw /component.fn is not a function./
 
       expected = [
         {
@@ -38,5 +38,5 @@ describe 'Component', ->
           "message": "is required"
         }
       ]      
-      expect (-> ensured-component-definition {}) .to.throw expected
+      expect (-> ensured-component {}) .to.throw expected
       done!

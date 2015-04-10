@@ -7,16 +7,16 @@ export function ensured-component-options(options)
   #@TODO: check component options.
   return options
 
-export function ensured-component-definition(definition)
-  validate = syntax-validator 'ComponentDefinition'
-  if validate definition
+export function ensured-component(component)
+  validate = syntax-validator 'Component'
+  if validate component
     # JSON Schema does not support function type, we need 
     # check it by ourself.
-    if typeof definition.fn is 'function'
+    if typeof component.fn is 'function'
       #@TODO: check component function signature.
-      return definition
+      return component
     else
-      throw new Error "definition.fn is not a function."
+      throw new Error "component.fn is not a function."
   else
     throw validate.errors
 
@@ -25,7 +25,8 @@ export function load-component(fpath, options)
   unless mod.provide-component?
     throw "module loaded from #{path} does not have provideComponent function."
   options = ensured-component-options options 
-  defs = ensured-component-definition mod.provide-component options
+  defs = mod.provide-component options
+  # @TODO: check definition
   return defs <<< do
     inports: defs.inputs
     outports: defs.outputs
