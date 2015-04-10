@@ -23,7 +23,7 @@ export function ensured-component(component)
 export function load-component(fpath, options)
   mod = require path.resolve fpath  
   unless mod.provide-component?
-    throw "module loaded from #{path} does not have provideComponent function."
+    throw "module loaded from #{fpath} does not have provideComponent function."
   options = ensured-component-options options 
   defs = mod.provide-component options
   # @TODO: check definition
