@@ -1,16 +1,14 @@
 should = require 'chai' .should!
 expect = require 'chai' .expect
-require! mkdirp
-require! rimraf
 
 conf = require '../lib/config' .conf
 Socket = require '../lib/socket' .Socket
+{init-runtime-env, clean-runtime-env} = require '../lib/runtime'
 
 describe 'Socket', ->
-  before ->
-    <- mkdirp conf.get 'RUNTIME_SOCKETS_DIR'
-  after ->
-    <- rimraf conf.get 'RUNTIME_SOCKETS_DIR'
+  beforeEach (done) ->
+    err <- clean-runtime-env
+    init-runtime-env done
   describe 'is directional.', -> ``it``
     .. 'should be `in` or `out` direction.', (done) ->
       s = new Socket 'in', {name: 'in'}

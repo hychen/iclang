@@ -1,22 +1,8 @@
 require! events
-require! fs
 require! uuid
-require! mkdirp
-require! rimraf
 
-{conf} = require '../lib/config'
 {Socket} = require '../lib/socket'
-
-RUNTIME_SOCKETS_DIR = conf.get 'RUNTIME_SOCKETS_DIR'
-
-export function init-runtime-env(done)
-  mkdirp RUNTIME_SOCKETS_DIR, done
-
-export function clean-runtime-env(done)
-  rimraf RUNTIME_SOCKETS_DIR, done
-
-export function is-runtime-env-ready()
-  fs.existsSync RUNTIME_SOCKETS_DIR
+{init-runtime-env, clean-runtime-env, is-runtime-env-ready} = require '../lib/runtime'
 
 export function connect-port(src-process, src-port-name, dest-process, dest-port-name)
   throw 'source process is not valid.' unless src-process

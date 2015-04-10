@@ -1,12 +1,12 @@
 should = require 'chai' .should!
 
-{Process, init-runtime-env, clean-runtime-env, connect-port} = require '../lib/process'
+{Process, connect-port} = require '../lib/process'
+{init-runtime-env, clean-runtime-env} = require '../lib/runtime'
 
 describe 'Process Firing', ->
-  beforeEach ->
-    <- init-runtime-env 
-  afterEach ->
-    <- clean-runtime-env
+  beforeEach (done) ->
+    <- clean-runtime-env    
+    init-runtime-env done
   describe 'is executing the function of the component with recievied arguments on in sockets.', -> ``it``
     describe 'the component function without arguments.', ->
       .. 'should send the returned values of the function to outports.', (done) ->

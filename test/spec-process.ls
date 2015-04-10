@@ -1,16 +1,16 @@
 should = require 'chai' .should!
 
-{Process, init-runtime-env, clean-runtime-env, connect-port} = require '../lib/process'
+{Process, connect-port} = require '../lib/process'
+{init-runtime-env, clean-runtime-env} = require '../lib/runtime'
 
 fake-comp = do
   inports: []
   outports: []
 
 describe 'Process', ->
-  beforeEach ->
-    err <- init-runtime-env
-  afterEach ->
+  beforeEach (done) ->
     err <- clean-runtime-env
+    init-runtime-env done
   describe 'has a unique identifier.', -> ``it``
     .. 'should be UUID.', (done) ->
       p1 = new Process 
