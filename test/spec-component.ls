@@ -14,3 +14,4 @@ describe 'Component', ->
         .exec (err, result ) ->
           result.should.deep.eq {out:10}
           done!
+  describe.skip 'ensured-component-options()', ->
