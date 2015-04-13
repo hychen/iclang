@@ -33,7 +33,7 @@ for more details, please check the [[file:spec/spec-iclang.org][specification]] 
 
 * Get started
 
-** Install
+** Install [[https://travis-ci.org/hychen/iclang.svg?branch=master]]
 The Node.JS implementation of IClang requires [[https://github.com/imatix/zguide][ØMQ]] for send/receive data between components.
 
 #+BEGIN_SRC shell
