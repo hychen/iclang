@@ -42,8 +42,7 @@ export class Process extends events.EventEmitter
 
   check-status: ->
     # ready iff required runtime environement is prepared
-    # and a component is given.
-    if @has-component! and is-runtime-env-ready!
+    if is-runtime-env-ready!
       @set-status 'ready'
     # running if the sockets count is equal the count of components ports.
     # 0 sockets is valid case here.

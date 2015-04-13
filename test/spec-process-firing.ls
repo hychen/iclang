@@ -11,13 +11,16 @@ describe 'Process Firing', ->
     describe 'the component function without arguments.', ->
       .. 'should send the returned values of the function to outports.', (done) ->
         p1 = new Process do
+          friendlyName: '' 
           inports: []
           fn: (_, exists) ->
             exists.success {out:'hello'}
           outports: {out:{}}
         p2 = new Process do          
+          friendlyName: '' 
           inports: {in:{}}
           outports: []
+          fn: ->
         <- p1.start          
         <- p2.start
         p2.ports.in.on 'message', -> 
@@ -29,16 +32,19 @@ describe 'Process Firing', ->
   describe 'the component function with arguments', -> ``it``
     .. 'should only be executed iff all wanted data arrived on in sockets.', (done) ->
         p1 = new Process do
+          friendlyName: '' 
           inports: []
           fn: (_, exists) ->
             exists.success {out: 'from-p1'}
           outports: {out:{}}
         p2 = new Process do
+          friendlyName: '' 
           inports: []
           fn: (_, exists) ->
             exists.success {out: 'from-p2'}
           outports: {out:{}}
         p3 = new Process do
+          friendlyName: '' 
           inports: {in1:{}, in2:{}}
           fn: (inputs) ->
             inputs.should.be.deep.eq {in:'from-p1', out:'from-p2'}

@@ -4,8 +4,10 @@ should = require 'chai' .should!
 {init-runtime-env, clean-runtime-env} = require '../lib/runtime'
 
 fake-comp = do
+  friendlyName: ''
   inports: {}
   outports: {}
+  fn: ->
 
 describe 'Process', ->
   beforeEach (done) ->
@@ -13,15 +15,11 @@ describe 'Process', ->
     init-runtime-env done
   describe 'has a unique identifier.', -> ``it``
     .. 'should be UUID.', (done) ->
-      p1 = new Process 
-      p2 = new Process
+      p1 = new Process fake-comp
+      p2 = new Process fake-comp
       p1.id.should.not.eq p2.id
       done!    
   describe 'is a instance of a component in the runtime.', -> ``it``
-    .. 'should not be ready if the component isnt given.', (done) ->
-      p = new Process 
-      p.is-ready!.should.not.ok
-      done!
     .. 'should throw error if trying set a component on a process which is ready.', (done) ->
       p = new Process fake-comp
       (-> p.set-component fake-comp).should.throw /try to set a component on a process which is ready./
@@ -36,8 +34,10 @@ describe 'Process', ->
       done!
     .. 'may be running with sockets.', (done) ->
       comp = do
+        friendlyName: ''
         inports: {in:{}}
         outports: {out:{}}
+        fn: ->
       p = new Process comp
       pid <- p.start
       pid.should.be.ok
