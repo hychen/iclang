@@ -9,8 +9,8 @@
 Internet Combinator Language, ICLang in short, is a cordination language for compositing things of internet.
 and designed in dataflow mindset with [[en.wikipedia.org/wiki/Configurable_modularity][configurable modularity]].
 
-Not like How we does when we building a application in conventional programming language, building a pplication
-in ICLang is totally different, and almost like like building a electronic circuit by wiring pins of integrated
+Not like how we do when we building a application in conventional programming language, building a pplication
+in ICLang is totally different, and almost like building a electronic circuit by wiring pins of integrated
 circuits.
 
 Which means a developer defines applications as networks of "black box" processes, which exchange data across
