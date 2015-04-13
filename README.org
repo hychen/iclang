@@ -6,8 +6,18 @@
 
 /WARNING: This is work in progress. The APIs will remain in flux until 1.0.0. Suggestions welcome!/
 
-Internet Combinator Language, iclang in short, is a cordination language 
-which has configurable modularity for compositing things of internet.
+Internet Combinator Language, ICLang in short, is a cordination language for compositing things of internet.
+and designed in dataflow mindset with [[en.wikipedia.org/wiki/Configurable_modularity][configurable modularity]].
+
+Not like How we does when we building a application in conventional programming language, building a pplication
+in ICLang is totally different, and almost like like building a electronic circuit by wiring pins of integrated
+circuits.
+
+Which means a developer defines applications as networks of "black box" processes, which exchange data across
+predefined connections by message passing, where the connections are specified externally to the processes.
+
+These black box processes can be reconnected endlessly to form different applications without having to be changed
+internally. So, when a developer programs, he is doing visual thinking in his mind.
 
 #+BEGIN_SRC ditaa
    +-----------------------------------------------+
@@ -16,20 +26,10 @@ which has configurable modularity for compositing things of internet.
 str|[]--->[]in Read out[]---->[]in Print out[]--->[]status
    |      |             |     |              |     |
    |      +-------------+     +--------------+     |
-   +-----------------------------------------------+      
+   +-----------------------------------------------+
 #+END_SRC
 
-*  Design Principle
-
-Writing a application in IClang is simple like building a electronic circuit by 
-wiring pins of integrated circuits.
-
-- All components in IClang should be independent and stateless.
-- All connections between component ports should be parallelism.
-- All components are language-free and developers can write in their favor conventional 
-  programming language, such as JavaScript, Python, etc.
-
-for more details, please check the [[file:spec/spec-iclang.org][specification]] (in Chinese) in *spec* directory.
+for more details, please check the [[file:spec/spec-iclang.org][specification]] in *spec* directory.
 
 * Get started
 

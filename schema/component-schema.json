@@ -1,37 +1,38 @@
+
 {
     "$schema": "http://json-schema.org/schema#",
     "title": "ICLang Component Definition JSON Schema",
     "type": "object",
     "required": ["friendlyName", "fn"],
     "properties": {
-		"friendlyName":{
-			"type": "string"
-		},
-		"description":{
-			"type": "string"
-		},
-		"inputs": {
-			"type": "object"
-		},
-		"outputs":{
-			"type": "object"
-		},
-		"defaultExists": {
-			"type": "string"
-		},
-		"exists": {
-			"type": "object",
-            "addtionalProperties":false,
-            "patternProperties":{
-                "^[a-zA-Z]([a-zA-Z0-9]*?)":{
+        "friendlyName":{
+            "type": "string"
+        },
+        "description":{
+            "type": "string"
+        },
+        "inputs": {
+            "type": "object"
+        },
+        "outputs":{
+            "type": "object"
+        },
+        "defaultExists": {
+            "type": "string"
+        },
+        "extis": {
+            "type": "object"
+        },
+        "addtionalProperties":false,
+        "patternProperties":{
+            "^[a-zA-Z]([a-zA-Z0-9]*?)":{
                     "type":"object",
                     "required":["description"],
                     "properties":{
                         "description":{"type":"string"}
                     }
                 }
-            }			
-		},
-		"fn": {}
-	}
+        },
+        "fn": {}
+    }
 }

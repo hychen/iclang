@@ -1,13 +1,60 @@
-#+TITLE: IClang Specification
+#+TITLE: Internet Combinator Language Specification
 #+AUTHOR: Hsin-Yi Chen (hychen)
-#+OPTIONS: H:2 num:t toc:nil
+#+OPTIONS: H:2 num:t toc:2
 #+OPTIONS: ^:nil
 #+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
 
-* 介紹
-** HyperScript File
-*** 定義
-HyperScript File 是一個能被符合下列[[http://json-schema.org/][JSON Schema]]的[[http://json.org/][JSON]]檔。
+* Introduction
+
+Internet Combinator Language, ICLang in short, is a cordination language for compositing things of internet.
+and designed in dataflow mindset with [[en.wikipedia.org/wiki/Configurable_modularity][configurable modularity]].
+
+Not like How we does when we building a application in conventional programming language, building a pplication 
+in ICLang is totally different, and almost like like building a electronic circuit by wiring pins of integrated 
+circuits.
+
+Which means a developer defines applications as networks of "black box" processes, which exchange data across 
+predefined connections by message passing, where the connections are specified externally to the processes. 
+
+These black box processes can be reconnected endlessly to form different applications without having to be changed
+internally. So, when a developer programs, he is doing visual thinking in his mind.
+
+#+BEGIN_SRC ditaa
+   +-----------------------------------------------+
+   |      +-------------+     +--------------+     |
+   |      |             |     |              |     |
+str|[]--->[]in Read out[]---->[]in Print out[]--->[]status
+   |      |             |     |              |     |
+   |      +-------------+     +--------------+     |
+   +-----------------------------------------------+      
+#+END_SRC
+
+This programming paradigm that uses a "data factory" metaphor for designing and building applications 
+usually called [[https://en.wikipedia.org/wiki/Dataflow_programming][Data Flow Programming]], [[http://www.jpaulmorrison.com/fbp/][Flow-based Programming]].
+
+This document defines the syntax for IClang programs and an informal abstract semantics for the meaning of such 
+programs. We leave as implementation dependent the ways in which ICLang programs are to be manipulated, interpreted,
+etc. 
+
+The implementations should follow principle below:
+
+- All components should be independent and stateless.
+- All components should be able written in any conventional programming language.
+- All connections between component ports should be parallelism.
+
+** Program Structure
+
+In this section, we describe the abstract syntactic and semantic structure of ICLang.
+
+1. At the topmost level is IClang's lexcial structure. The lexical structure represents ICLang programs in 
+   JSON files.
+2. At the bottom level is a collection of components described in Chapter [[Components]].
+  
+* Lexical Structure
+
+In this chapter, we describe the low-level lexical structure of ICLang.
+
+** Lexical Program Structure
 
 #+BEGIN_SRC javascript :tangle ../schema/hyperscript-schema.json
   {
@@ -98,32 +145,8 @@ HyperScript File 是一個能被符合下列[[http://json-schema.org/][JSON Sche
       }
   }
 #+END_SRC
-**** Properties 欄位
-**** Processes 欄位
-**** Connections 欄位
-**** Inports, Exports 欄位
-*** 範例
 
-假設現在我們有一個 HyperScript，它的功能是讀取一個字串然後顯示在終端機，有一個輸入端口`str`,
-一個輸出端口`status`，由Read, Print兩個 Component 組成，Read Component 有一個輸入口`in`，
-用來輸入字串，一個輸出口`out`用來把獨進來的字串傳遞到另一個Component。 
-
-Print Component 有一個輸入口`in`, 用來從另一個Component接收一個字串，在終端機顯示該字串後，
-若成功`out`輸出端口為0, 失敗則為1。
-
-而這個 HyperScript `str`輸入端口所接受到的任何東西會傳到內部 Read 的輸入口`in`, Print的`out`的輸出會傳到`status`。
-
-#+BEGIN_SRC ditaa
-   +-----------------------------------------------+
-   |      +-------------+     +--------------+     |
-   |      |             |     |              |     |
-str|[]--->[]in Read out[]---->[]in Print out[]--->[]status
-   |      |             |     |              |     |
-   |      +-------------+     +--------------+     |
-   +-----------------------------------------------+      
-#+END_SRC
-
-其 HyperScript 的內容可以如此定義
+As an example below, shows a IClang program.
 
 #+BEGIN_SRC javascript :tangle ../example/simple-hyperscript.json
   {
@@ -172,89 +195,170 @@ str|[]--->[]in Read out[]---->[]in Print out[]--->[]status
   }
 #+END_SRC
 
-* 概念
-** Static Time
+*** Property: properties
 TBD
-** Dynamic Time
+*** Property: processes
 TBD
-* 型別
-** Value
+*** Property: connections
 TBD
-** Identifier
-*** 定義
-由字母，數字，底線組，反斜線合成的字串。
-*** 特性
-- 所有的 Identifier 裏的反斜線是用來標示命名空間。taiwan/taipei 表示 taipei 屬於 taiwan。
-- 所有的 Identifier 長度最少為3個字元，最多為255個字元。
-** Stream
+*** Property: inports
 TBD
-** Port
-*** 定義
-有方向的點，用來傳送接收*Stream*，方向為接收(In)的稱為*Inport*，方向為傳送(Out)的稱為*Outport*。
-*** 特性
-1. 所有的 Port 都有一個型別為*Identifier*的名稱。
-2. 所有的 Port 都有方向性，不是In, 就是 Out
-3. 所有的 Port 都可以被連接，其狀態不是 Connected 就是 Disconnected。
-4. 所以的 Port 都可以預先設定一個預設值，其型別為*Value*。
-** Component
-*** 定義
-實際進行資料運算，或流程控制的基本單元，其行為可以在Static Time時用Option改變。
-*** 特性
-1. 所有的 Component 都有一個型別為*Identifier*的名稱。
-2. 所有的 Component 都有一個 Option Port，用來接收 Option。Option Port是Inport。
-3. 所有的 Component 可以有最少一個，最多無限多個的Inport。
-4. 所有的 Component 可以有最少一個，最多無限多個的Outport。
-5. 所有的 Component 是/functional/，/無狀態的/。
-** Link
-*** 定義
-兩個 Port 連接在一起稱為 Link。
-*** 特性
-1. 只有不同 Component 或是 HyperScript 的 Port 可以互相連接。
-2. 所有的 Inport 只能跟 Outport 連接，反之亦然。
-** HyperScript 
-*** 定義
-以流程圖方式定義資料運算相依性的dataflow程式，由 Component，Link 構成，且能像 Component 一樣有Inport或Outport。
-HyperScript裏的Outport通常稱為Export。
-*** 特性
-1. 所有的 HyperScript 都有一個型別為Identifier的名稱。
-2. 所有的 HyperScript 都有最少一個，最多無限多個Component。
-3. 所有的 HyperScript 都有最少一個，最多無限多個Link。
-4. 所有的 HyperScript 都是 directed graph，且不能有loop。
-5. 所有的 HyperScript 可以有零到無限個Inport。
-6. 所有的 HyperScript 可以有零到無限個Export。
-7. 所有的 HyperScript 可以如同 Component 一樣，能與其他 Component 或是 HyperScript 組合。
-** Socket
-*** 定義
-Port 在 dynamic time 時的 instance。方向為 In 的稱為 In Socket, 方向為 Out 稱為Out Socket。
-*** 特性
-1. 所有的 Socket 都有一個型別為UUID的識別碼。
-2. 所有的 Socket 都有方向性，不是In就是Out。
-3. 所有的 Socket 都處於 connecting, connected, disconnecting, disconnected 這四種其中一種狀態。
-4. 所有的 Socket 連接後，除非 Process 進入 terminating 狀態，否則不能被 disconnect。
-4. 所有的 Socket 如果沒有被連接，則回傳的值是其Port的預設值。
-** Process
-*** 定義
-Process 是 Component 在 dyanmic time 的 instance.
+*** Property: exports
+TBD
+*** Property: comments
+    TBD
+* Components
 
-一個 Process 包含一個 Component 以及多個方向為 in 或 out 的 Sockets, 且 Component 內的 Ports 與 Sockets 一一對應, 換言之，有多少組Port就有多少組Socket。
-*** 特性
-1. 所有的 Process 都有一個型別為字串的名稱。
-2. 所有的 Process 都有執行狀態，處於 init, ready, running, terminating, terminated 這五種狀態中。
-3. 所有的 Process 都有零到無限多個的In Socket或是 Out Socket。
-4. 所有的 Process 在方向為 In 的 Sockets 蒐集到 Component 的 Function 所需要的輸入參數後，會執行該 Function，並將執行結果轉送的 Out Socekts。
-** Connection
-*** 定義
-兩個 Socket 連在一起稱為 Connection。
-*** 特性
-1. 只有不同 Process 或是 HyperProcess 的 Socket 可以互相連結。
-2. 所有的 In Socket 只能跟 Out Socket 連接，反之亦然。
-** HyperProcess
-*** 定義
-HyperScript 在 dynamic time 時的 instance。
-*** 特性
-1. 所有的 HyperProcess 都有一個UUID。 
-2. 所有的 HyperProcess, 只有在 terminated 狀態下，才能修改裡面的 connection。
-3. 所有的 HyperProcess, 只有在 terminated 狀態下，才能修改裡面的 process。
-4. 所有的 HyperProcess 都有執行狀態，處於 init, ready, running, terminating, terminated 這五種狀態中。
+A component is a module of a conventional programming language, exports [[Component%20Definition][Component Definition]], a value declares component
+metadata, such as name, description,etc. And [[Component%20Provider][Component Provider]] a function to provide the value. the name of the value 
+and function should be corresponding to ones used in the ICLang runtime implemented in same conventional programming 
+language.
 
+In this chapter, we are using Node.JS implmentation of a component to explain the syntax and abstract meaning.
 
+** Component Strucutre
+
+Hre is the structure for Node.JS and components implemented in other conventional programming language 
+should very simliary to this one.
+
+#+BEGIN_SRC javascript
+  module.exports.definition = {
+      friendlyName: 'Do something',
+      description: 'Do something with the provided inputs that results in one of the exit scenarios.',
+      inputs: {
+          apiKey: {
+              description: 'The api key to be used.',
+              example: 'foo',
+          }
+      },
+      outputs:{
+          out:{
+              description: ''
+              example: 'foo'
+          }  
+      },
+    defaultExit: 'success',
+      exits: {
+          success: {
+              example: 'myApiKey',
+              description: 'Returns the API key for your totally fake account'
+          },
+          error: {
+              description: 'Unexpected error occurred.'
+          }
+      },
+      fn: function(inputs, exits) {
+          // ...
+          // your code here
+      var result = 'foo';
+          // ...
+          // ...and when you're done:
+          return exits.success(result);
+      };
+  }
+
+  module.exports.provideComponent = function (options){
+      return definition;
+  }
+#+END_SRC
+
+As above shows, the Component Definition called *definition* and the Component Provider called *provideComponent*.
+
+** Component Definition
+
+Component Definition is a JSON that 
+
+- is [[http://node-machine.org/spec/machine][Node Machine Specification]] compatible.
+- can be verified by the following schema:
+
+#+BEGIN_SRC javascript :tangle ../schema/component-schema.json
+  {
+      "$schema": "http://json-schema.org/schema#",
+      "title": "ICLang Component Definition JSON Schema",
+      "type": "object",
+      "required": ["friendlyName", "fn"],
+      "properties": {
+          "friendlyName":{
+              "type": "string"
+          },
+          "description":{
+              "type": "string"
+          },
+          "inputs": {
+              "type": "object"
+          },
+          "outputs":{
+              "type": "object"
+          },
+          "defaultExists": {
+              "type": "string"
+          },
+          "extis": {
+              "type": "object"
+          },
+          "addtionalProperties":false,
+          "patternProperties":{
+              "^[a-zA-Z]([a-zA-Z0-9]*?)":{
+                      "type":"object",
+                      "required":["description"],
+                      "properties":{
+                          "description":{"type":"string"}
+                      }
+                  }
+          },
+          "fn": {}
+      }
+  }
+#+END_SRC
+
+*** Property: friendlyName
+TBD
+*** Property: description
+*** Property: inputs
+TBD
+*** Property: outputs
+TBD
+*** Property: defaultExits
+TBD
+*** Property: exits
+TBD
+*** Property: fn
+
+Component Function is a function recives two fixed arguments, inputs and exists
+
+- inputs :: data recived on the ports of the component it belongs to after firing.
+- exits :: callbacks.
+           
+** Component Provider
+
+Component Provider is a function receives an fixed argument that the type is a object and returns [[Component%20Definition][Component Definition]].
+
+* Evaluation
+
+A IClang program is evaluated by ICLang interpreter. It instances procesess, connects ports betwen processes in order 
+to indicate where data comes, how data be processed and where processed result goes.
+
+** Processes
+A process is an instance of a component.
+
+- All process should have a UUID identifier.
+- All process should be able to have zero to infinite InSocket or zero to infinite OutSocket.
+- All process should starts firing if and only if the Firing Rules is satisfied.
+  
+** Sockets
+A socket is an instance of a port which is place on a process to receiving or sending data.
+
+- All sockets should have a UUID identifier.
+- All socekts should be directional, the direction is either IN or Out, called InSocket or OutSocket.
+
+** Connections
+A logical link between a InPort and a OutPort  which allows one process is able to send data to another process.
+
+- Each socket should not be connect to another socket of a process it belongs to.
+- Sockets has same direction should be able to connect each other.
+
+** Firing 
+TBD
+
+** Firing Rules
+TBF
