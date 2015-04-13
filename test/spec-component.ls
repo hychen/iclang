@@ -1,7 +1,7 @@
 should = require 'chai' .should!
 expect = require 'chai' .expect
 
-{load-component, ensured-component} = require '../lib/component'
+{load-component, ensured-component, build-machine} = require '../lib/component'
 
 describe 'Component', ->
   describe 'is Node Machine compatable.', -> ``it``
@@ -9,8 +9,9 @@ describe 'Component', ->
       comp = load-component './test/fixture/components/mysum.ls'
       comp.inports.list.should.be.ok
       comp.outports.out.should.be.ok
-      comp.machine.id.should.eq 'mysum'
-      comp.machine
+      machine = build-machine comp
+      machine.id.should.eq 'mysum'
+      machine
         .configure {list:[1,2,3,4]}
         .exec (err, result ) ->
           result.should.deep.eq {out:10}

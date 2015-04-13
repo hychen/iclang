@@ -30,4 +30,6 @@ export function load-component(fpath, options)
   return defs <<< do
     inports: defs.inputs
     outports: defs.outputs
-    machine: machine.build defs
+
+export function build-machine(component)    
+    return machine.build component
