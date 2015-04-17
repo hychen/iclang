@@ -363,8 +363,30 @@ TBD
 Component Function is a function recives two fixed arguments, inputs and exists
 
 - inputs :: data recived on the ports of the component it belongs to after firing.
+
+#+BEGIN_SRC javascript
+  {
+      "apiKey": 'foo'
+  }
+#+END_SRC
+
+- outputs :: data will be routed.
+
+#+BEGIN_SRC javascript
+  {
+      "out": "foo"
+  }
+#+END_SRC
+
 - exits :: callbacks.
-           
+
+#+BEGIN_SRC javascript
+  {
+      "success": function(results) {// dispath results to destination ports.}
+      "error": function(error){console.error(error);}
+  }
+#+END_SRC
+
 ** Component Provider
 
 Component Provider is a function receives an fixed argument that the type is a object and returns [[Component%20Definition][Component Definition]].
