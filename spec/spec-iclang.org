@@ -437,7 +437,7 @@ A logical link between a InPort and a OutPort  which allows one process is able 
 The process run the component function if firing rule is satisfied.
 
 *** Fire Rule
-1. No data arrived, the process does not fire.
+**** No data arrived, the process does not fire.
 
 #+BEGIN_SRC
      +------------+
@@ -447,7 +447,7 @@ The process run the component function if firing rule is satisfied.
      +------------+
 #+END_SRC
 
-2. Only one data arrived to *in1*, port, the process does not fire.
+**** Only one data arrived to *in1*, port, the process does not fire.
 
 #+BEGIN_SRC
      +------------+
@@ -457,7 +457,7 @@ The process run the component function if firing rule is satisfied.
      +------------+
 #+END_SRC
 
-3. All data arrived to *in1* and *in2* port, the process fires.
+**** All data arrived to *in1* and *in2* port, the process fires.
 
 #+BEGIN_SRC
      +------------+
