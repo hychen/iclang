@@ -446,11 +446,11 @@ The process run the component function if firing rule is satisfied.
 **** No data arrived, the process does not fire.
 
 #+BEGIN_SRC
-     +------------+
---->[]in1         |
-     |     Print  |
---->[]in2         |
-     +------------+
+      +------------+
+X --->[]in1        |
+      |     Print  |
+X --->[]in2        |
+      +------------+
 #+END_SRC
 
 **** Only one data arrived to *in1*, port, the process does not fire.
@@ -459,7 +459,7 @@ The process run the component function if firing rule is satisfied.
      +------------+
 --->[X]in1        |
      |     Print  |
---->[]in2         |
+-X->[]in2         |
      +------------+
 #+END_SRC
 
