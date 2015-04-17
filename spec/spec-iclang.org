@@ -413,21 +413,21 @@ str|[]--->[]in Read out[]---->[]in Count out[]--->[]status|--->[]in Print out[]
 
 A IClang program is evaluated by ICLang interpreter. It instances procesess, connects ports betwen processes in order 
 to indicate where data comes, how data be processed and where processed result goes.
-
-** Processes
+*** Defintions
+**** Processes
 A process is an instance of a component.
 
 - All process should have a UUID identifier.
 - All process should be able to have zero to infinite InSocket or zero to infinite OutSocket.
 - All process should starts firing if and only if the Firing Rules is satisfied.
   
-** Sockets
+**** Sockets
 A socket is an instance of a port which is place on a process to receiving or sending data.
 
 - All sockets should have a UUID identifier.
 - All socekts should be directional, the direction is either IN or Out, called InSocket or OutSocket.
 
-** Connections
+**** Connections
 A logical link between a InPort and a OutPort  which allows one process is able to send data to another process.
 
 - Each socket should not be connect to another socket of a process it belongs to.
