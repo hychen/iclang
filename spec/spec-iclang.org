@@ -3,6 +3,14 @@
 #+OPTIONS: H:2 num:t toc:2
 #+OPTIONS: ^:nil
 #+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
+  
+* Conventions and Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", 
+and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 [RFC2119].
+
+The terms "JSON", "JSON text", "JSON value", "member", "element", "object", "array", "number", "string", "boolean", 
+"true", "false", and "null" in this document are to be interpreted as defined in RFC 4627 [RFC4627].
 
 * Introduction
 
@@ -49,7 +57,7 @@ In this section, we describe the abstract syntactic and semantic structure of IC
 1. At the topmost level is IClang's lexcial structure. The lexical structure represents ICLang programs in 
    JSON files.
 2. At the bottom level is a collection of components described in Chapter [[Components]].
-  
+
 * Lexical Structure
 
 In this chapter, we describe the low-level lexical structure of ICLang.
