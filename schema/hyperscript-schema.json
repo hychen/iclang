@@ -1,7 +1,7 @@
 
 {
     "$schema": "http://json-schema.org/schema#",
-    "title": "ICLang HyperScript JSON Schema",
+    "title": "ICLang Program",
     "type": "object",
     "required":["properties", "processes", "connections"],
     "properties": {
@@ -14,19 +14,23 @@
     },
     "definitions":{        
         "properties":{
+            "title": "IClang Program Properties",
             "type":"object",
             "properties":{
                 "name":{
+                    "title": "IClang Program Name",                    
                     "type":"string",
                     "required": true
                 },
                 "description":{
+                    "title": "IClang Program Description",
                     "type":"string",
                     "required": true
                 }
             }
         },
         "processes":{
+            "title": "Running Processes",
             "type":"object",
             "addtionalProperties":false,
             "patternProperties":{
@@ -34,21 +38,35 @@
                     "type":"object",
                     "required":["component", "option"],
                     "properties":{
-                        "component":{"type":"string"},
-                        "option":{"type":"object"}
+                        "component":{
+                            "title": "Component",
+                            "type":"string"
+                        },
+                        "option":{
+                            "title": "Component Option",
+                            "type":"object"
+                        }
                     }
                 }
             }
         },
         "process_port":{
+            "title": "Process Port",
             "type":"object",
             "required":["process", "port"],
             "properties":{
-                "process":{"type":"string"},
-                "port":{"type":"string"}
+                "process":{
+                    "title": "Process Name",
+                    "type":"string"
+                },
+                "port":{
+                    "title": "Port Name",
+                    "type":"string"
+                }
             }
         },
         "connections":{
+            "title": "Connections",
             "type":"array",
             "items":{
                 "type":"object",
@@ -60,28 +78,41 @@
             }
         },
         "inports":{
+            "title": "Program InPorts",
             "type":"array",
             "items":{
                 "type":"object",
                 "required":["name","dest"],
                 "properties":{
-                    "name":{"type":"string"},
-                    "dest":{"$ref":"#/definitions/process_port"}
+                    "name":{
+                        "title": "InPort Name",
+                        "type":"string"
+                    },
+                    "dest":{
+                        "$ref":"#/definitions/process_port"
+                    }
                 }
             }
         },
         "exports":{
+            "title": "Program ExPorts",
             "type":"array",
             "items":{
                 "required":["name", "src"],
                 "type":"object",
                 "properties":{
-                    "name":{"type":"string"},
-                    "src":{"$ref":"#/definitions/process_port"}
+                    "name":{
+                        "title": "ExPort Name",
+                        "type":"string"
+                    },
+                    "src":{
+                        "$ref":"#/definitions/process_port"
+                    }
                 }
             }
         },
         "comment":{
+            "title": "Program Comment",
             "type":"string"
         }        
     }
