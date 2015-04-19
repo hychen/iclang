@@ -53,7 +53,7 @@ In this section, we describe the abstract syntactic and semantic structure of IC
 
 1. At the topmost level is IClang's lexcial structure. The lexical structure represents ICLang programs in 
    JSON files.
-2. At the top level is modules described in Chapter [[Modules][Modules]].
+2. At the top level is modules described in Chapter [[Modules][Modules]]. Modules provide a way to control namespaces.
 3. At the bottom level is a collection of components described in Chapter [[Components]].
 
 * Lexical Structure
