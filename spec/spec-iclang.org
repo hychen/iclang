@@ -371,7 +371,7 @@ Component Function is a function recives two fixed arguments, inputs and exists
   }
 #+END_SRC
 
-- outputs :: data will be routed.
+- outputs :: [[Tagged Data Token][Tagged Data Token]] will be routed.
 
 #+BEGIN_SRC javascript
   {
@@ -408,6 +408,30 @@ str|[]--->[]in Read out[]---->[]in Count out[]--->[]status|--->[]in Print out[]
    |      +-------------+     +--------------+     |           +--------------+
    +-----------------------------------------------+
                   ReadAndCount
+#+END_SRC
+
+* Tagged Token
+** Input Data Token
+
+It is just a json object that the keys are the source ports name.
+
+#+BEGIN_SRC javascript
+  {
+      "inport1": "value1",
+      "inport2": "value2"
+  }
+#+END_SRC
+
+** Output Data Token
+
+It is just a json object that the keys are the desitination ports name.
+Each value will be route to proper ports after firing.
+
+#+BEGIN_SRC javascript
+  {
+      "outport1": "value1",
+      "outport2": "value2"
+  }
 #+END_SRC
 
 * Modules
