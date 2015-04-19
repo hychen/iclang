@@ -409,6 +409,88 @@ str|[]--->[]in Read out[]---->[]in Count out[]--->[]status|--->[]in Print out[]
                   ReadAndCount
 #+END_SRC
 
+* Modules
+
+IClang modules are maintianed by conventional programming language package menagement tool. 
+Node.Js implementations of modules are maintained by [[https://www.npmjs.com][NPM]] and uses the prefix *ic-module-*.
+
+In this chapter, we use Node.Js implmentation to explain the directory structure and its meaning.
+
+** Directory tructure
+
+Here is a typical directory structure for a IClang module.
+
+#+BEGIN_SRC 
+- metadata.json
+- package.json
+- scripts/
+  |- script_a.json
+- components/
+  |- component_a.js
+  \- component_b.js
+#+END_SRC
+
+*** metadata.json
+
+The *metadata.json* file must contain a node-red entry that identifies what nodes the module provides,
+along with a pointer to their files.
+
+It should be able to verified by the schema below.
+
+#+BEGIN_SRC javascript
+    {
+        "$schema": "http://json-schema.org/schema#",
+        "title": "ICLang Module",
+        "type": "object",
+        "required":["scripts", "components"],
+        "properties": {
+            "scripts": {
+                "type": "array",
+                "items":{
+                    "type": "string"
+                }
+            },
+            "components": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+#+END_SRC
+
+As example below, its shows this module contains two components, *component_a* and *component_b* in 
+*components* directory.
+
+#+BEGIN_SRC javascript
+  {
+      "scripts": [
+          "script_a.json"
+      ],    
+      "components": [
+          "component_a.js",
+          "component_b.js"
+      ]
+  }
+#+END_SRC
+
+*** package.json
+
+If any of the components have dependencies on other npm modules, they must be included in the dependencies property.
+
+To help make the components discoverable within the npm repository, the file should include iclang in its keywords 
+property. This will ensure the package appears when searching by keyword.
+
+#+BEGIN_SRC javascript
+  {
+      "name": "ic-module-samplemodule",
+      "version": "0.0.1",
+      "description": "A sample module",
+      "keywords": ["iclang"],
+  }
+#+END_SRC
+
 * Evaluation
 
 A IClang program is evaluated by ICLang interpreter. It instances procesess, connects ports betwen processes in order 
