@@ -11,10 +11,14 @@ and *OPTIONAL* in this document are to be interpreted as described in [[https://
 
 * Introduction
 
-Internet Combinator Language, ICLang in short, is a cordination language for compositing things of internet.
-and designed in dataflow mindset with [[en.wikipedia.org/wiki/Configurable_modularity][configurable modularity]].
+The things of internet is a highly interconnected collection of computational resources, and 
+as such it can be considred as forming a big computer. It is obviously to have some kind 
+of abstract programming language runs on this wired computer.
 
-Not like How we does when we building a application in conventional programming language, building a pplication 
+Internet Combinator Language, ICLang in short, is a cordination language for compositing things on internet.
+and designed in dataflow mindset with [[en.wikipedia.org/wiki/Configurable_modularity][configurable modularity]]. 
+
+Not like how we does when we building a application in conventional programming language, building a pplication 
 in ICLang is totally different, and almost like like building a electronic circuit by wiring pins of integrated 
 circuits.
 
