@@ -433,7 +433,7 @@ Here is a typical directory structure for a IClang module.
 
 *** metadata.json
 
-The *metadata.json* file must contain a node-red entry that identifies what nodes the module provides,
+The *metadata.json* file must contain entries to show what components the module provides,
 along with a pointer to their files.
 
 It should be able to verified by the schema below.
