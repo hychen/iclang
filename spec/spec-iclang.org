@@ -466,11 +466,11 @@ As example below, its shows this module contains two components, *component_a* a
 #+BEGIN_SRC javascript
   {
       "scripts": [
-          "script_a.json"
+          "scripts/script_a.json"
       ],    
       "components": [
-          "component_a.js",
-          "component_b.js"
+          "components/component_a.js",
+          "components/component_b.js"
       ]
   }
 #+END_SRC
