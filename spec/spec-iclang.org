@@ -45,10 +45,11 @@ This document defines the syntax for IClang programs and an informal abstract se
 programs. We leave as implementation dependent the ways in which ICLang programs are to be manipulated, interpreted,
 etc. 
 
-The implementations should follow principle below:
+** Principles
 
+- All programs should be able to run on browser and backend without any modification.
 - All components should be independent and stateless.
-- All components should be able written in any conventional programming language.
+- All components should be loadded and running on browser and backend.
 - All connections between component ports should be parallelism.
 
 ** Program Structure
