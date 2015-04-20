@@ -582,22 +582,24 @@ The module described in an import path  will be automatically fected into *node_
   |- module_root/
 #+END_SRC
 
+**** Import path syntax
+
 The import path sytanx contains two part, the first one is provider name, and the second one is module path.
 
 #+BEGIN_SRC
 {{provider}}:{{path_to_module}}
 #+END_SRC
 
-**** Import path: NPM
+*NPM*
 
 #+BEGIN_SRC
 npm: module_root
 #+END_SRC
 
-**** Import path : github 
+*Github*
 
 #+BEGIN_SRC
-- github: ic-modules/module_root
+github: ic-modules/module_root
 #+END_SRC
 
 * Evaluation
