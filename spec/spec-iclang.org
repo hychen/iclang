@@ -480,7 +480,7 @@ along with a pointer to their files.
 
 It should be able to verified by the schema below.
 
-#+BEGIN_SRC javascript
+#+BEGIN_SRC javascript :tangle ../schema/module-schema.json
     {
         "$schema": "http://json-schema.org/schema#",
         "title": "ICLang Module",
