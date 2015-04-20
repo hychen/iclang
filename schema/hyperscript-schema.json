@@ -12,7 +12,7 @@
         "inports": {"$ref":"#/definitions/inports"},
         "exports": {"$ref":"#/definitions/exports"}
     },
-    "definitions":{        
+    "definitions":{
         "properties":{
             "title": "IClang Program Properties",
             "type":"object",
@@ -27,6 +27,14 @@
                     "type":"string",
                     "required": true
                 }
+            }
+        },
+        "import":{
+            "title":"Imported Modules",
+            "type": "array",
+            "items":{
+                "title": "Import Paht",
+                "type":"string"
             }
         },
         "processes":{

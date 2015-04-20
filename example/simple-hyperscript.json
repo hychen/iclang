@@ -4,12 +4,15 @@
         "name":"read a string and print",
         "description": "read a string then print it to console."
     },
+    "import":[
+        "facebook"
+    ],
     "processes":{
         "Read":{
-            "component":"ReadComponentId"
+            "component":"facebook.group_post.read"
         },
         "Print":{
-            "component":"PrintComponentId"
+            "component":"logging.log"
         }
     },
     "connections":[

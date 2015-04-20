@@ -80,7 +80,7 @@ In this chapter, we describe the low-level lexical structure of ICLang.
           "inports": {"$ref":"#/definitions/inports"},
           "exports": {"$ref":"#/definitions/exports"}
       },
-      "definitions":{        
+      "definitions":{
           "properties":{
               "title": "IClang Program Properties",
               "type":"object",
@@ -95,6 +95,14 @@ In this chapter, we describe the low-level lexical structure of ICLang.
                       "type":"string",
                       "required": true
                   }
+              }
+          },
+          "import":{
+              "title":"Imported Modules",
+              "type": "array",
+              "items":{
+                  "title": "Import Paht",
+                  "type":"string"
               }
           },
           "processes":{
@@ -190,50 +198,53 @@ In this chapter, we describe the low-level lexical structure of ICLang.
 As an example below, shows a IClang program.
 
 #+BEGIN_SRC javascript :tangle ../example/simple-hyperscript.json
-  {
-      "properties":{
-          "name":"read a string and print",
-          "description": "read a string then print it to console."
-      },
-      "processes":{
-          "Read":{
-              "component":"ReadComponentId"
-          },
-          "Print":{
-              "component":"PrintComponentId"
-          }
-      },
-      "connections":[
-          {
-              "src":{
-                  "process":"Read",
-                  "port":"out"                
-              },
-              "dest":{
-                  "process":"Print",
-                  "port":"in"
-              }
-          }
-      ],
-      "inports":[
-          {
-              "name":"str",          
-              "dest":{
-                  "process":"Read",
-                  "port":"in"
-              }
-          }
-      ],
-      "exports":[
-          {
-              "name":"status",
-              "src":{
-                  "process":"Print",
-                  "port":"out"
-              }
-          }    
-      ]
-  }
+    {
+        "properties":{
+            "name":"read a string and print",
+            "description": "read a string then print it to console."
+        },
+        "import":[
+            "facebook"
+        ],
+        "processes":{
+            "Read":{
+                "component":"facebook.group_post.read"
+            },
+            "Print":{
+                "component":"logging.log"
+            }
+        },
+        "connections":[
+            {
+                "src":{
+                    "process":"Read",
+                    "port":"out"                
+                },
+                "dest":{
+                    "process":"Print",
+                    "port":"in"
+                }
+            }
+        ],
+        "inports":[
+            {
+                "name":"str",          
+                "dest":{
+                    "process":"Read",
+                    "port":"in"
+                }
+            }
+        ],
+        "exports":[
+            {
+                "name":"status",
+                "src":{
+                    "process":"Print",
+                    "port":"out"
+                }
+            }    
+        ]
+    }
 #+END_SRC
 
 *** Property: properties
