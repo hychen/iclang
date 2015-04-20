@@ -47,9 +47,9 @@ etc.
 
 ** Principles
 
-- All programs should be able to run on browser and backend without any modification.
+- All programs should be able to run on browser or backend without any modification.
 - All components should be independent and stateless.
-- All components should be loadded and running on browser and backend.
+- All components should be able to load and run on browser or backend.
 - All connections between component ports should be parallelism.
 
 ** Program Structure
