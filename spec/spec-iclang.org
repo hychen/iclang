@@ -575,7 +575,8 @@ property. This will ensure the package appears when searching by keyword.
 
 *** Remote modules
 
-An import path can describe how to obtain the package source code using [[https://docs.npmjs.com/cli/install][npm install]].
+An import path can describe how to obtain the package source code using [[https://docs.npmjs.com/cli/install][npm install]] in backend or using
+[[http://jspm.io][JSPM]] in browers.
 
 #+BEGIN_SRC javascript
   {
