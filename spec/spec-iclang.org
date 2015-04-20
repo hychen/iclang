@@ -561,6 +561,45 @@ property. This will ensure the package appears when searching by keyword.
   }
 #+END_SRC
 
+*** Remote modules
+
+An import path can describe how to obtain the package source code using [[https://docs.npmjs.com/cli/install][npm install]].
+
+#+BEGIN_SRC javascript
+  {
+      "import":[
+          "github:hychen/module_root"
+      ]
+  }
+#+END_SRC
+
+The module described in an import path  will be automatically fected into *node_modules* when 
+*ic-program.json* is evulated, as the following shows.
+
+#+BEGIN_SRC javascript
+- ic-program.json
+- node_modules/
+  |- module_root/
+#+END_SRC
+
+The import path sytanx contains two part, the first one is provider name, and the second one is module path.
+
+#+BEGIN_SRC
+{{provider}}:{{path_to_module}}
+#+END_SRC
+
+**** Import path: NPM
+
+#+BEGIN_SRC
+npm: module_root
+#+END_SRC
+
+**** Import path : github 
+
+#+BEGIN_SRC
+- github: ic-modules/module_root
+#+END_SRC
+
 * Evaluation
 
 A IClang program is evaluated by ICLang interpreter. It instances procesess, connects ports betwen processes in order 
