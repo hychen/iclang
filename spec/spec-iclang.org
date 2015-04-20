@@ -637,6 +637,10 @@ A logical link between a InPort and a OutPort  which allows one process is able 
 - Each socket should not be connect to another socket of a process it belongs to.
 - Sockets has same direction should be able to connect each other.
 
+** Handling Dependency
+
+fetching required remote modules if any presents in import paths.
+
 ** Binding variables
 TBD
 ** Instancing components
