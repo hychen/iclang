@@ -643,8 +643,17 @@ fetching required remote modules if any presents in import paths.
 
 ** Binding variables
 TBD
+
+** Prepare Runtime Environment
+*** Runtime Directory Structure
+The directory name is */tmp/iclang*.
+
+#+BEGIN_SRC
+- sockets/ # opened sockets.
+#+END_SRC
+
 ** Instancing components
-TBD
+
 ** Connecting processes
 TBD
 ** Firing 
