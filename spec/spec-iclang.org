@@ -543,14 +543,11 @@ property. This will ensure the package appears when searching by keyword.
   |- metadata.json
   |- package.json
   |- module_a/
-  |  |- metadata.json
   |  |- components/
   |     |- component_a.js
   |     \- component_b.js
   |- module_b/
-     |- metadata.json
      |- module_b_c/
-        |- metdata.json
         |- components/
         |  |- component_b_c_a.js
         \- scripts/
