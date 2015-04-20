@@ -440,13 +440,16 @@ Each value will be route to proper ports after firing.
 
 * Modules
 
-IClang modules are maintianed by conventional programming language package menagement tool. 
+Modules are namespaces which contain multiple modules and components themselves and maintianed
+by conventional programming language package menagement tool. 
+
 Node.Js implementations of modules are maintained by [[https://www.npmjs.com][NPM]] and uses the prefix *ic-module-*.
 
 In this chapter, we use Node.Js implmentation to explain the directory structure and its meaning.
 
-** Directory tructure
+** Directory structure
 
+The *metadata.json* files are required to make ICLang treat the directories as containing modules;
 Here is a typical directory structure for a IClang module.
 
 #+BEGIN_SRC 
@@ -517,6 +520,44 @@ property. This will ensure the package appears when searching by keyword.
       "version": "0.0.1",
       "description": "A sample module",
       "keywords": ["iclang"],
+  }
+#+END_SRC
+
+
+** More complex structure
+
+#+BEGIN_SRC
+- module_root/
+  |- metadata.json
+  |- package.json
+  |- module_a/
+  |  |- metadata.json
+  |  |- components/
+  |     |- component_a.js
+  |     \- component_b.js
+  |- module_b/
+     |- metadata.json
+     |- module_b_c/
+        |- metdata.json
+        |- components/
+        |  |- component_b_c_a.js
+        \- scripts/
+
+#+END_SRC
+
+#+BEGIN_SRC javascript
+  {
+      "import":[
+          "module_root"
+      ],
+      "processes": {
+          "Read":{
+              "component": "module_root.module_a.component_a"
+          },
+          "Write":{
+              "component": "module_root.module_b.module_b_c.component_b_c_a"
+          }
+      }
   }
 #+END_SRC
 
