@@ -28,23 +28,5 @@
                 "port":"in"
             }
         }
-    ],
-    "inports":[
-        {
-            "name":"str",
-            "dest":{
-                "process":"SubCNN",
-                "port":"in"
-            }
-        }
-    ],
-    "exports":[
-        {
-            "name":"status",
-            "src":{
-                "process":"Print",
-                "port":"out"
-            }
-        }
     ]
 }
