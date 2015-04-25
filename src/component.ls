@@ -28,8 +28,8 @@ export function load-component(fpath, options)
   defs = mod.provide-component options
   # @TODO: check definition
   return defs <<< do
-    inports: defs.inputs
-    outports: defs.outputs
+    inports: defs.inputs or {}
+    outports: defs.outputs or {}
 
 export function build-machine(component)    
     return machine.build component
