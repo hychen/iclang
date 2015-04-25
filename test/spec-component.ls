@@ -1,6 +1,3 @@
-should = require 'chai' .should!
-expect = require 'chai' .expect
-ic = require '../'
 {load-component, ensured-component, build-machine} = ic.component!
 
 describe 'Component', ->

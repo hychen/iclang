@@ -1,5 +1,3 @@
-should = require 'chai' .should!
-ic = require '../'
 {Process, connect-port} = ic.process!
 {init-runtime-env, clean-runtime-env} = ic.runtime!
 

@@ -1,6 +1,4 @@
 require! 'fs'
-should = require 'chai' .should!
-ic = require '../'
 {syntax-validator} = ic.syntax!
 
 ok = (s) ->

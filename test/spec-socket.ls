@@ -1,6 +1,3 @@
-should = require 'chai' .should!
-expect = require 'chai' .expect
-ic = require '../'
 {conf} = ic.config!
 {Socket} = ic.socket!
 {init-runtime-env, clean-runtime-env} = ic.runtime!
