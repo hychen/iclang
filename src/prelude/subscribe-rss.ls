@@ -21,7 +21,7 @@ export definition = do
 
 export function provide-component(options)
   return-type = 'item' unless options.return-type?
-	definition.fn = (inputs, exits) ->
+  definition.fn = (inputs, exits) ->
     reader = new FeedSub inputs.feed
     reader.on 'error', ->
       exits.error it
