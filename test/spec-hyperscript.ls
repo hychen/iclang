@@ -1,7 +1,7 @@
 require! 'fs'
 should = require 'chai' .should!
-
-{syntax-validator} = require '../lib/syntax'
+ic = require '../'
+{syntax-validator} = ic.syntax!
 
 ok = (s) ->
   validate s .should.be.ok

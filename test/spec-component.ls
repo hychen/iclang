@@ -1,7 +1,7 @@
 should = require 'chai' .should!
 expect = require 'chai' .expect
-
-{load-component, ensured-component, build-machine} = require '../lib/component'
+ic = require '../'
+{load-component, ensured-component, build-machine} = ic.component!
 
 describe 'Component', ->
   describe 'is Node Machine compatable.', -> ``it``

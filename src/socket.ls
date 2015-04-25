@@ -1,7 +1,7 @@
 require! zmq
 require! uuid
 
-{conf} = require '../lib/config'
+{conf} = require './config'
 
 RUNTIME_SOCKETS_DIR = conf.get 'RUNTIME_SOCKETS_DIR'
 

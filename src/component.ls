@@ -1,7 +1,7 @@
 require! path
 require! machine
 
-{syntax-validator} = require '../lib/syntax'
+{syntax-validator} = require './syntax'
 
 export function ensured-component-options(options)
   #@TODO: check component options.

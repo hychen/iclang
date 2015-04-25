@@ -1,7 +1,7 @@
 should = require 'chai' .should!
-
-{Process, connect-port} = require '../lib/process'
-{init-runtime-env, clean-runtime-env} = require '../lib/runtime'
+ic = require '../'
+{Process, connect-port} = ic.process!
+{init-runtime-env, clean-runtime-env} = ic.runtime!
 
 fake-comp = do
   friendlyName: ''

@@ -1,9 +1,9 @@
 should = require 'chai' .should!
 expect = require 'chai' .expect
-
-conf = require '../lib/config' .conf
-Socket = require '../lib/socket' .Socket
-{init-runtime-env, clean-runtime-env} = require '../lib/runtime'
+ic = require '../'
+{conf} = ic.config!
+{Socket} = ic.socket!
+{init-runtime-env, clean-runtime-env} = ic.runtime!
 
 describe 'Socket', ->
   beforeEach (done) ->

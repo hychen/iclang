@@ -1,9 +1,9 @@
 require! events
 require! uuid
 
-{Socket} = require '../lib/socket'
-{ensured-component} = require '../lib/component'
-{init-runtime-env, clean-runtime-env, is-runtime-env-ready} = require '../lib/runtime'
+{Socket} = require './socket'
+{ensured-component} = require './component'
+{init-runtime-env, clean-runtime-env, is-runtime-env-ready} = require './runtime'
 
 export function connect-port(src-process, src-port-name, dest-process, dest-port-name)
   throw 'source process is not valid.' unless src-process
