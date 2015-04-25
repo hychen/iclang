@@ -1,0 +1,50 @@
+{
+    "properties":{
+        "name":"read CNN last news",
+        "description": "subscribe CNN last news feed and print to console."
+    },
+    "processes":{
+        "SubCNN":{
+            "component": "subscribe-rss",
+            "arguments": {
+            	"feed": "http://rss.cnn.com/rss/cnn_latest.rss"
+            },
+            "options": {
+            	"return-type": "item"
+            }
+        },
+        "Print":{
+            "component":"print"
+        }
+    },
+    "connections":[
+        {
+            "src":{
+                "process":"SubCNN",
+                "port":"out"
+            },
+            "dest":{
+                "process":"Print",
+                "port":"in"
+            }
+        }
+    ],
+    "inports":[
+        {
+            "name":"str",
+            "dest":{
+                "process":"SubCNN",
+                "port":"in"
+            }
+        }
+    ],
+    "exports":[
+        {
+            "name":"status",
+            "src":{
+                "process":"Print",
+                "port":"out"
+            }
+        }
+    ]
+}
