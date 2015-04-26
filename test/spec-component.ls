@@ -3,7 +3,7 @@
 describe 'Component', ->
   describe 'is Node Machine compatable.', -> ``it``
     .. 'should be able to build as a machine.' (done) ->
-      comp = load-component './test/fixture/components/mysum.ls'
+      comp = load-component './test/fixtures/components/mysum.ls'
       comp.inports.list.should.be.ok
       comp.outports.out.should.be.ok
       machine = build-machine comp
