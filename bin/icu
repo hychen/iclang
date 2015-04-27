@@ -1,0 +1,13 @@
+#!/usr/bin/env lsc
+require! program: commander
+
+program
+  .version (require require.resolve \../package.json).version
+  .description 'icu is a set of tools for managing iclang runtime.'
+  .command 'start-process', 'start a process'
+  .command 'stop-process', 'stop a process'
+  .command 'run-process', 'run a process'
+  .command 'pause-process', 'pause a process'
+  .command 'list-process', 'list running processes'
+
+program.parse process.argv

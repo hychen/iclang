@@ -1,0 +1,18 @@
+#!/usr/bin/env lsc
+require! program: commander
+require! path
+ic = require '../'
+
+program
+  .version (require require.resolve \../package.json).version
+  .description 'start a process.'
+  .arguments '<component-name-or-path> <process-name>'
+  .action (component-name-or-path, process-name) ->
+#    (require 'daemon')()
+    require! forever
+    child-args = [(path.join __dirname, 'ic-node-process'), component-name-or-path, process-name]
+    child-opts = {max:2, killSignal: 'SIGTERM'}
+    child = forever.start child-args, child-opts
+    forever.startServer child
+
+program.parse process.argv
