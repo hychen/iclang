@@ -5,6 +5,7 @@ require! machine
 
 export function ensured-component-options(options)
   #@TODO: check component options.
+  throw new Error 'component options is required.' unless typeof options is 'object'
   return options
 
 export function ensured-component(component)
