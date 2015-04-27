@@ -25,8 +25,13 @@ export function load-component(fpath, options)
   mod = require path.resolve fpath  
   unless mod.provide-component?
     throw "module loaded from #{fpath} does not have provideComponent function."
-  options = ensured-component-options options 
-  defs = mod.provide-component options
+
+  if options    
+    options = ensured-component-options options 
+    defs = mod.provide-component options
+  else
+    defs = mod.provide-component null
+
   # @TODO: check definition
   return defs <<< do
     inports: defs.inputs or {}
