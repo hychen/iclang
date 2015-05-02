@@ -12,6 +12,7 @@ VALID_PROCESS_STATUS = <[
     initializing
     ready
     running
+    firing
     terminated
     suspend    
   ]>
@@ -74,7 +75,6 @@ export class Process extends events.EventEmitter
     # -------------------------------------    
     # Initializations
     # -------------------------------------    
-    @_init-rpc!
     @_init-event-handlers!
 
   # -------------------------------------
@@ -86,6 +86,7 @@ export class Process extends events.EventEmitter
   start: ->
     rpc-server-addr = "ipc://#{rpc-socket-addr @name}"
     winston.log 'debug',  "PROCESS: starting RPC server on #{rpc-server-addr}"
+    @_init-rpc!    
     @_rpc-server.bind rpc-server-addr
     @_set-status 'ready'    
 
@@ -150,6 +151,17 @@ export class WorkerProcess extends Process
     # Internal Properties
     # -------------------------------------     
     @_component = ensured-component component
+    @_incoming = {}
+    @_rpc-protocol <<< do
+      fire: (token, _, reply) ~>
+        winston.log 'debug',  "RPC: fire()"
+        @fire token, do
+          success: (result) ->
+            winston.log 'debug',  "RPC: fire() success"
+            reply null, result
+          error: (error)->
+            winston.log 'debug',  "RPC: fire() error"
+            reply error
 
     # -------------------------------------    
     # Initializations
@@ -159,24 +171,80 @@ export class WorkerProcess extends Process
   # Public Methods
   # -------------------------------------
   start: ->
-    super!
     @_init-ports!
-    
+    super!
+
   stop: ->    
     @_deinit-ports!
     super!
+
+  fire: (token, rpc-exits) ->
+    # ---------------------
+    # Helper functions start.
+    # ---------------------
+    process-exits = do
+      # when component function executes success, 
+      # process send each value in the result to properly port.
+      success: (token) ~>
+        for let port-name, value of token
+          @ports[port-name].send value
+      # when component funciton executes failed with unexcpted error,
+      # process print the error message to console.
+      error: -> 
+        console.error it
+    # ---------------------
+    # Helper functions end.        
+    # ---------------------
+    current-status = @status! 
+
+    # if token is given, the process is fired by RPC command.
+    if token?
+      winston.log 'debug', 'PROCESS: fired by RPC.'
+      data = token
+      exits = do
+        success: -> 
+          process-exits.success it
+          rpc-exits.success it
+        error: -> rpc-exits.error it
+    # else the process is fired when firing rule is stastify.
+    else
+      winston.log 'debug', 'PROCESS: fired by Firing Rule.'
+      data = @_incoming
+      exits = process-exits
+
+    # the process can not be fired if it is not under running mode.
+    if current-status isnt 'running'
+      winston.log 'debug', 'PROCESS: skip firing because the process is not running.'
+    else
+      @_set-status 'firing'
+      # always flush incoming queue when firing.
+      @_incoming = {}
+
+      # invoke component function.
+      winston.log 'debug', 'PROCESS: invoke component function.'
+      result = @_component.fn data, exits
+      # no matter the component function is executing or is not, 
+      # the process is able to fire again.
+      # 
+      # [Note] this make the computing results are not in order.
+      @_set-status 'running'
 
   # -------------------------------------
   # Internal Methods
   # -------------------------------------
   _init-ports: ->
-    winston.log 'debug', 'Process: initializing ports.'
+    winston.log 'debug', 'PROCESS: initializing ports.'
     for let port-name, port-def of @_component.outports
       @ports[port-name] = new OutPort port-name
     for let port-name, port-def of @_component.inports
       @ports[port-name] = new InPort port-name
+      @ports[port-name].on 'data', ->
+        @_incoming[port-name] = it
+        # fire iff all required input collected.
+        if ports-length @_incoming == ports-length @_component.inports
+          @fire!
 
   _deinit-ports: ->
-    winston.log 'debug', 'Process: deinitializing ports.'
+    winston.log 'debug', 'PROCESS: deinitializing ports.'
     for let port in @ports
       port.clos!

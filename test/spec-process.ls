@@ -78,3 +78,16 @@ describe 'WorkerProcess', ->
       p.ports.out.addr.should.ok
       p.stop!
       done!
+  describe 'can be controlled by RPC.', -> ``it``
+    .. '#fire()', (done) ->
+      fn = (inputs, exits) -> 
+        exits.success {out:inputs.in + 1}
+      comp = mock-component 'Fake', <[in]>, <[out]>, fn
+      p = new WorkerProcess 'Fake', comp
+      p.ports.should.deep.eq {}
+      p.start!
+      err, res, more <- control-process 'Fake', 'run'
+      err, res, more <- control-process 'Fake', 'fire', {in:1}
+      res.should.be.deep.eq {out:2}
+      p.stop!
+      done!
