@@ -41,7 +41,7 @@ export function control-process(proc-name, ...args)
     client.close!
     done err, res, more
   else
-    console.log "source process #{proc-name} is not running"
+    done "target process #{proc-name} is not running"
 
 export class Process extends events.EventEmitter
 
