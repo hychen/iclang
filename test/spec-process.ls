@@ -110,9 +110,13 @@ describe 'WorkerProcess', ->
       p2.start!
       p3.start!
       err, res, more <- control-process 'Fake2', 'connect', 'in', 'Fake1', 'out'
+      expect err .to.eq undefined      
       err, res, more <- control-process 'Fake3', 'connect', 'in', 'Fake2', 'out'
+      expect err .to.eq undefined      
       err, res, more <- control-process 'Fake2', 'run'
+      expect err .to.eq undefined      
       err, res, more <- control-process 'Fake3', 'run'
+      expect err .to.eq undefined      
       err, res, more <- control-process 'Fake1', 'run'
       p1.stop!
       p2.stop!
