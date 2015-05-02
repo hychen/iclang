@@ -6,7 +6,7 @@ require! mkdirp
 require! winston
 
 {load-component, ensured-component} = require './component'
-{InPort, OutPort} = require './port'
+{InPort, OutPort, ports-length} = require './port'
 
 VALID_PROCESS_STATUS = <[
     initializing
@@ -96,7 +96,9 @@ export class Process extends events.EventEmitter
       @_set-status 'running'
       # fire iff the process is running and does not have any inports,
       # because its component function may produce data.
-      if @status! is 'running' and ports-length @_component.inports == 0
+      inports-length = ports-length @_component.inports 
+      if @status! is 'running' and inports-length == 0
+        winston.log 'debug', 'PROCESS: fire when the process has no inports.'
         @fire!
     else
       throw new Error "process is #{@status!} and can not enter running mode. "
@@ -169,10 +171,10 @@ export class WorkerProcess extends Process
         if src-port?
           err, res, more <- control-process dest-process-name, 'info', 'outport-addr', dest-port-name
           if err
-            winston.log 'debug', 'PROCESS: can not get dest port address #{err.message}'
+            winston.log 'debug', "PROCESS: can not get dest port address #{err.message}"
             reply "dest port not found."
           else
-            winston.log 'debug', 'PROCESS: source port #{src-port-name} connect to #{dest-process-name}:#{dest-port-name}.'
+            winston.log 'debug', "PROCESS: source port #{src-port-name} connect to #{dest-process-name}:#{dest-port-name}."
             src-port.connect res
             reply null, true
         else
@@ -223,7 +225,7 @@ export class WorkerProcess extends Process
     rpc-mode = token?
 
     # if token is given, the process is fired by RPC command.
-    if rpc-mode?
+    if rpc-mode
       winston.log 'debug', 'PROCESS: fired by RPC.'
       data = token
       exits = do
@@ -240,7 +242,7 @@ export class WorkerProcess extends Process
     # the process can not be fired if it is not under running mode.
     if current-status isnt 'running'
       winston.log 'debug', 'PROCESS: skip firing because the process is not running.'
-      if rpc-mode?
+      if rpc-mode
         rpc-exits.error 'process is suspend.'
     else
       @_set-status 'firing'
@@ -265,10 +267,10 @@ export class WorkerProcess extends Process
       @ports[port-name] = new OutPort port-name
     for let port-name, port-def of @_component.inports
       @ports[port-name] = new InPort port-name
-      @ports[port-name].on 'data', ->
+      @ports[port-name].on 'data', ~>
         @_incoming[port-name] = it
         # fire iff all required input collected.
-        if ports-length @_incoming == ports-length @_component.inports
+        if ports-length(@_incoming) == ports-length @_component.inports
           @fire!
 
   _deinit-ports: ->

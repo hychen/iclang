@@ -2,10 +2,10 @@ require! path
 require! zmq
 require! uuid
 
-ports-names = ->
+export function ports-names()
   return Object.keys it
 
-ports-length = ->
+export function ports-length()
   return ports-names it .length
 
 port-addr = (proto, id) ->

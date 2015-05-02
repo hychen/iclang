@@ -93,6 +93,31 @@ describe 'WorkerProcess', ->
       p1.stop!
       p2.stop!
       done!
+    .. '#connect() auto firing', (done) ->
+      fn1 = (inputs, exits) ->
+        exits.success {out: 10}
+      fn2 = (inputs, exits) -> 
+        exits.success {out: inputs.in + 1}
+      fn3 = (inputs, exits) -> 
+        inputs.should.be.deep.eq {in:11}
+      comp1 = mock-component 'Fake1', [], <[out]>, fn1
+      comp2 = mock-component 'Fake2', <[in]>, <[out]>, fn2
+      comp3 = mock-component 'Fake2', <[in]>, [], fn3
+      p1 = new WorkerProcess 'Fake1', comp1
+      p2 = new WorkerProcess 'Fake2', comp2
+      p3 = new WorkerProcess 'Fake3', comp3
+      p1.start!
+      p2.start!
+      p3.start!
+      err, res, more <- control-process 'Fake2', 'connect', 'in', 'Fake1', 'out'
+      err, res, more <- control-process 'Fake3', 'connect', 'in', 'Fake2', 'out'
+      err, res, more <- control-process 'Fake2', 'run'
+      err, res, more <- control-process 'Fake3', 'run'
+      err, res, more <- control-process 'Fake1', 'run'
+      p1.stop!
+      p2.stop!
+      p3.stop!      
+      done!      
     .. '#fire()', (done) ->
       fn = (inputs, exits) -> 
         exits.success {out:inputs.in + 1}
