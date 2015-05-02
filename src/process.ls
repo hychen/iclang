@@ -94,6 +94,10 @@ export class Process extends events.EventEmitter
   run: ->
     if @status! is 'ready'
       @_set-status 'running'
+      # fire iff the process is running and does not have any inports,
+      # because its component function may produce data.
+      if @status! is 'running' and ports-length @_component.inports == 0
+        @fire!
     else
       throw new Error "process is #{@status!} and can not enter running mode. "
 
