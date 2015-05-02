@@ -196,9 +196,10 @@ export class WorkerProcess extends Process
     # Helper functions end.        
     # ---------------------
     current-status = @status! 
+    rpc-mode = token?
 
     # if token is given, the process is fired by RPC command.
-    if token?
+    if rpc-mode?
       winston.log 'debug', 'PROCESS: fired by RPC.'
       data = token
       exits = do
@@ -215,6 +216,8 @@ export class WorkerProcess extends Process
     # the process can not be fired if it is not under running mode.
     if current-status isnt 'running'
       winston.log 'debug', 'PROCESS: skip firing because the process is not running.'
+      if rpc-mode?
+        rpc-exits.error 'process is suspend.'
     else
       @_set-status 'firing'
       # always flush incoming queue when firing.

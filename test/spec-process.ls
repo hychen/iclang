@@ -89,5 +89,8 @@ describe 'WorkerProcess', ->
       err, res, more <- control-process 'Fake', 'run'
       err, res, more <- control-process 'Fake', 'fire', {in:1}
       res.should.be.deep.eq {out:2}
+      err, res, more <- control-process 'Fake', 'pause'
+      err, res, more <- control-process 'Fake', 'fire', {in:1}
+      err.message.should.be.eq 'process is suspend.'
       p.stop!
       done!
