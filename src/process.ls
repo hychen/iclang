@@ -68,9 +68,6 @@ export class Process extends events.EventEmitter
         winston.log 'debug',  "RPC: pause()"
         @pause!
         reply!
-      connect: (src-port, dest-port, _, reply) ~>
-        winston.log 'debug',  "RPC: connect(#{src-port}, #{dest-port})"
-        reply!    
 
     # -------------------------------------    
     # Initializations

@@ -53,18 +53,6 @@ describe 'Process', ->
       res.should.be.eq 'suspend'
       p.stop!
       done!
-    .. '#connect()', (done) ->
-      p1 = new Process 'process1'
-      p2 = new Process 'process2'
-      p1.start!
-      p2.start!
-      err, res, more <- control-process 'process1', 'run'
-      err, res, more <- control-process 'process2', 'run'
-      err, res, more <- control-process 'process1', 'connect', 'port1', 'process2:port1'
-      expect err .to.eq undefined
-      p1.stop!
-      p2.stop!
-      done!
 
 describe 'WorkerProcess', ->
   beforeEach (done) ->
