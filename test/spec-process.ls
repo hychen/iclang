@@ -5,9 +5,9 @@ require! rimraf
 
 describe 'Process', ->
   beforeEach (done) ->
-    mkdirp './.ic/sock', done
+    mkdirp "#{TEST_RUNTIME_DIR}/socket", done
   afterEach (done) ->
-    rimraf './.ic/', done
+    rimraf "#{TEST_RUNTIME_DIR}", done
   describe 'should be able controlled via RPC.', -> ``it``
     .. '#status()', (done) ->
       hello = new Process 'hello'
