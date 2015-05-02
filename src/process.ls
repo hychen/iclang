@@ -3,6 +3,7 @@ require! path
 require! zerorpc
 require! fs
 require! mkdirp
+require! winston
 
 {load-component, ensured-component} = require './component'
 
@@ -56,18 +57,18 @@ export class Process extends events.EventEmitter
     @_rpc-server = null
     @_rpc-protocol = do
       status: (_, reply) ~>
-        console.log "RPC: status()"
+        winston.log 'debug',  "RPC: status()"
         reply null, @status!
       run: (_, reply)  ~>
-        console.log "RPC: run()"
+        winston.log 'debug',  "RPC: run()"
         @run! 
         reply!
       pause: (_, reply)  ~>
-        console.log "RPC: pause()"
+        winston.log 'debug',  "RPC: pause()"
         @pause!
         reply!
       connect: (src-port, dest-port, _, reply) ~>
-        console.log "RPC: connect(#{src-port}, #{dest-port})"
+        winston.log 'debug',  "RPC: connect(#{src-port}, #{dest-port})"
         reply!    
 
     # -------------------------------------    
@@ -84,7 +85,7 @@ export class Process extends events.EventEmitter
 
   start: ->
     rpc-server-addr = "ipc://#{rpc-socket-addr @name}"
-    console.log "PROCESS: starting RPC server on #{rpc-server-addr}"
+    winston.log 'debug',  "PROCESS: starting RPC server on #{rpc-server-addr}"
     @_rpc-server.bind rpc-server-addr
     @_set-status 'ready'    
 
@@ -123,15 +124,15 @@ export class Process extends events.EventEmitter
 
   _init-event-handlers: ->
     @on 'internal:status-changed', (old-status, new-status) ->
-      console.log "EVENT: status-changed: #{old-status} -> #{new-status}"
+      winston.log 'debug', "EVENT: status-changed: #{old-status} -> #{new-status}"
       @emit 'status-changed'
 
     # process will be graceful terminating when it received
     # SIGTERM or SIGINT.
     process.on 'SIGTERM', ~>
-      console.log "SIG: SIGTERM received"
+      winston.log 'debug', "SIG: SIGTERM received"
       @stop!
 
     process.on 'SIGINT', ~>
-      console.log "SIG: SIGINT received"
+      winston.log 'debug', "SIG: SIGINT received"
       @stop!

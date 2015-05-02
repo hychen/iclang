@@ -36,3 +36,4 @@ dependencies:
   machine: '4.0.x'
   rimraf: '^2.3.2'
   zmq: '2.10.x'
+  winston: '1.0.0'
