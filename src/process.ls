@@ -163,6 +163,19 @@ export class WorkerProcess extends Process
           else
             reply "Invalid port name."
         | _ => reply 'Invalid query.'
+      connect: (src-port-name, dest-process-name, dest-port-name, _, reply) ~>
+        src-port = @ports[src-port-name]
+        if src-port?
+          err, res, more <- control-process dest-process-name, 'info', 'outport-addr', dest-port-name
+          if err
+            winston.log 'debug', 'PROCESS: can not get dest port address #{err.message}'
+            reply "dest port not found."
+          else
+            winston.log 'debug', 'PROCESS: source port #{src-port-name} connect to #{dest-process-name}:#{dest-port-name}.'
+            src-port.connect res
+            reply null, true
+        else
+          reply "source port not found."
       fire: (token, _, reply) ~>
         winston.log 'debug',  "RPC: fire()"
         @fire token, do

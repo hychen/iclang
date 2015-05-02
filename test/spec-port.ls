@@ -24,7 +24,7 @@ describe 'Port', ->
     .. 'should be able to receive JSON.', (done) ->
       outport = new OutPort <[out]>
       inport = new InPort null
-      inport.connect outport
+      inport.connect outport.addr
       inport.on 'data', ->
         it.should.be.deep.eq {obj:1} 
         outport.close!

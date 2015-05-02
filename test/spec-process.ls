@@ -16,6 +16,9 @@ mock-component = (name, inports, outports, fn) ->
     outports: tr outports
     fn: fn
 
+# We might have more than 10 processes in testing, but will only 
+# one Process instance per each ndoe.js process.
+process.setMaxListeners 100
 
 describe 'Process', ->
   beforeEach (done) ->
@@ -88,6 +91,19 @@ describe 'WorkerProcess', ->
       err, res, more <- control-process 'Fake', 'info', 'outport-addr', 'out'
       res.should.be.ok
       p.stop!
+      done!
+    .. '#connect()', (done) ->
+      fn = (inputs, exits) -> 
+        exits.success {out:inputs.in + 1}
+      comp = mock-component 'Fake', <[in]>, <[out]>, fn
+      p1 = new WorkerProcess 'Fake1', comp
+      p2 = new WorkerProcess 'Fake2', comp
+      p1.start!
+      p2.start!
+      err, res, more <- control-process 'Fake2', 'connect', 'in', 'Fake1', 'out'
+      res.should.be.ok
+      p1.stop!
+      p2.stop!
       done!
     .. '#fire()', (done) ->
       fn = (inputs, exits) -> 

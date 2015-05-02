@@ -35,8 +35,8 @@ export class InPort implements PortInterface
     @name = name
     @sock = zmq.socket 'pull'    
 
-  connect: (port) ->
-    @sock.connect port.addr
+  connect: (port-addr) ->
+    @sock.connect port-addr
 
   on: (event, callback) ->
     match event
