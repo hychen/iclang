@@ -6,6 +6,7 @@ require! mkdirp
 require! winston
 
 {load-component, ensured-component} = require './component'
+{InPort, OutPort} = require './port'
 
 VALID_PROCESS_STATUS = <[
     initializing
@@ -135,3 +136,47 @@ export class Process extends events.EventEmitter
     process.on 'SIGINT', ~>
       winston.log 'debug', "SIG: SIGINT received"
       @stop!
+
+export class WorkerProcess extends Process
+
+  (name, component) ->
+    super name
+    # -------------------------------------
+    # Public Properties
+    # -------------------------------------
+    @ports = {}
+
+    # -------------------------------------    
+    # Internal Properties
+    # -------------------------------------     
+    @_component = ensured-component component
+
+    # -------------------------------------    
+    # Initializations
+    # -------------------------------------    
+
+  # -------------------------------------
+  # Public Methods
+  # -------------------------------------
+  start: ->
+    super!
+    @_init-ports!
+    
+  stop: ->    
+    @_deinit-ports!
+    super!
+
+  # -------------------------------------
+  # Internal Methods
+  # -------------------------------------
+  _init-ports: ->
+    winston.log 'debug', 'Process: initializing ports.'
+    for let port-name, port-def of @_component.outports
+      @ports[port-name] = new OutPort port-name
+    for let port-name, port-def of @_component.inports
+      @ports[port-name] = new InPort port-name
+
+  _deinit-ports: ->
+    winston.log 'debug', 'Process: deinitializing ports.'
+    for let port in @ports
+      port.clos!

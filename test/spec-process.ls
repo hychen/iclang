@@ -1,7 +1,21 @@
 require! mkdirp
 require! rimraf
 
-{Process, control-process} = ic.process!
+{Process, WorkerProcess, control-process} = ic.process!
+
+mock-component = (name, inports, outports, fn) ->
+  tr = ->
+    o = {}
+    for p in it
+      o[p] = do
+        description: "port description."
+    return o
+  do
+    friendlyName: name
+    inports: tr inports
+    outports: tr outports
+    fn: fn
+
 
 describe 'Process', ->
   beforeEach (done) ->
@@ -47,4 +61,20 @@ describe 'Process', ->
       expect err .to.eq undefined
       p1.stop!
       p2.stop!
+      done!
+
+describe 'WorkerProcess', ->
+  beforeEach (done) ->
+    mkdirp "#{TEST_RUNTIME_DIR}/socket", done
+  afterEach (done) ->
+    rimraf "#{TEST_RUNTIME_DIR}", done
+  describe 'is a instance of a component.', -> ``it``
+    .. 'should have 0-infinit ports.', (done) ->
+      p = new WorkerProcess 'Fake', mock-component 'Fake', <[in]>, <[out]>, ->
+      p.ports.should.deep.eq {}
+      p.start!
+      p.ports.in.name.should.eq 'in'
+      p.ports.out.name.should.eq 'out'
+      p.ports.out.addr.should.ok
+      p.stop!
       done!
