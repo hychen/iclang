@@ -36,4 +36,5 @@ dependencies:
   machine: '4.0.x'
   rimraf: '^2.3.2'
   zmq: '2.10.x'
+  zerorpc: 'git://github.com/marrs/zerorpc-node.git'
   winston: '1.0.0'
