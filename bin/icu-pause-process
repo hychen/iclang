@@ -8,6 +8,6 @@ program
   .description 'turn a process into suspend mode'
   .arguments '<process-name>'
   .action (process-name) ->
-    control-process process-name, 'pause'
+    <- control-process process-name, 'pause'
 
 program.parse process.argv

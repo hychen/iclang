@@ -27,13 +27,17 @@ export function start-process(component-name-or-path, proc-name)
   return p
 
 export function control-process(proc-name, ...args)
+  # popup the callback function.
+  done = args[args.length-1]
+  delete args[args.length-1]
+  # call remote RPC method.
   proc-sock-addr = rpc-socket-addr proc-name
   if fs.existsSync proc-sock-addr
     client = new zerorpc.Client!
     client.connect "ipc://#{proc-sock-addr}"
     err, res, more <- client.invoke ...args
-    console.log err if err
     client.close!
+    done err, res, more
   else
     console.log "source process #{proc-name} is not running"
 
@@ -97,18 +101,18 @@ export class Process extends events.EventEmitter
 
   _init-rpc: ->
     @rpc-server = new zerorpc.Server do
-      status: (reply) ~>
+      status: (_, reply) ~>
         console.log "RPC: status()"
-        reply!
-      run: (reply)  ~>
+        reply null, @status!
+      run: (_, reply)  ~>
         console.log "RPC: run()"
         @run! 
         reply!
-      pause: (reply)  ~>
+      pause: (_, reply)  ~>
         console.log "RPC: pause()"
         @pause!
         reply!
-      connect: (src-port, dest-port, reply) ~>
+      connect: (src-port, dest-port, _, reply) ~>
         console.log "RPC: connect(#{src-port}, #{dest-port})"
         reply!
 

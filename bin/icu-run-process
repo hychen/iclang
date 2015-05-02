@@ -8,6 +8,6 @@ program
   .description 'turn a process into running mode'
   .arguments '<process-name>'
   .action (process-name) ->
-    control-process process-name, 'run'
+    err, res, more <- control-process process-name, 'run'
 
 program.parse process.argv
