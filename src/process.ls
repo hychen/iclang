@@ -22,7 +22,7 @@ export function start-process(component-name-or-path, proc-name)
   err <- mkdirp './.ic/sock'
   throw err if err
   component = load-component component-name-or-path, {}
-  p = new Process component, proc-name
+  p = new Process proc-name
   p.start!
   return p
 
@@ -39,12 +39,11 @@ export function control-process(proc-name, ...args)
 
 export class Process extends events.EventEmitter
 
-  (component, name)->
+  (name)->
     # -------------------------------------
     # Public Properties
     # -------------------------------------    
     @name = name
-    @_component = ensured-component component
 
     # -------------------------------------    
     # Internal Properties
