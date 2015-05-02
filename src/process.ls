@@ -53,6 +53,22 @@ export class Process extends events.EventEmitter
     # Internal Properties
     # -------------------------------------    
     @_status = 'initializing'
+    @_rpc-server = null
+    @_rpc-protocol = do
+      status: (_, reply) ~>
+        console.log "RPC: status()"
+        reply null, @status!
+      run: (_, reply)  ~>
+        console.log "RPC: run()"
+        @run! 
+        reply!
+      pause: (_, reply)  ~>
+        console.log "RPC: pause()"
+        @pause!
+        reply!
+      connect: (src-port, dest-port, _, reply) ~>
+        console.log "RPC: connect(#{src-port}, #{dest-port})"
+        reply!    
 
     # -------------------------------------    
     # Initializations
@@ -69,11 +85,11 @@ export class Process extends events.EventEmitter
   start: ->
     rpc-server-addr = "ipc://#{rpc-socket-addr @name}"
     console.log "PROCESS: starting RPC server on #{rpc-server-addr}"
-    @rpc-server.bind rpc-server-addr
+    @_rpc-server.bind rpc-server-addr
     @_set-status 'ready'    
 
   stop: ->
-    @rpc-server._socket.close!
+    @_rpc-server._socket.close!
     @_set-status 'terminated'
 
   run: ->
@@ -100,23 +116,9 @@ export class Process extends events.EventEmitter
       throw new Error "set process into invalid status: #{new-status}."
 
   _init-rpc: ->
-    @rpc-server = new zerorpc.Server do
-      status: (_, reply) ~>
-        console.log "RPC: status()"
-        reply null, @status!
-      run: (_, reply)  ~>
-        console.log "RPC: run()"
-        @run! 
-        reply!
-      pause: (_, reply)  ~>
-        console.log "RPC: pause()"
-        @pause!
-        reply!
-      connect: (src-port, dest-port, _, reply) ~>
-        console.log "RPC: connect(#{src-port}, #{dest-port})"
-        reply!
+    @_rpc-server = new zerorpc.Server @_rpc-protocol
 
-    @rpc-server.on 'error', ->
+    @_rpc-server.on 'error', ->
       console.error "RPC: Error: #{it}"
 
   _init-event-handlers: ->
