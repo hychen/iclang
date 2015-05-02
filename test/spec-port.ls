@@ -8,7 +8,7 @@ describe 'Port', ->
   beforeEach (done) ->
     mkdirp "#{TEST_RUNTIME_DIR}/socket", done
   afterEach (done) ->
-    rimraf "#{TEST_RUNTIME_DIR}/socket", done
+    rimraf "#{TEST_RUNTIME_DIR}", done
   describe 'the direction can be Out.' -> ``it``
     .. 'should be able to send JSON.', (done) ->
       ports = new OutPort <[out]>, runtime-dir: TEST_RUNTIME_DIR
