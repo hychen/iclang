@@ -8,7 +8,8 @@ ports-names = ->
 ports-length = ->
   return ports-names it .length
 
-port-addr = (proto, runtime-dir, id) ->
+port-addr = (proto, id) ->
+  runtime-dir = process.env.RUNTIME_DIR or './.ic'
   "#{proto}#{path.join runtime-dir, 'socket', id}"
 
 PortInterface = do
@@ -18,10 +19,10 @@ PortInterface = do
 
 export class OutPort implements PortInterface
 
-  (name, options) ->
+  (name) ->
     @id = uuid.v4!
     @name = name
-    @addr = port-addr 'ipc://', options.runtime-dir, @id
+    @addr = port-addr 'ipc://', @id
     @sock = zmq.socket 'push'
     @sock.bindSync @addr
 

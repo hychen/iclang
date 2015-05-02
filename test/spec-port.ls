@@ -11,7 +11,7 @@ describe 'Port', ->
     rimraf "#{TEST_RUNTIME_DIR}", done
   describe 'the direction can be Out.' -> ``it``
     .. 'should be able to send JSON.', (done) ->
-      ports = new OutPort <[out]>, runtime-dir: TEST_RUNTIME_DIR
+      ports = new OutPort <[out]>
       sock = zmq.socket 'pull'
       sock.connect ports.addr
       sock.on 'message', (message) -> 
@@ -22,8 +22,8 @@ describe 'Port', ->
       ports.send {obj:1}
   describe 'the direction can be In.' -> ``it``
     .. 'should be able to receive JSON.', (done) ->
-      outport = new OutPort <[out]>, runtime-dir: TEST_RUNTIME_DIR
-      inport = new InPort null, runtime-dir: TEST_RUNTIME_DIR
+      outport = new OutPort <[out]>
+      inport = new InPort null
       inport.connect outport
       inport.on 'data', ->
         it.should.be.deep.eq {obj:1} 
