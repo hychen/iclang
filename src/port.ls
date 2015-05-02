@@ -2,6 +2,12 @@ require! path
 require! zmq
 require! uuid
 
+ports-names = ->
+  return Object.keys it
+
+ports-length = ->
+  return ports-names it .length
+
 port-addr = (proto, runtime-dir, id) ->
   "#{proto}#{path.join runtime-dir, 'socket', id}"
 
@@ -21,3 +27,20 @@ export class OutPort implements PortInterface
 
   send: (data) ->
     @sock.send JSON.stringify data
+
+export class InPort implements PortInterface
+
+  (definition, options) ->
+    @definition = @definition
+    @sock = zmq.socket 'pull'    
+
+  connect: (port) ->
+    @sock.connect port.addr
+
+  on: (event, callback) ->
+    match event
+    | /data/ =>
+      @sock.on 'message', ->
+       callback JSON.parse it.toString! 
+    | _ => 
+      @sock event, callback
