@@ -18,9 +18,9 @@ PortInterface = do
 
 export class OutPort implements PortInterface
 
-  (definition, options) ->
+  (name, options) ->
     @id = uuid.v4!
-    @definition = definition
+    @name = name
     @addr = port-addr 'ipc://', options.runtime-dir, @id
     @sock = zmq.socket 'push'
     @sock.bindSync @addr
@@ -30,8 +30,8 @@ export class OutPort implements PortInterface
 
 export class InPort implements PortInterface
 
-  (definition, options) ->
-    @definition = @definition
+  (name, options) ->
+    @name = name
     @sock = zmq.socket 'pull'    
 
   connect: (port) ->
