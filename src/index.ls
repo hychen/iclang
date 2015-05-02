@@ -3,3 +3,4 @@ module.exports = do
   component: -> require './component'
   process: -> require './process'
   syntax: -> require './syntax'
+  port: -> require './port'
