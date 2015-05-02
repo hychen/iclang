@@ -24,7 +24,7 @@ export function rpc-socket-addr(proc-name)
 
 export function start-process(component-name-or-path, proc-name)
   component = load-component component-name-or-path, {}
-  p = new Process proc-name
+  p = new Process proc-name, component
   p.start!
   return p
 
