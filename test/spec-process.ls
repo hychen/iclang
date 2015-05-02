@@ -79,6 +79,16 @@ describe 'WorkerProcess', ->
       p.stop!
       done!
   describe 'can be controlled by RPC.', -> ``it``
+    .. '#info()', (done) ->
+      fn = (inputs, exits) -> 
+        exits.success {out:inputs.in + 1}
+      comp = mock-component 'Fake', <[in]>, <[out]>, fn
+      p = new WorkerProcess 'Fake', comp
+      p.start!
+      err, res, more <- control-process 'Fake', 'info', 'outport-addr', 'out'
+      res.should.be.ok
+      p.stop!
+      done!
     .. '#fire()', (done) ->
       fn = (inputs, exits) -> 
         exits.success {out:inputs.in + 1}

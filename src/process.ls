@@ -153,6 +153,16 @@ export class WorkerProcess extends Process
     @_component = ensured-component component
     @_incoming = {}
     @_rpc-protocol <<< do
+      info: (prop-name, query, _, reply) ~>
+        winston.log 'debug',  "RPC: info()"
+        match prop-name
+        | /outport-addr/ =>
+          port = @ports[query]
+          if port? and port.addr?
+            reply null, port.addr
+          else
+            reply "Invalid port name."
+        | _ => reply 'Invalid query.'
       fire: (token, _, reply) ~>
         winston.log 'debug',  "RPC: fire()"
         @fire token, do
