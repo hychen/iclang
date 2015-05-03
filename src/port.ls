@@ -1,7 +1,14 @@
+## Module Port
+#
+# Description of `Port`
 require! path
 require! zmq
 require! uuid
 {is-type} = require 'prelude-ls'
+
+# --------------------------------------------
+# Public Functions
+# --------------------------------------------
 
 # Takes a set of ports and returns port name ame
 #
@@ -30,32 +37,82 @@ export function port-addr(id)
   runtime-dir = process.env.RUNTIME_DIR or './.ic'
   "ipc://#{path.join runtime-dir, 'socket', id}"
 
+# --------------------------------------------
+# Internal Interfaces
+# --------------------------------------------
 PortInterface = do
 
+  # Close the port
+  #
+  # @param N/A
+  # @raise Erro raised from zmq.socket if any
+  # @return Undeciable
   close: ->
     @sock.close!
 
+# --------------------------------------------
+# Public Classes
+# --------------------------------------------
 export class OutPort implements PortInterface
 
+  # @param String name - The OutPort name
+  # @return OutPort - The OutPort instance
   (name) ->
+    # -- Public Properties
+    # @prop String id - The identifier in UUID v4 format
     @id = uuid.v4!
+    # @prop String name - The port name
     @name = name
+    # @prop String addr - The port ipc address where other ports can connect
     @addr = port-addr @id
+
+    # -- Internal Properties
     @sock = zmq.socket 'push'
+
+    # -- Initialization 
     @sock.bindSync @addr
 
+  # --------------------------------------------
+  # Public Methods
+  # --------------------------------------------
+
+  # To send a JSON to the port it attached.
+  #
+  # @param JSON data
+  # @raises Error raised from zmq.Socket if any
+  # @return Undeciable
   send: (data) ->
     @sock.send JSON.stringify data
 
 export class InPort implements PortInterface
 
   (name, options) ->
+    # -- Public Properties    
+    # @prop String name - The port name
     @name = name
+
+    # -- Internal Properties    
     @sock = zmq.socket 'pull'    
 
+  # --------------------------------------------
+  # Public Methods
+  # --------------------------------------------
+
+  # To connect to another OutPort
+  #
+  # @param String port-addr - port ipc address
+  # @raises Error raised from zmq.Socket if any
+  # @return Undeciable
   connect: (port-addr) ->
     @sock.connect port-addr
 
+  # To handle the event
+  #
+  # @param String event - event name
+  # @param Function callback - event handler
+  # @return Undeciable
+  # @event `data` - emit JSON when data received
+  # @event `error` - emit Error if any error happen
   on: (event, callback) ->
     match event
     | /data/ =>
