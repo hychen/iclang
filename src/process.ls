@@ -89,8 +89,12 @@ export class Process extends events.EventEmitter
     @_set-status 'ready'    
 
   stop: ->
-    @_rpc-server._socket.close!
+    @_rpc-server.close!
     @_set-status 'terminated'
+    #@FIX Workround.
+    # The process will hang after rpc server is closed.
+    # we will check this problem later.
+    process.exit 0 
 
   run: ->
     if @status! is 'ready'
