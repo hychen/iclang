@@ -9,5 +9,7 @@ program
   .arguments '<process-name>'
   .action (process-name) ->
     err, res, more <- control-process process-name, 'run'
+    if err
+      console.error err
 
 program.parse process.argv
