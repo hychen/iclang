@@ -2,7 +2,7 @@ require! mkdirp
 require! rimraf
 require! path
 
-{ports-names, ports-length, port-addr} = ic.port!
+{OutPort, ports-names, ports-length, port-addr} = ic.port!
 
 ports = do
   in1:1
@@ -54,5 +54,16 @@ describe 'Port functions', ->
       done!
     .. 'should raise error if runtime directory not exists', (done) ->
       <- rimraf TEST_RUNTIME_SOCKET_DIR
-      expect(-> port-addr 'yooo').to.throw 'runtime soceket directory not exists.'
+      expect(-> port-addr 'yooo').to.throw 'runtime socket directory not exists.'
+      done!
+
+describe 'class OutPort', -> 
+  describe '#constructor(name)', -> ``it``
+    .. 'should raise error if runtime root directory not exists.', (done) ->
+      expect(-> new OutPort 'hello').to.throw /runtime directory not exists./
+      done!
+    .. 'should raise error if runtime socket directory not exists.', (done) ->
+      <- mkdirp TEST_RUNTIME_DIR      
+      expect(-> new OutPort 'hello').to.throw /runtime socket directory not exists./
+      <- rimraf TEST_RUNTIME_DIR
       done!      

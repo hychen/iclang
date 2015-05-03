@@ -41,7 +41,7 @@ export function port-addr(id)
     if fs.existsSync socket-dir
       "ipc://#{path.join socket-dir, id}"
     else
-      throw new Error 'runtime soceket directory not exists.'
+      throw new Error 'runtime socket directory not exists.'
   else
     throw new Error 'runtime directory not exists.'
 
