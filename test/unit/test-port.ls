@@ -1,3 +1,6 @@
+require! mkdirp
+require! rimraf
+
 {ports-names, ports-length, port-addr} = ic.port!
 
 ports = do
@@ -22,6 +25,14 @@ describe 'Port functions', ->
       expect(-> ports-length []).to.throw /ports is not an object./
       done!
   describe 'port-addr(id)', -> ``it``
+    beforeEach (done) ->
+      <- mkdirp TEST_RUNTIME_DIR 
+      <- mkdirp TEST_RUNTIME_SOCKET_DIR
+      done!
+    afterEach (done) ->
+      <- rimraf TEST_RUNTIME_DIR
+      <- rimraf TEST_RUNTIME_SOCKET_DIR
+      done!
     .. 'should return an ipc address.', (done) ->
       addr = port-addr 'pppppp' 
       addr.should.match /^ipc:\/\//
@@ -29,11 +40,17 @@ describe 'Port functions', ->
       done!
     .. 'should return an ipc address with configured runtime directory.', (done) ->
       process.env.RUNTIME_DIR = '/tmp'
+      <- mkdirp '/tmp/socket'
       addr = port-addr 'pppppp' 
       addr.should.match /^ipc:\/\//
       addr.should.match /\/tmp\/socket\/pppppp/
-      delete process.env.RUNTIME_DIR
-      addr = port-addr 'pppppp' 
-      addr.should.match /^ipc:\/\//
-      addr.should.match /\.ic\/socket\/pppppp/
+      process.env.RUNTIME_DIR = TEST_RUNTIME_DIR
       done!
+    .. 'should raise error if runtime directory not exists', (done) ->
+      <- rimraf TEST_RUNTIME_DIR
+      expect(-> port-addr 'yooo').to.throw 'runtime directory not exists.'
+      done!
+    .. 'should raise error if runtime directory not exists', (done) ->
+      <- rimraf TEST_RUNTIME_SOCKET_DIR
+      expect(-> port-addr 'yooo').to.throw 'runtime soceket directory not exists.'
+      done!      

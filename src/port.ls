@@ -4,6 +4,7 @@
 require! path
 require! zmq
 require! uuid
+require! fs
 {is-type} = require 'prelude-ls'
 
 # --------------------------------------------
@@ -35,7 +36,14 @@ export function ports-length(ports)
 # @return String - The port ipc address.
 export function port-addr(id)
   runtime-dir = process.env.RUNTIME_DIR or './.ic'
-  "ipc://#{path.join runtime-dir, 'socket', id}"
+  if fs.existsSync runtime-dir
+    socket-dir = path.join runtime-dir, 'socket'
+    if fs.existsSync socket-dir
+      "ipc://#{path.join socket-dir, id}"
+    else
+      throw new Error 'runtime soceket directory not exists.'
+  else
+    throw new Error 'runtime directory not exists.'
 
 # --------------------------------------------
 # Internal Interfaces
