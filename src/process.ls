@@ -18,13 +18,14 @@ VALID_PROCESS_STATUS = <[
   ]>
 
 export function rpc-socket-addr(proc-name)
-  runtime-dir = process.env.RUNTIME_DIR or '././ic'
+  runtime-dir = process.env.RUNTIME_DIR or './.ic'
   fname = "ipc-process-#{proc-name}"
   return path.join runtime-dir, 'socket', fname
 
 export function start-process(component-name-or-path, proc-name)
+  <- mkdirp './.ic/socket'
   component = load-component component-name-or-path, {}
-  p = new Process proc-name, component
+  p = new WorkerProcess proc-name, component
   p.start!
   return p
 
