@@ -4,6 +4,7 @@ require! zerorpc
 require! fs
 require! mkdirp
 require! winston
+#winston.level = 'debug'
 
 {load-component, ensured-component} = require './component'
 {InPort, OutPort, ports-length} = require './port'
@@ -172,6 +173,7 @@ export class WorkerProcess extends Process
             reply "Invalid port name."
         | _ => reply 'Invalid query.'
       connect: (src-port-name, dest-process-name, dest-port-name, _, reply) ~>
+        console.log dest-port-name
         src-port = @ports[src-port-name]
         if src-port?
           err, res, more <- control-process dest-process-name, 'info', 'outport-addr', dest-port-name
