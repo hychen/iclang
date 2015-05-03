@@ -38,3 +38,4 @@ dependencies:
   zmq: '2.10.x'
   zerorpc: 'git://github.com/marrs/zerorpc-node.git'
   winston: '1.0.0'
+  commander: '2.8.x'
