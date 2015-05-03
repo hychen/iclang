@@ -1,0 +1,17 @@
+#!/usr/bin/env lsc
+require! program: commander
+ic = require '../'
+{control-process} = ic.process!
+
+program
+  .version (require require.resolve \../package.json).version
+  .description 'connect a process port to antoher process port.'
+  .arguments '<src-port-addr> <target-port-addr>'
+  .action (src-port-addr, target-port-addr) ->
+    [src-process-name, src-port-name] = src-port-addr / ':'
+    [target-process-name, target-port-name] = target-port-addr / ':'
+    err, res, more <- control-process src-process-name, 'connect', src-port-name, target-process-name, target-port-name
+    if err 
+      console.error err
+
+program.parse process.argv

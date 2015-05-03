@@ -9,5 +9,6 @@ program
   .command 'run-process', 'run a process'
   .command 'pause-process', 'pause a process'
   .command 'list-process', 'list running processes'
+  .command 'connect-process', 'connect a process port to another port.'
 
 program.parse process.argv
