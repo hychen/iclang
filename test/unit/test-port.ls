@@ -3,7 +3,7 @@ require! rimraf
 require! path
 require! zmq
 
-{OutPort, ports-names, ports-length, port-addr} = ic.port!
+{OutPort, InPort, ports-names, ports-length, port-addr} = ic.port!
 
 ports = do
   in1:1
@@ -86,3 +86,28 @@ describe 'Module Port', ->
           it.toString! .should.be.eq '{"obj":1}'
           done!
         p.send {obj:1}
+
+  describe 'class InPort', -> 
+    beforeEach (done) ->  
+      <- mkdirp TEST_RUNTIME_DIR 
+      <- mkdirp TEST_RUNTIME_SOCKET_DIR
+      done!
+    afterEach (done) ->
+      <- rimraf TEST_RUNTIME_DIR
+      <- rimraf TEST_RUNTIME_SOCKET_DIR
+      done!    
+    describe '#connect(port-addr)', -> ``it``
+      .. 'should raise error if port-addr is not valid ipc address.', (done) ->
+        p = new InPort 'hello'
+        expect(-> p.connect 'ipc://somewhere').to.throw /... not exists/
+        done!
+    describe '#on(event, callback)', -> ``it``
+      .. 'should recive JSON if `data` event emitted', (done) ->
+        outport = new OutPort 'out'
+        inport = new InPort 'in'
+        inport.connect outport.addr
+        inport.on 'data', (data) ->
+          data.should.deep.eq {obj:1}
+          done!
+        outport.send {obj:1}
+

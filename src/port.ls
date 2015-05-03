@@ -112,7 +112,11 @@ export class InPort implements PortInterface
   # @raises Error raised from zmq.Socket if any
   # @return Undeciable
   connect: (port-addr) ->
-    @sock.connect port-addr
+    ipc-path = port-addr.replace 'ipc://', ''
+    if fs.existsSync ipc-path
+      @sock.connect port-addr
+    else
+      throw new Error "#{port-addr} not exists."
 
   # To handle the event
   #
