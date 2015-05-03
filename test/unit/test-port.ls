@@ -1,5 +1,6 @@
 require! mkdirp
 require! rimraf
+require! path
 
 {ports-names, ports-length, port-addr} = ic.port!
 
@@ -39,12 +40,13 @@ describe 'Port functions', ->
       addr.should.match /\.ic\/socket\/pppppp/
       done!
     .. 'should return an ipc address with configured runtime directory.', (done) ->
-      process.env.RUNTIME_DIR = '/tmp'
-      <- mkdirp '/tmp/socket'
+      process.env.RUNTIME_DIR = path.join TEST_FIXTURE_ROOT_DIR, '.ic2'
+      <- mkdirp path.join process.env.RUNTIME_DIR, 'socket'
       addr = port-addr 'pppppp' 
       addr.should.match /^ipc:\/\//
-      addr.should.match /\/tmp\/socket\/pppppp/
+      addr.should.match /\.ic2\/socket\/pppppp/
       process.env.RUNTIME_DIR = TEST_RUNTIME_DIR
+      <- rimraf path.join TEST_FIXTURE_ROOT_DIR, '.ic2'
       done!
     .. 'should raise error if runtime directory not exists', (done) ->
       <- rimraf TEST_RUNTIME_DIR
