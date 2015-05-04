@@ -3,7 +3,7 @@
 # Description of `Component`
 require! path
 require! machine
-
+{is-type} = require 'prelude-ls'
 {syntax-validator} = require './syntax'
 
 # --------------------------------------------
@@ -16,7 +16,7 @@ require! machine
 # @return Object - A valid options
 export function ensured-component-options(options)
   #@TODO: check component options.
-  throw new Error 'component options is required.' unless typeof options is 'object'
+  throw new Error 'TypeError: options' unless is-type 'Object' options
   return options
 
 # Takes a component and return valid component
