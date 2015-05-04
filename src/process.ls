@@ -95,7 +95,7 @@ export class Process extends events.EventEmitter
     #@FIX Workround.
     # The process will hang after rpc server is closed.
     # we will check this problem later.
-    process.exit 0 
+#    process.exit 0 
 
   run: ->
     if @status! is 'ready'
