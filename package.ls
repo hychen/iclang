@@ -11,7 +11,7 @@ repository:
   url: 'git://github.com/hychen/iclang'
 scripts:
   test: """
-    mocha
+    npm run prepublish && mocha test/bootstrap-test.ls test/unit/*.ls test/spec/*.ls
   """
   prepublish: """
     lsc -cj package.ls &&
@@ -31,6 +31,11 @@ devDependencies:
   uuid: '2.0.x'
   mkdirp: '0.5.x'
 dependencies:
+  'forever': '0.14.x'
+  'prelude-ls': '1.1.x'
   machine: '4.0.x'
   rimraf: '^2.3.2'
   zmq: '2.10.x'
+  zerorpc: 'git://github.com/marrs/zerorpc-node.git'
+  winston: '1.0.0'
+  commander: '2.8.x'

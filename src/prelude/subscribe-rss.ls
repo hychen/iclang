@@ -1,3 +1,5 @@
+FeedSub = require 'feedsub'
+
 export definition = do
   friendlyName: 'Subscribe a feed.'
   description: 'Subscribe a remote RSS/Atom/JSON feed and output of any items it reads.'
