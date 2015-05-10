@@ -50,10 +50,12 @@ export class Process
   configure: (options) ->
     winston.level = options?.log-level or 'info'
 
+  # Starts the process
   start: ->
     @_create-ports!
     @_status = 'running'    
 
+  # Stop the process
   stop: ->
     @_destroy-ports!
     @_status = 'terminated'
