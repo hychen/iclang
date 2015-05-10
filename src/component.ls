@@ -26,6 +26,8 @@ export function ensured-component-options(options)
 # @raise Error - When component is not valid
 # @return Object - A valid component
 export function ensured-component(component)
+  unless component?
+    throw new Error 'component is required'
   validate = syntax-validator 'Component'
   if validate component
     # JSON Schema does not support function type, we need 
