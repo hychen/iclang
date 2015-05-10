@@ -12,8 +12,8 @@ describe 'Module Process', ->
       <- mkdirp TEST_RUNTIME_SOCKET_DIR
       done!
     afterEach (done) ->
-#      <- rimraf TEST_RUNTIME_DIR
-#      <- rimraf TEST_RUNTIME_SOCKET_DIR
+      <- rimraf TEST_RUNTIME_DIR
+      <- rimraf TEST_RUNTIME_SOCKET_DIR
       done!     
     describe '#constructor(name, component)', -> ``it`` 
       .. 'should raise error if the name is not valid.', (done) ->
