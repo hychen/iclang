@@ -123,3 +123,20 @@ describe 'Module Process', ->
         expect(-> p.connect 'out', '....').to.throw /port `out` is not a inport/
         p.stop!
         done!
+    describe '#fire-token(token, exits)', -> ``it``
+      .. 'should invoke component function within token', (done) ->
+          p = new Process 'A', do
+                friendlyName: '...'
+                fn: (inputs, exits) -> 
+                  exits.ok inputs.str
+          p.start!
+          p.fire-token {+str}, do 
+            ok: ->  
+              it.should.be.ok
+              done!
+      .. 'should raise error if the process is not running', (done) ->
+        p = new Process 'A', do
+              friendlyName: '...'
+              fn: ->
+        expect(-> p.fire-token {a:1}).to.throw /the process is not running/
+        done!

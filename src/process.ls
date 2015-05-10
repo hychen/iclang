@@ -92,6 +92,24 @@ export class Process
     throw "port `#{src-port-name}` is not a inport." if src-port.addr?
     src-port.connect dest-port-addr
 
+  # Fires within token
+  # 
+  # @param {Object} token
+  # @param {Object} exit callbacks
+  fire-token: (token, exits) ->
+    winston.log 'debug', "PROCESS: firing"
+    # the process can not be fired if it is not running.
+    throw new Error 'the process is not running' unless @_status is 'running'
+    @_status = 'firing'
+
+    winston.log 'debug', 'PROCESS: invoke component function.'      
+    @_component.fn token, exits
+    # no matter the component function is executing or is not, 
+    # the process is able to fire again.
+    # 
+    # [Note] this make the computing results are not in order.
+    @_status = 'running'    
+
   # --------------------------------------------
   # Internal Methods
   # --------------------------------------------
@@ -107,7 +125,7 @@ export class Process
         @_incoming[port-name] = it
         # fire iff all required input collected.
         if ports-length(@_incoming) == ports-length @_component.inports
-          @fire!
+          @_stream-fire!
 
   # Destroy ports          
   _destroy-ports: ->
