@@ -1,6 +1,7 @@
 require! mkdirp
 require! rimraf
 require! path
+require! fs
 
 {Process} = ic.process!
 
@@ -11,8 +12,8 @@ describe 'Module Process', ->
       <- mkdirp TEST_RUNTIME_SOCKET_DIR
       done!
     afterEach (done) ->
-      <- rimraf TEST_RUNTIME_DIR
-      <- rimraf TEST_RUNTIME_SOCKET_DIR
+#      <- rimraf TEST_RUNTIME_DIR
+#      <- rimraf TEST_RUNTIME_SOCKET_DIR
       done!     
     describe '#constructor(name, component)', -> ``it`` 
       .. 'should raise error if the name is not valid.', (done) ->
@@ -46,3 +47,18 @@ describe 'Module Process', ->
         p.ports.out?sock?_zmq?should.be.ok
         p.ports.out.sock.close!
         done!
+    describe '#stop()', -> ``it``
+      .. 'should close outports if the component has inports', (done) ->
+        p = new Process 'A', do
+            friendlyName: '...'
+            outports: do
+              out: do
+                description: '....'
+            fn: ->
+        p.start!
+        sockaddr = p.ports.out.addr.replace 'ipc://', ''
+        p.stop!
+        setTimeout (->
+          fs.existsSync sockaddr .should.not.be.ok
+          done!
+        ), 1 

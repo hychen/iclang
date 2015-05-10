@@ -64,6 +64,7 @@ export class Process
 
   # Create ports.
   _create-ports: ->
+    winston.log 'debug', 'PROCESS: creating ports.'
     for let port-name, port-def of @_component.outports
       @ports[port-name] = new OutPort port-name
     for let port-name, port-def of @_component.inports
@@ -73,3 +74,9 @@ export class Process
         # fire iff all required input collected.
         if ports-length(@_incoming) == ports-length @_component.inports
           @fire!
+
+  # Destroy ports          
+  _destroy-ports: ->
+    winston.log 'debug', 'PROCESS: destroying ports.'
+    for let _, port of @ports
+      port.close!
