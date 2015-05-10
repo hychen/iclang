@@ -61,7 +61,7 @@ describe 'Module Process', ->
         setTimeout (->
           fs.existsSync sockaddr .should.not.be.ok
           done!
-        ), 1 
+        ), 0.0001 
     describe '#inquery(prop-name, query)', (done) -> ``it``
       .. 'should raise error if prop name is not supported.', (done) ->
         p = new Process 'A', do
