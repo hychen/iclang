@@ -34,3 +34,15 @@ describe 'Module Process', ->
         p.ports.in?sock?_zmq?should.be.ok
         p.ports.in.sock.close!
         done!
+      .. 'should create outports if the component has outports.', (done) ->
+        p = new Process 'A', do
+            friendlyName: '...'
+            outports: do
+              out: do
+                description: '....'
+            fn: ->
+        p.start!
+        p._status.should.eq 'running'
+        p.ports.out?sock?_zmq?should.be.ok
+        p.ports.out.sock.close!
+        done!
