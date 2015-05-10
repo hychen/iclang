@@ -97,3 +97,29 @@ describe 'Module Process', ->
           p.start!
           expect(-> p.inquery 'OutPortAddr', 'in').to.throw 'Port `in` is not a outport.'
           done!
+    describe '#connect(src-port, dest-port-addr)', -> ``it``
+      .. 'should raise error if the process is not running', (done) ->
+        p = new Process 'A', do
+              friendlyName: '...'
+              fn: ->
+        expect(-> p.connect 'out', '....').to.throw /process is not running/
+        done!
+      .. 'should raise error if src-port not exists', (done) ->
+        p = new Process 'A', do
+              friendlyName: '...'
+              fn: ->
+        p.start!                
+        expect(-> p.connect 'XXXX', '...').to.throw /port `XXXX` not exists/
+        p.stop!
+        done!      
+      .. 'should raise error if src-port not exists', (done) ->
+        p = new Process 'A', do
+              friendlyName: '...'
+              outports: do
+                out: do
+                  destination: '...'
+              fn: ->
+        p.start!                
+        expect(-> p.connect 'out', '....').to.throw /port `out` is not a inport/
+        p.stop!
+        done!

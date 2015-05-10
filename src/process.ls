@@ -65,6 +65,7 @@ export class Process
   # @param {Any} query
   # @return {Any} result
   inquery: (prop-name, query) ->
+    winston.log 'debug', "PROCESS: inquery #{prop-name} #{query}"
     match prop-name
     | /OutPortAddr/ => 
       port = @ports[query]
@@ -72,6 +73,24 @@ export class Process
       throw "Port `#{query}` is not a outport." unless port.addr?
       return port.addr
     | _ => throw "Inquery prop `#{prop-name}` is not supported."
+
+  # Connects a source port to a outport address.
+  #
+  # @param {String} src-port-name - a in port name
+  # @param {String} dest-port-addr - ipc address of a outport.
+  # @raise {Error} when the port name isnt given
+  # @raise {Error} when the dest-port-addr is not given
+  # @raise {Error} when the port not exists
+  # @raise {Error} when the port is not a inport
+  connect: (src-port-name, dest-port-addr) ->
+    winston.log 'debug', "PROCESS: connecting port `#{src-port-name} to #{dest-port-addr}."
+    throw "source port name is required" unless src-port-name?
+    throw "destination ipc address is required" unless dest-port-addr?
+    throw "process is not running" unless @_status is 'running'
+    src-port = @ports[src-port-name]
+    throw "port `#{src-port-name}` not exists." unless src-port?
+    throw "port `#{src-port-name}` is not a inport." if src-port.addr?
+    src-port.connect dest-port-addr
 
   # --------------------------------------------
   # Internal Methods
