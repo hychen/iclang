@@ -58,6 +58,19 @@ export class Process
     @_destroy-ports!
     @_status = 'terminated'
 
+  # Inquery property of a process.
+  # @param {String} property name
+  # @param {Any} query
+  # @return {Any} result
+  inquery: (prop-name, query) ->
+    match prop-name
+    | /OutPortAddr/ => 
+      port = @ports[query]
+      throw "Port `#{query}` not exists." unless port?
+      throw "Port `#{query}` is not a outport." unless port.addr?
+      return port.addr
+    | _ => throw "Inquery prop `#{prop-name}` is not supported."
+
   # --------------------------------------------
   # Internal Methods
   # --------------------------------------------
