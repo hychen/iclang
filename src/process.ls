@@ -12,6 +12,23 @@ require! winston
 {InPort, OutPort, ports-length} = require './port'
 
 # --------------------------------------------
+# Internal Module Properties
+# --------------------------------------------
+VALID_PROCESS_STATUS = <[
+    initializing
+    running
+    terminated
+  ]>
+
+# --------------------------------------------
+# Public Functions
+# --------------------------------------------
+export function rpc-socket-addr(proc-name)
+  runtime-dir = process.env.RUNTIME_DIR or './.ic'
+  fname = "ipc-process-#{proc-name}"
+  return path.join runtime-dir, 'socket', fname
+
+# --------------------------------------------
 # Public Classes
 # --------------------------------------------
 export class Process
@@ -53,12 +70,12 @@ export class Process
   # Starts the process
   start: ->
     @_create-ports!
-    @_status = 'running'    
+    @_set-status 'running'    
 
   # Stop the process
   stop: ->
     @_destroy-ports!
-    @_status = 'terminated'
+    @_set-status 'terminated'
 
   # Inquery property of a process.
   # @param {String} property name
@@ -91,6 +108,7 @@ export class Process
     throw "port `#{src-port-name}` not exists." unless src-port?
     throw "port `#{src-port-name}` is not a inport." if src-port.addr?
     src-port.connect dest-port-addr
+    delete @_incoming[src-port-name]
 
   # Fires within token
   # 
@@ -108,11 +126,23 @@ export class Process
     # the process is able to fire again.
     # 
     # [Note] this make the computing results are not in order.
-    @_status = 'running'    
+    @_set-status 'running'    
 
   # --------------------------------------------
   # Internal Methods
   # --------------------------------------------
+
+  # Set new status
+  # 
+  # @param {String} new-status - new status, choice: initialize, running, terminated
+  _set-status: (new-status) ->
+    old-status = @_status
+    winston.log 'debug', "PROCESS: set new status: #{old-status} -> #{new-status}"
+    if new-status in VALID_PROCESS_STATUS
+      @_status = new-status
+      winston.log 'debug', "PROCESS: status changed #{old-status} -> #{new-status}"
+    else
+      throw new Error "set process into invalid status: #{new-status}."
 
   # Create ports.
   _create-ports: ->
