@@ -140,3 +140,44 @@ describe 'Module Process', ->
               fn: ->
         expect(-> p.fire-token {a:1}).to.throw /the process is not running/
         done!
+    describe '#_fire-stream()', -> ``it``
+      .. 'should create exits callbacks used in component function.', (done) ->
+        p = new Process 'A', do
+              friendlyName: '...'
+              outports: 
+                success: do
+                  description: '...'
+                error: do
+                  description: '...'
+              fn: (inputs, exits) ->
+                exits.success?.should.be.ok
+                exits.error?.should.be.ok
+                p.stop!
+                done!
+        p.start!
+        p._fire-stream!
+      .. 'should make its component function be able to send data to specfied outports.', (done) ->
+        p1 = new Process 'A', do
+              friendlyName: '...'
+              outports: 
+                success: do
+                  description: '...'
+                error: do
+                  description: '...'
+              fn: (inputs, exits) ->
+                exits.success 'hello'
+        p2 = new Process 'B', 
+              friendlyName: '...'
+              inports: 
+                  in: do
+                    description: '...'
+              fn: (inputs, exits) ->
+                exits.should.be.deep.eq {}
+                inputs.in.should.eq 'hello'
+                p1.stop!
+                p2.stop!
+                done!
+        p1.start!
+        p2.start!
+        p2.connect 'in' p1.ports.success.addr
+        p1._fire-stream!

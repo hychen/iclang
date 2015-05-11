@@ -125,10 +125,34 @@ export class Process
         @_incoming[port-name] = it
         # fire iff all required input collected.
         if ports-length(@_incoming) == ports-length @_component.inports
-          @_stream-fire!
+          @_fire-stream!
 
   # Destroy ports          
   _destroy-ports: ->
     winston.log 'debug', 'PROCESS: destroying ports.'
     for let _, port of @ports
       port.close!
+
+  # Firing within token from stream.
+  _fire-stream: ->
+    winston.log 'debug', 'PROCESS: fire within token from stream.'
+    # -- Helpers
+
+    # Takes a component and returns callbacks to send data to each outport.
+    #
+    # @param {Object} component - a component.
+    # @return {Array} callbacks
+    component-exits = (component) ~>
+      callbacks = {}
+      for let name, _ of component.outports
+        callbacks[name] = ~>
+          @ports[name].send it
+      return callbacks
+
+    # build exist callbacks defined by component.
+    exits = component-exits @_component 
+    # always flush incoming when firing.
+    token = @_incoming 
+    @_incoming = {}
+
+    @fire-token token, exits
