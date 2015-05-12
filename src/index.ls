@@ -4,3 +4,4 @@ module.exports = do
   process: -> require './process'
   syntax: -> require './syntax'
   port: -> require './port'
+  rpc: -> require './rpc'
