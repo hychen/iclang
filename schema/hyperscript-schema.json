@@ -18,7 +18,7 @@
             "type":"object",
             "properties":{
                 "name":{
-                    "title": "IClang Program Name",                    
+                    "title": "IClang Program Name",
                     "type":"string",
                     "required": true
                 },
@@ -122,6 +122,6 @@
         "comment":{
             "title": "Program Comment",
             "type":"string"
-        }        
+        }
     }
 }

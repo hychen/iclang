@@ -11,7 +11,7 @@ program
     [src-process-name, src-port-name] = src-port-addr / ':'
     [target-process-name, target-port-name] = target-port-addr / ':'
     err, res, more <- control-process src-process-name, 'connect', src-port-name, target-process-name, target-port-name
-    if err 
+    if err
       console.error err
 
 program.parse process.argv

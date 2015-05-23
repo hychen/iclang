@@ -6,7 +6,7 @@ export definition = do
       description: 'A string or a text.'
   default-exit: 'success'
   exits: do
-    success: 
+    success:
       description: 'Done.'
     error:
       description: 'Unexpected error occurred.'

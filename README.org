@@ -6,8 +6,8 @@
 
 /WARNING: This is work in progress. The APIs will remain in flux until 1.0.0. Suggestions welcome!/
 
-The things of internet is a highly interconnected collection of computational resources, and 
-as such it can be considred as forming a big computer. It is obviously to have some kind 
+The things of internet is a highly interconnected collection of computational resources, and
+as such it can be considred as forming a big computer. It is obviously to have some kind
 of abstract programming language runs on this wired computer.
 
 Internet Combinator Language, ICLang in short, is a cordination language for compositing things on internet.
@@ -48,12 +48,12 @@ and then get recent version of Node.js and the IClang source code via Github.
 
 #+BEGIN_SRC shell
 $ git clone https://github.com/hychen/iclang.git
-#+END_SRC 
+#+END_SRC
 
 then simply type
 
 #+BEGIN_SRC shell
-$ npm i 
+$ npm i
 #+END_SRC
 
 now, you can run test.

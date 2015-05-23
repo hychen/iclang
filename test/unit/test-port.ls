@@ -29,7 +29,7 @@ describe 'Module Port', ->
         done!
     describe 'port-addr(id)', -> ``it``
       beforeEach (done) ->
-        <- mkdirp TEST_RUNTIME_DIR 
+        <- mkdirp TEST_RUNTIME_DIR
         <- mkdirp TEST_RUNTIME_SOCKET_DIR
         done!
       afterEach (done) ->
@@ -37,14 +37,14 @@ describe 'Module Port', ->
         <- rimraf TEST_RUNTIME_SOCKET_DIR
         done!
       .. 'should return an ipc address.', (done) ->
-        addr = port-addr 'pppppp' 
+        addr = port-addr 'pppppp'
         addr.should.match /^ipc:\/\//
         addr.should.match /\.ic\/socket\/pppppp/
         done!
       .. 'should return an ipc address with configured runtime directory.', (done) ->
         process.env.RUNTIME_DIR = path.join TEST_FIXTURE_ROOT_DIR, '.ic2'
         <- mkdirp path.join process.env.RUNTIME_DIR, 'socket'
-        addr = port-addr 'pppppp' 
+        addr = port-addr 'pppppp'
         addr.should.match /^ipc:\/\//
         addr.should.match /\.ic2\/socket\/pppppp/
         process.env.RUNTIME_DIR = TEST_RUNTIME_DIR
@@ -59,43 +59,43 @@ describe 'Module Port', ->
         expect(-> port-addr 'yooo').to.throw 'runtime socket directory not exists.'
         done!
 
-  describe 'class OutPort', -> 
+  describe 'class OutPort', ->
     describe '#constructor(name)', -> ``it``
       .. 'should raise error if runtime root directory not exists.', (done) ->
         expect(-> new OutPort 'hello').to.throw /runtime directory not exists./
         done!
       .. 'should raise error if runtime socket directory not exists.', (done) ->
-        <- mkdirp TEST_RUNTIME_DIR      
+        <- mkdirp TEST_RUNTIME_DIR
         expect(-> new OutPort 'hello').to.throw /runtime socket directory not exists./
         <- rimraf TEST_RUNTIME_DIR
         done!
     describe '#send(data)', -> ``it``
-      beforeEach (done) ->  
-        <- mkdirp TEST_RUNTIME_DIR 
+      beforeEach (done) ->
+        <- mkdirp TEST_RUNTIME_DIR
         <- mkdirp TEST_RUNTIME_SOCKET_DIR
         done!
       afterEach (done) ->
         <- rimraf TEST_RUNTIME_DIR
         <- rimraf TEST_RUNTIME_SOCKET_DIR
-        done!  
+        done!
       .. 'should serialize and send data.', (done) ->
-        p = new OutPort 'hello' 
-        insock = zmq.socket 'pull' 
+        p = new OutPort 'hello'
+        insock = zmq.socket 'pull'
         insock.connect p.addr
         insock.on 'message', ->
           it.toString! .should.be.eq '{"obj":1}'
           done!
         p.send {obj:1}
 
-  describe 'class InPort', -> 
-    beforeEach (done) ->  
-      <- mkdirp TEST_RUNTIME_DIR 
+  describe 'class InPort', ->
+    beforeEach (done) ->
+      <- mkdirp TEST_RUNTIME_DIR
       <- mkdirp TEST_RUNTIME_SOCKET_DIR
       done!
     afterEach (done) ->
       <- rimraf TEST_RUNTIME_DIR
       <- rimraf TEST_RUNTIME_SOCKET_DIR
-      done!    
+      done!
     describe '#connect(port-addr)', -> ``it``
       .. 'should raise error if port-addr is not valid ipc address.', (done) ->
         p = new InPort 'hello'

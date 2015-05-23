@@ -10,7 +10,7 @@ validator = require 'is-my-json-valid'
 # --------------------------------------------
 
 # Takes a type name and returns a type validator
-# 
+#
 # @param String _type - The type
 # @raise Error - When type is not a string
 # @raise Error - When type is not supported

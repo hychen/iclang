@@ -7,70 +7,70 @@
 * Patterns
 - [[http://workflowpatterns.com][Workflow Patterns]]
 - [[http://communicationtheory.org/patterns-of-communication/][Communication Patters]]
-- Dsitrubuted Computing Software Architecture Pattern 
+- Dsitrubuted Computing Software Architecture Pattern
   - [[http://www.cs.wustl.edu/~schmidt/POSA/POSA4/][Pattern-Oriented Software Architecture: A Pattern Language for Distributed Computing]]
 - Enterprise Intergration Patterns
   - [[http://www.enterpriseintegrationpatterns.com/toc.html][Messaging Patterns]]
 * Coordination Language And Models
 ** Papers
 *** Coordination models and languages, GA Papadopoulos, F Arbab, 1999
-**** The concept of coordination is by no means limited to Computer Science. 
-Malone and Crowston characterise coordination as an emerging research area with an interdisciplinary focus, 
-playing a key issue in many diverse disciplines such as economics and operational  research,  organisation theory  and  biology. 
+**** The concept of coordination is by no means limited to Computer Science.
+Malone and Crowston characterise coordination as an emerging research area with an interdisciplinary focus,
+playing a key issue in many diverse disciplines such as economics and operational  research,  organisation theory  and  biology.
 **** What is Coordination Model
 - the glue that binds separate activities into an ensemble.
 - The need of Multilingual and Heterogeneous Systems
 ****  Coordination works well  on distributed/parallel programming.
-Programming a distributed or parallel system can be seen as the combination of two distinct activities: the actual 
-computing part comprising a number of processes involved in manipulating data and a coordination part responsible for 
-the communication and cooperation between the processes. Thus, coordination can be used to distinguish the computational 
+Programming a distributed or parallel system can be seen as the combination of two distinct activities: the actual
+computing part comprising a number of processes involved in manipulating data and a coordination part responsible for
+the communication and cooperation between the processes. Thus, coordination can be used to distinguish the computational
 concerns of some distributed or parallel application from the communication ones, allowing the separate development but also
 the eventual amalgamation of the these two major development phases.
 **** Data-Driven
-- The main characteristic of the data-driven coordination models and languages is the fact that the state of the computation at any moment 
+- The main characteristic of the data-driven coordination models and languages is the fact that the state of the computation at any moment
   in time is defined in terms of both the values of the data being received or sent and the actual configuration of the coordinated components.
 - A data-driven coordination language typically offers some coordination primitives (coupled with a coordination metaphor) which are mixed within
-  the purely computational part of  the  code.  These  primitives  do  encapsulate  in  a  useful  way  the  communication  and configurational 
-  aspects of some computation, but must be used in conjunction with the purely computational manipulation of data associated with some process. 
-  This means that processes cannot easily be distinguished as either coordination or computational processes. 
+  the purely computational part of  the  code.  These  primitives  do  encapsulate  in  a  useful  way  the  communication  and configurational
+  aspects of some computation, but must be used in conjunction with the purely computational manipulation of data associated with some process.
+  This means that processes cannot easily be distinguished as either coordination or computational processes.
 ***** Data-Driven Model - Shared Data Space
 - Almost all coordination models belonging to this category have evolved around the notion of a *Shared Dataspace*.
-- A *Shared  Dataspace* is a common, content-addressable  data structure. All processes involved in some computation can communicate among themselves only indirectly via this medium. 
+- A *Shared  Dataspace* is a common, content-addressable  data structure. All processes involved in some computation can communicate among themselves only indirectly via this medium.
   this metaphor achieves decoupling of processes in both space and time.
 ***** Data-Driven Model - Message-passing
 
 ***** Data-Driven Model - Compositional Programming
 - A compositional programming system is one in which properties of program
-  components are preserved when those components are composed in parallel 
-  with other program components. 
-  Thus, it is possible to define in a compositional way recurring patterns 
-  of parallel computation, whether configuration ones (such as mapping techniques) 
-  or communication ones (such as streamers  and  mergers),  as  building  blocks  
-  and  combine  them  together  to  form  bigger programs. 
+  components are preserved when those components are composed in parallel
+  with other program components.
+  Thus, it is possible to define in a compositional way recurring patterns
+  of parallel computation, whether configuration ones (such as mapping techniques)
+  or communication ones (such as streamers  and  mergers),  as  building  blocks
+  and  combine  them  together  to  form  bigger programs.
 - 2 approachs
   - *concurrent logic programming*
   - *functional programming*
 **** Control-Driven
 - the coordinated framework evolves by means of observing state changes in processes
-  and, possibly, broadcast of events. Contrary to the case of the data-driven family 
-  where coordinators directly handle and examine data values, here processes 
-  (whether coordination or computational ones) are treated as black boxes; data handled 
-  within a  process is of no concern to the environment of the process. 
-- Processes communicate with their environment by means of clearly defined interfaces, 
+  and, possibly, broadcast of events. Contrary to the case of the data-driven family
+  where coordinators directly handle and examine data values, here processes
+  (whether coordination or computational ones) are treated as black boxes; data handled
+  within a  process is of no concern to the environment of the process.
+- Processes communicate with their environment by means of clearly defined interfaces,
   usually referred to as input or output ports. Producer-consumer relationships are formed
-  by means of setting up stream or channel connections between output ports of producers 
-  and input ports of consumers. By nature, these connections are point-to-point, although 
-  limited  broadcasting functionality  is  usually  allowed  by  forming  1-n  
-  relationships  between  a  producer  and  n consumers and vice versa. 
-- Most of the coordination languages to be described in this section realise in one way or 
+  by means of setting up stream or channel connections between output ports of producers
+  and input ports of consumers. By nature, these connections are point-to-point, although
+  limited  broadcasting functionality  is  usually  allowed  by  forming  1-n
+  relationships  between  a  producer  and  n consumers and vice versa.
+- Most of the coordination languages to be described in this section realise in one way or
   another the above *CSP*- or *Occam-like* formalism.
 - *static reconfiguration* v.s. *dynamic reconfiguration*
-- [[http://projects.cwi.nl/manifold/][MANIFOLD]] 
+- [[http://projects.cwi.nl/manifold/][MANIFOLD]]
 **** Comparision Between Data-Driven and Control-Driven
-- In the case of the data-driven category, the coordination component is usually a set of primitives with predefined functionality which is used in connection with 
+- In the case of the data-driven category, the coordination component is usually a set of primitives with predefined functionality which is used in connection with
   some “host” computational language, in the control-driven category the coordination component is usually a fully-fledged language.
-- The data-driven category tends to be used mostly for parallelising computational problems. The control-driven category tends to be used primarily for modelling systems. 
-- the data- vs. control-driven separation is by no means a clear cut one. 
+- The data-driven category tends to be used mostly for parallelising computational problems. The control-driven category tends to be used primarily for modelling systems.
+- the data- vs. control-driven separation is by no means a clear cut one.
 **** Major Dimensions Of Coordination Model
 - the entities being coordinated
 - the mechanism of coordination
@@ -83,10 +83,10 @@ the eventual amalgamation of the these two major development phases.
 **** Concerned Issues
 - flat unstructured communication medium v.s. hierarchical levels of their communication medium
 - port-to-port connections via streams with static/dymaic reconfiguration support.
-- channnled-based v.s. medium-based 
-  
+- channnled-based v.s. medium-based
 
-* Web Services Compositions 
+
+* Web Services Compositions
 ** Papers
 *** van der Aalst, W.M.P, Dumas, M. ; ter Hofstede, A.H.M..  (2003). Web Service Composition Languages: Old Wine in New Bottles?. IEEE.
 ***  Luca Cardelli and Rowan Davies. . (1997). Service Combinators for Web Computing. IEEE.

@@ -6,7 +6,7 @@
 # mysum(
 #  {
 #    'list': [1,2,3,4]
-#  }, 
+#  },
 #  {
 #    success: function(outputs){
 #      console.log(outputs.out);
@@ -59,13 +59,13 @@ export definition = do
 
 # Component Provider
 #
-# A function gnerates a configured component definition will be loaded 
+# A function gnerates a configured component definition will be loaded
 # and initialize a process to perform my-sum function.
 #
 # ```
 # comp = new Component 'mysum'
 # mysum = new Process comp
-# # connect out port of mysum process to in port of print2console 
+# # connect out port of mysum process to in port of print2console
 # # process.
 # connect mysum, 'out', print2console, 'in'
 # send list to mysum and print the result to console.

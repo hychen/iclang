@@ -16,7 +16,7 @@ export definition = do
       description: 'returned article(s)'
   default-exit: 'success'
   exits: do
-    success: 
+    success:
       description: 'New article(s) fetched.'
     error:
       description: 'Unexpected error occurred.'

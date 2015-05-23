@@ -6,14 +6,14 @@ export definition = do
       description: 'return pulse'
   default-exit: 'success'
   exits: do
-    success: 
+    success:
       description: 'New pluse token send.'
     error:
       description: 'Unexpected error occurred.'
 
 export function provide-component(options)
   definition.fn = (inputs, exits) ->
-    setInterval (-> 
+    setInterval (->
       exits.success {out:1}
-      ), 10 
+      ), 10
   return definition

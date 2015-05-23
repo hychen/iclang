@@ -19,7 +19,7 @@ require! fs
 export function ports-names(ports)
   if is-type 'Object' ports
     Object.keys ports
-  else 
+  else
     throw new Error "ports is not an object."
 
 # Takes a set of ports and returns count of ports.
@@ -77,7 +77,7 @@ export class OutPort implements PortInterface
     # -- Internal Properties
     @sock = zmq.socket 'push'
 
-    # -- Initialization 
+    # -- Initialization
     @sock.bindSync @addr
 
   # --------------------------------------------
@@ -95,12 +95,12 @@ export class OutPort implements PortInterface
 export class InPort implements PortInterface
 
   (name, options) ->
-    # -- Public Properties    
+    # -- Public Properties
     # @prop String name - The port name
     @name = name
 
-    # -- Internal Properties    
-    @sock = zmq.socket 'pull'    
+    # -- Internal Properties
+    @sock = zmq.socket 'pull'
 
   # --------------------------------------------
   # Public Methods
@@ -129,6 +129,6 @@ export class InPort implements PortInterface
     match event
     | /data/ =>
       @sock.on 'message', ->
-       callback JSON.parse it.toString! 
-    | _ => 
+       callback JSON.parse it.toString!
+    | _ =>
       @sock event, callback

@@ -6,16 +6,16 @@ require! fs
 {Process} = ic.process!
 
 describe 'Module Process', ->
-  describe 'class Process', -> 
-    beforeEach (done) ->  
-      <- mkdirp TEST_RUNTIME_DIR 
+  describe 'class Process', ->
+    beforeEach (done) ->
+      <- mkdirp TEST_RUNTIME_DIR
       <- mkdirp TEST_RUNTIME_SOCKET_DIR
       done!
     afterEach (done) ->
       <- rimraf TEST_RUNTIME_DIR
       <- rimraf TEST_RUNTIME_SOCKET_DIR
-      done!     
-    describe '#constructor(name, component)', -> ``it`` 
+      done!
+    describe '#constructor(name, component)', -> ``it``
       .. 'should raise error if the name is not valid.', (done) ->
         expect(-> new Process).to.throw 'process name is required'
         done!
@@ -61,7 +61,7 @@ describe 'Module Process', ->
         setTimeout (->
           fs.existsSync sockaddr .should.not.be.ok
           done!
-        ), 0.0001 
+        ), 0.0001
     describe '#inquery(prop-name, query)', (done) -> ``it``
       .. 'should raise error if prop name is not supported.', (done) ->
         p = new Process 'A', do
@@ -86,7 +86,7 @@ describe 'Module Process', ->
               fn: ->
           p.start!
           expect(-> p.inquery 'OutPortAddr', 'in').to.throw 'Port `in` not exists.'
-          done!        
+          done!
         .. 'should riase error if asking the address of a inport', (done) ->
           p = new Process 'A', do
               friendlyName: '...'
@@ -108,10 +108,10 @@ describe 'Module Process', ->
         p = new Process 'A', do
               friendlyName: '...'
               fn: ->
-        p.start!                
+        p.start!
         expect(-> p.connect 'XXXX', '...').to.throw /port `XXXX` not exists/
         p.stop!
-        done!      
+        done!
       .. 'should raise error if src-port not exists', (done) ->
         p = new Process 'A', do
               friendlyName: '...'
@@ -119,7 +119,7 @@ describe 'Module Process', ->
                 out: do
                   destination: '...'
               fn: ->
-        p.start!                
+        p.start!
         expect(-> p.connect 'out', '....').to.throw /port `out` is not a inport/
         p.stop!
         done!
@@ -127,11 +127,11 @@ describe 'Module Process', ->
       .. 'should invoke component function within token', (done) ->
           p = new Process 'A', do
                 friendlyName: '...'
-                fn: (inputs, exits) -> 
+                fn: (inputs, exits) ->
                   exits.ok inputs.str
           p.start!
-          p.fire-token {+str}, do 
-            ok: ->  
+          p.fire-token {+str}, do
+            ok: ->
               it.should.be.ok
               done!
       .. 'should raise error if the process is not running', (done) ->
@@ -144,7 +144,7 @@ describe 'Module Process', ->
       .. 'should create exits callbacks used in component function.', (done) ->
         p = new Process 'A', do
               friendlyName: '...'
-              outports: 
+              outports:
                 success: do
                   description: '...'
                 error: do
@@ -159,16 +159,16 @@ describe 'Module Process', ->
       .. 'should make its component function be able to send data to specfied outports.', (done) ->
         p1 = new Process 'A', do
               friendlyName: '...'
-              outports: 
+              outports:
                 success: do
                   description: '...'
                 error: do
                   description: '...'
               fn: (inputs, exits) ->
                 exits.success 'hello'
-        p2 = new Process 'B', 
+        p2 = new Process 'B',
               friendlyName: '...'
-              inports: 
+              inports:
                   in: do
                     description: '...'
               fn: (inputs, exits) ->

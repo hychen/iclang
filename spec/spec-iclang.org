@@ -3,27 +3,27 @@
 #+OPTIONS: H:2 num:t toc:2
 #+OPTIONS: ^:nil
 #+OPTIONS: <:nil todo:nil *:t ^:{} @:t ::t |:t TeX:t
-  
+
 * Conventions and Terminology
 
-The key words *MUST*, *MUST NOT*, *REQUIRED*, *SHALL*, *SHALL NOT*, *SHOULD*, *SHOULD NOT*, *RECOMMENDED*, *MAY*, 
+The key words *MUST*, *MUST NOT*, *REQUIRED*, *SHALL*, *SHALL NOT*, *SHOULD*, *SHOULD NOT*, *RECOMMENDED*, *MAY*,
 and *OPTIONAL* in this document are to be interpreted as described in [[https://www.ietf.org/rfc/rfc2119.txt][RFC 2119]].
 
 * Introduction
 
-The things of internet is a highly interconnected collection of computational resources, and 
-as such it can be considred as forming a big computer. It is obviously to have some kind 
+The things of internet is a highly interconnected collection of computational resources, and
+as such it can be considred as forming a big computer. It is obviously to have some kind
 of abstract programming language runs on this wired computer.
 
 Internet Combinator Language, ICLang in short, is a cordination language for compositing things on internet.
-and designed in dataflow mindset with [[en.wikipedia.org/wiki/Configurable_modularity][configurable modularity]]. 
+and designed in dataflow mindset with [[en.wikipedia.org/wiki/Configurable_modularity][configurable modularity]].
 
-Not like how we does when we building a application in conventional programming language, building a pplication 
-in ICLang is totally different, and almost like like building a electronic circuit by wiring pins of integrated 
+Not like how we does when we building a application in conventional programming language, building a pplication
+in ICLang is totally different, and almost like like building a electronic circuit by wiring pins of integrated
 circuits.
 
-Which means a developer defines applications as networks of "black box" processes, which exchange data across 
-predefined connections by message passing, where the connections are specified externally to the processes. 
+Which means a developer defines applications as networks of "black box" processes, which exchange data across
+predefined connections by message passing, where the connections are specified externally to the processes.
 
 These black box processes can be reconnected endlessly to form different applications without having to be changed
 internally. So, when a developer programs, he is doing visual thinking in his mind.
@@ -35,15 +35,15 @@ internally. So, when a developer programs, he is doing visual thinking in his mi
 str|[]--->[]in Read out[]---->[]in Print out[]--->[]status
    |      |             |     |              |     |
    |      +-------------+     +--------------+     |
-   +-----------------------------------------------+      
+   +-----------------------------------------------+
 #+END_SRC
 
-This programming paradigm that uses a "data factory" metaphor for designing and building applications 
+This programming paradigm that uses a "data factory" metaphor for designing and building applications
 usually called [[https://en.wikipedia.org/wiki/Dataflow_programming][Data Flow Programming]], [[http://www.jpaulmorrison.com/fbp/][Flow-based Programming]].
 
-This document defines the syntax for IClang programs and an informal abstract semantics for the meaning of such 
+This document defines the syntax for IClang programs and an informal abstract semantics for the meaning of such
 programs. We leave as implementation dependent the ways in which ICLang programs are to be manipulated, interpreted,
-etc. 
+etc.
 
 ** Principles
 
@@ -56,7 +56,7 @@ etc.
 
 In this section, we describe the abstract syntactic and semantic structure of ICLang.
 
-1. At the topmost level is IClang's lexcial structure. The lexical structure represents ICLang programs in 
+1. At the topmost level is IClang's lexcial structure. The lexical structure represents ICLang programs in
    JSON files.
 2. At the top level is modules described in Chapter [[Modules][Modules]]. Modules provide a way to control namespaces.
 3. At the bottom level is a collection of components described in Chapter [[Components]].
@@ -87,7 +87,7 @@ In this chapter, we describe the low-level lexical structure of ICLang.
               "type":"object",
               "properties":{
                   "name":{
-                      "title": "IClang Program Name",                    
+                      "title": "IClang Program Name",
                       "type":"string",
                       "required": true
                   },
@@ -191,7 +191,7 @@ In this chapter, we describe the low-level lexical structure of ICLang.
           "comment":{
               "title": "Program Comment",
               "type":"string"
-          }        
+          }
       }
   }
 #+END_SRC
@@ -219,7 +219,7 @@ As an example below, shows a IClang program.
             {
                 "src":{
                     "process":"Read",
-                    "port":"out"                
+                    "port":"out"
                 },
                 "dest":{
                     "process":"Print",
@@ -229,7 +229,7 @@ As an example below, shows a IClang program.
         ],
         "inports":[
             {
-                "name":"str",          
+                "name":"str",
                 "dest":{
                     "process":"Read",
                     "port":"in"
@@ -243,7 +243,7 @@ As an example below, shows a IClang program.
                     "process":"Print",
                     "port":"out"
                 }
-            }    
+            }
         ]
     }
 #+END_SRC
@@ -263,15 +263,15 @@ TBD
 * Components
 
 A component is a module of a conventional programming language, exports [[Component%20Definition][Component Definition]], a value declares component
-metadata, such as name, description,etc. And [[Component%20Provider][Component Provider]] a function to provide the value. the name of the value 
-and function should be corresponding to ones used in the ICLang runtime implemented in same conventional programming 
+metadata, such as name, description,etc. And [[Component%20Provider][Component Provider]] a function to provide the value. the name of the value
+and function should be corresponding to ones used in the ICLang runtime implemented in same conventional programming
 language.
 
 In this chapter, we are using Node.JS implmentation of a component to explain the syntax and abstract meaning.
 
 ** Component Strucutre
 
-Hre is the structure for Node.JS and components implemented in other conventional programming language 
+Hre is the structure for Node.JS and components implemented in other conventional programming language
 should very simliary to this one.
 
 #+BEGIN_SRC javascript
@@ -288,7 +288,7 @@ should very simliary to this one.
           out:{
               description: ''
               example: 'foo'
-          }  
+          }
       },
     defaultExit: 'success',
       exits: {
@@ -319,7 +319,7 @@ As above shows, the Component Definition called *definition* and the Component P
 
 ** Component Definition
 
-Component Definition is a JSON that 
+Component Definition is a JSON that
 
 - is [[http://node-machine.org/spec/machine][Node Machine Specification]] compatible.
 - can be verified by the following schema:
@@ -453,7 +453,7 @@ Each value will be route to proper ports after firing.
 * Modules
 
 Modules are namespaces which contain multiple modules and components themselves and maintianed
-by conventional programming language package menagement tool. 
+by conventional programming language package menagement tool.
 
 Node.Js implementations of modules are maintained by [[https://www.npmjs.com][NPM]] and uses the prefix *ic-module-*.
 
@@ -464,7 +464,7 @@ In this chapter, we use Node.Js implmentation to explain the directory structure
 The *metadata.json* files are required to make ICLang treat the directories as containing modules;
 Here is a typical directory structure for a IClang module.
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 - metadata.json
 - package.json
 - scripts/
@@ -504,14 +504,14 @@ It should be able to verified by the schema below.
     }
 #+END_SRC
 
-As example below, its shows this module contains two components, *component_a* and *component_b* in 
+As example below, its shows this module contains two components, *component_a* and *component_b* in
 *components* directory.
 
 #+BEGIN_SRC javascript
   {
       "scripts": [
           "scripts/script_a.json"
-      ],    
+      ],
       "components": [
           "components/component_a.js",
           "components/component_b.js"
@@ -523,7 +523,7 @@ As example below, its shows this module contains two components, *component_a* a
 
 If any of the components have dependencies on other npm modules, they must be included in the dependencies property.
 
-To help make the components discoverable within the npm repository, the file should include iclang in its keywords 
+To help make the components discoverable within the npm repository, the file should include iclang in its keywords
 property. This will ensure the package appears when searching by keyword.
 
 #+BEGIN_SRC javascript
@@ -583,7 +583,7 @@ An import path can describe how to obtain the package source code using [[https:
   }
 #+END_SRC
 
-The module described in an import path  will be automatically fected into *node_modules* when 
+The module described in an import path  will be automatically fected into *node_modules* when
 *ic-program.json* is evulated, as the following shows.
 
 #+BEGIN_SRC javascript
@@ -614,7 +614,7 @@ github: ic-modules/module_root
 
 * Evaluation
 
-A IClang program is evaluated by ICLang interpreter. It instances procesess, connects ports betwen processes in order 
+A IClang program is evaluated by ICLang interpreter. It instances procesess, connects ports betwen processes in order
 to indicate where data comes, how data be processed and where processed result goes.
 *** Defintions
 **** Processes
@@ -623,7 +623,7 @@ A process is an instance of a component.
 - All process should have a UUID identifier.
 - All process should be able to have zero to infinite InSocket or zero to infinite OutSocket.
 - All process should starts firing if and only if the Firing Rules is satisfied.
-  
+
 **** Sockets
 A socket is an instance of a port which is place on a process to receiving or sending data.
 
@@ -655,7 +655,7 @@ The directory name is */tmp/iclang*.
 
 ** Connecting processes
 TBD
-** Firing 
+** Firing
 The process run the component function if firing rule is satisfied.
 
 *** Fire Rule

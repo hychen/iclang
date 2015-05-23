@@ -134,7 +134,6 @@ describe 'HyperScript File', ->
 
         s = test-script-from-proc 'Process', test-proc 1, {x:1, 2}
         nok s, err
-                                                                        
         done!
     describe 'must have connections field that', -> ``it``
       err = err-ref-nmatch 'data.connections'
@@ -148,7 +147,7 @@ describe 'HyperScript File', ->
           bad-port = test-port process:1, port:1
           src-port = test-port process:'processA', port:'out'
           dest-port = test-port process: 'processB', port: 'in'
-          
+
           s = test-script-from-conn test-conn src-port, dest-port
           ok s
 
@@ -168,20 +167,20 @@ describe 'HyperScript File', ->
       err-in = err-ref-nmatch 'data.inports'
       err-exp = err-ref-nmatch 'data.exports'
       bad-process-port = test-port process:1, port:2
-      process-port = test-port process:'processA', port:'out'        
+      process-port = test-port process:'processA', port:'out'
       .. 'each inport has a name and destination process port.', (done) ->
         s = test-script-from-inexports inports: test-inports 'inport', process-port
         ok s
 
         s = test-script-from-inexports inports: test-inports 1, process-port
         nok s, err-in
-        
+
         s = test-script-from-inexports inports: test-inports 'inport', bad-process-port
         nok s, err-in
 
         s = test-script-from-inexports inports: {}
         nok s, err-in
-                
+
         done!
       .. 'each exports has a name and source process port.', (done) ->
         s = test-script-from-inexports exports: test-exports 'export', process-port
@@ -195,5 +194,5 @@ describe 'HyperScript File', ->
 
         s = test-script-from-inexports exports: {}
         nok s, err-exp
-        
+
         done!

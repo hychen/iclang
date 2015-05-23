@@ -20,7 +20,7 @@ describe 'Module Component', ->
           fn: ->
         r = ensured-component ori
         r.should.be.deep.eq ori
-        done!      
+        done!
       .. 'should raise error if member `fn` is not a function.', (done) ->
         expect (-> ensured-component do
           friendlyName: 'sum'
@@ -37,7 +37,7 @@ describe 'Module Component', ->
             "field": "data.fn"
             "message": "is required"
           }
-        ]      
+        ]
         expect (-> ensured-component {}) .to.throw expected
         done!
     describe 'load-component(fpath)', -> ``it``

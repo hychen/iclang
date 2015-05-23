@@ -12,13 +12,13 @@ require! fs
 # Public Functions
 # --------------------------------------------
 
-# Takes a process name, component, options and returns a rpc server  
-# 
+# Takes a process name, component, options and returns a rpc server
+#
 # @param {String}
 export function create-rpc-process(proc-name, component, options, done)
   process = new Process proc-name, component, options
   rpc-server-addr = "ipc://#{rpc-socket-addr proc-name}"
-  
+
   # configure options
   winston.level = options?log-level or 'info'
 
@@ -30,7 +30,7 @@ export function create-rpc-process(proc-name, component, options, done)
   server = new zerorpc.Server process-rpc-proto
   server.bind rpc-server-addr
 
-  # After rpc server is running, 
+  # After rpc server is running,
   # so we can manage the process.
   process.start!
   done server, process

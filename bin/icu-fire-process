@@ -10,7 +10,7 @@ program
   .action (process-name, json) ->
     data = JSON.parse json
     err, res, more <- control-process process-name, 'fire', data
-    if err 
+    if err
       console.error err
 
 program.parse process.argv

@@ -56,13 +56,13 @@ export class Process
   # --------------------------------------------
 
   # Takes options and change process behavior
-  # 
+  #
   # @param Object - process config options
   # @example {'log-level': 'debug'}
   # @rais N/A
-  # @returns N/A  
+  # @returns N/A
   #
-  # Avaliable Options: 
+  # Avaliable Options:
   # - log-level : log level
   configure: (options) ->
     winston.level = options?.log-level or 'info'
@@ -70,7 +70,7 @@ export class Process
   # Starts the process
   start: ->
     @_create-ports!
-    @_set-status 'running'    
+    @_set-status 'running'
 
   # Stop the process
   stop: ->
@@ -84,7 +84,7 @@ export class Process
   inquery: (prop-name, query) ->
     winston.log 'debug', "PROCESS: inquery #{prop-name} #{query}"
     match prop-name
-    | /OutPortAddr/ => 
+    | /OutPortAddr/ =>
       port = @ports[query]
       throw "Port `#{query}` not exists." unless port?
       throw "Port `#{query}` is not a outport." unless port.addr?
@@ -111,7 +111,7 @@ export class Process
     delete @_incoming[src-port-name]
 
   # Fires within token
-  # 
+  #
   # @param {Object} token
   # @param {Object} exit callbacks
   fire-token: (token, exits) ->
@@ -120,20 +120,20 @@ export class Process
     throw new Error 'the process is not running' unless @_status is 'running'
     @_status = 'firing'
 
-    winston.log 'debug', 'PROCESS: invoke component function.'      
+    winston.log 'debug', 'PROCESS: invoke component function.'
     @_component.fn token, exits
-    # no matter the component function is executing or is not, 
+    # no matter the component function is executing or is not,
     # the process is able to fire again.
-    # 
+    #
     # [Note] this make the computing results are not in order.
-    @_set-status 'running'    
+    @_set-status 'running'
 
   # --------------------------------------------
   # Internal Methods
   # --------------------------------------------
 
   # Set new status
-  # 
+  #
   # @param {String} new-status - new status, choice: initialize, running, terminated
   _set-status: (new-status) ->
     old-status = @_status
@@ -157,7 +157,7 @@ export class Process
         if ports-length(@_incoming) == ports-length @_component.inports
           @_fire-stream!
 
-  # Destroy ports          
+  # Destroy ports
   _destroy-ports: ->
     winston.log 'debug', 'PROCESS: destroying ports.'
     for let _, port of @ports
@@ -180,9 +180,9 @@ export class Process
       return callbacks
 
     # build exist callbacks defined by component.
-    exits = component-exits @_component 
+    exits = component-exits @_component
     # always flush incoming when firing.
-    token = @_incoming 
+    token = @_incoming
     @_incoming = {}
 
     @fire-token token, exits

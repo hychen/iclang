@@ -19,7 +19,7 @@
         {
             "src":{
                 "process":"Read",
-                "port":"out"                
+                "port":"out"
             },
             "dest":{
                 "process":"Print",
