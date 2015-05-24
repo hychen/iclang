@@ -30,7 +30,7 @@ export function ensured-component(component)
     throw new Error 'component is required'
   validate = syntax-validator 'Component'
   if validate component
-    # JSON Schema does not support function type, we need 
+    # JSON Schema does not support function type, we need
     # check it by ourself.
     if typeof component.fn is 'function'
       #@TODO: check component function signature.
@@ -47,12 +47,12 @@ export function ensured-component(component)
 # @raise Error - When the file does not have provideComponent function
 # @return Object - A component
 export function load-component(fpath, options)
-  mod = require path.resolve fpath  
+  mod = require path.resolve fpath
   unless mod.provide-component?
     throw "module loaded from #{fpath} does not have provideComponent function."
 
-  if options    
-    options = ensured-component-options options 
+  if options
+    options = ensured-component-options options
     defs = mod.provide-component options
   else
     defs = mod.provide-component null
@@ -66,5 +66,5 @@ export function load-component(fpath, options)
 #
 # @param Object component - The component
 # @return Object - A Node machine
-export function build-machine(component)    
+export function build-machine(component)
     return machine.build component
