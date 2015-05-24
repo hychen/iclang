@@ -24,7 +24,17 @@ export function create-rpc-process(proc-name, component, options, done)
 
   process-rpc-proto = do
     ping: (_, reply) ->
+      winston.log 'debug', 'RPC: Ping'
       reply null, 'pong'
+    inquery: (prop-name, query, _, reply) ->
+      winston.log 'debug', "RPC: Start to inquery #{prop-name}, query: #{query}"
+      try
+        res = process.inquery prop-name, query
+        winston.log 'debug', "RPC: Success to inquery #{prop-name}, query: #{query}, result: #{res}"
+        reply null, res
+      catch error
+        winston.log 'debug', "RPC: Fail to inquery #{prop-name}, query: #{query}"
+        reply error
 
   # create server
   server = new zerorpc.Server process-rpc-proto
