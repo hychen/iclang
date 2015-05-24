@@ -62,3 +62,17 @@ describe 'Module RPC', ->
           err, res, _ <- control-rpc-process 'A','ping'
           res.should.be.eq 'pong'
           done!
+      describe 'inquery(prop-name, query)', -> ``it``
+        .. 'should return error message if the property is not supported.', (done) ->
+          err, res, _ <- control-rpc-process 'A', 'inquery', 'utPortAddr', 'success'
+          err.message.should.eq 'Inquery prop `utPortAddr` is not supported.'
+          done!
+      describe 'inquery(OutPortAddr, success)', -> ``it``
+        .. 'should return ipc address of a process outport.', (done) ->
+          err, res, _ <- control-rpc-process 'A', 'inquery', 'OutPortAddr', 'success'
+          res.indexOf 'ipc://' .should.eq 0
+          done!
+        .. 'should raise error', (done) ->
+          err, res, _ <- control-rpc-process 'A', 'inquery', 'OutPortAddr', 'notexists'
+          err.message.should.eq "Port `notexists` not exists."
+          done!
