@@ -35,6 +35,27 @@ export function create-rpc-process(proc-name, component, options, done)
       catch error
         winston.log 'debug', "RPC: Fail to inquery #{prop-name}, query: #{query}"
         reply error
+    connect: (src-port-name, dest-proc-name, dest-port-name, _, reply) ->
+      winston.log 'debug', "RPC: Start to connect #{src-port-name} to #{dest-proc-name}:#{dest-port-name}"
+      err, dest-port-addr, _ <- control-rpc-process dest-proc-name, 'inquery', 'OutPortAddr', dest-port-name
+      if err
+        winston.log 'debug', "RPC: Can not get #{dest-port-name} address. #{err.message}"
+        reply err
+      else
+        winston.log 'debug', "RPC: Got #{dest-port-name} address."
+        src-port = process.ports[src-port-name]
+        if src-port
+          winston.log 'debug', "RPC: Port #{src-port-name} found"
+          try
+            src-port.connect dest-port-addr
+            winston.log 'debug', "RPC: #{src-port-name} connected to #{dest-port-addr}"
+            reply!
+          catch error
+            winston.log 'debug', "RPC: Port #{src-port-name} connect to dest-port-addr failed."
+            reply error
+        else
+          winston.log 'debug', "RPC: Port #{src-port-name} not found"
+          reply "source port `#{src-port-name}` not exists"
 
   # create server
   server = new zerorpc.Server process-rpc-proto

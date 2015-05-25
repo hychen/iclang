@@ -76,3 +76,53 @@ describe 'Module RPC', ->
           err, res, _ <- control-rpc-process 'A', 'inquery', 'OutPortAddr', 'notexists'
           err.message.should.eq "Port `notexists` not exists."
           done!
+      describe 'connect()', -> ``it``
+        .. 'should connect a inport to a outport on another process.', (done) ->
+          comp = do
+            friendlyName: 'B'
+            inports: do
+              in: do
+                description: ''
+            outports: do
+              success: do
+                description: 'done'
+            fn: ->
+
+          server, process <- create-rpc-process 'B', comp, {}
+          err, res, _ <- control-rpc-process 'A', 'connect', 'in', 'B', 'success'
+          expect err .to.be.not.ok
+          done!
+        .. 'should raise error if targe process is not running', (done) ->
+          err, res, _ <- control-rpc-process 'A', 'connect', 'notexists', 'B', 'success'
+          err.message.should.eq "target process B is not running"
+          done!
+        .. 'should raise error if the source port not exists.', (done) ->
+          comp = do
+            friendlyName: 'B'
+            inports: do
+              in: do
+                description: ''
+            outports: do
+              success: do
+                description: 'done'
+            fn: ->
+
+          server, process <- create-rpc-process 'B', comp, {}
+          err, res, _ <- control-rpc-process 'A', 'connect', 'notexists', 'B', 'success'
+          err.message.should.eq "source port `notexists` not exists"
+          done!
+        .. 'should raise error if the destination port not exists.', (done) ->
+          comp = do
+            friendlyName: 'B'
+            inports: do
+              in: do
+                description: ''
+            outports: do
+              success: do
+                description: 'done'
+            fn: ->
+
+          server, process <- create-rpc-process 'B', comp, {}
+          err, res, _ <- control-rpc-process 'A', 'connect', 'in', 'B', 'notexists'
+          err.message.should.eq "Port `notexists` not exists."
+          done!
