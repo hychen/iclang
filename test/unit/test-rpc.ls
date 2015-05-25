@@ -45,7 +45,8 @@ describe 'Module RPC', ->
           outports: do
             success: do
               description: 'done'
-          fn: ->
+          fn: (inputs, exits) ->
+            exits.success inputs.in + 1
 
         _server, _process <- create-rpc-process 'A', comp, {}
         server := _server
@@ -125,4 +126,9 @@ describe 'Module RPC', ->
           server, process <- create-rpc-process 'B', comp, {}
           err, res, _ <- control-rpc-process 'A', 'connect', 'in', 'B', 'notexists'
           err.message.should.eq "Port `notexists` not exists."
+          done!
+      describe 'fire()', -> ``it``
+        .. 'should return result of component function.', (done) ->
+          err, res, _ <- control-rpc-process 'A', 'fire', {in: 1}
+          res.should.be.eq 2
           done!

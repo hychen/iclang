@@ -56,6 +56,18 @@ export function create-rpc-process(proc-name, component, options, done)
         else
           winston.log 'debug', "RPC: Port #{src-port-name} not found"
           reply "source port `#{src-port-name}` not exists"
+    fire: (token, _, reply) ->
+      exists = do
+        success: (result) ->
+          winston.log 'debug',  "RPC: fire() success"
+          reply null, result
+        error: (error) ->
+          winston.log 'debug',  "RPC: fire() error"
+          reply error
+      try
+        process.fire-token token, exists
+      catch error
+        reply error
 
   # create server
   server = new zerorpc.Server process-rpc-proto
