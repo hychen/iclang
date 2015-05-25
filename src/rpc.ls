@@ -26,6 +26,10 @@ export function create-rpc-process(proc-name, component, options, done)
     ping: (_, reply) ->
       winston.log 'debug', 'RPC: Ping'
       reply null, 'pong'
+    configure: (cfg, _, reply) ->
+      winston 'debug', 'RPC: Configure'
+      process.configure(cfg)
+      reply!
     inquery: (prop-name, query, _, reply) ->
       winston.log 'debug', "RPC: Start to inquery #{prop-name}, query: #{query}"
       try
