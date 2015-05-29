@@ -1,2 +1,0 @@
-- files has *spec-* prefix are specifications.
-- files has *study-* prefix are study notes of particular area.

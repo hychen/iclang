@@ -1,3 +1,0 @@
-#!/usr/bin/env node
-ic = require('../');
-ic.process().startProcess(process.argv[2], process.argv[3]);
