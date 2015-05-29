@@ -11,6 +11,7 @@
     "mocha-testcheck": "^0.1.2"
   },
   "scripts": {
+    "tsd": "tsd --config conf/tsd-test.json reinstall",
     "prepublish": "./node_modules/.bin/tsc --project .",
     "test": "./node_modules/.bin/mocha -R spec built/test"
   },
