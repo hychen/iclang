@@ -2,6 +2,7 @@
     "compilerOptions": {
         "target": "es5",
         "outDir": "built/",
+        "module": "commonjs",
         "removeComments": true,
         "sourceMap": true
     },
@@ -12,6 +13,7 @@
     "files": [
         "./src/lib/main.ts",
         "./src/test/bootstrap.ts",
+        "./typings/lib/lib.es6.d.ts",
         "./typings/lib/node/node.d.ts",
         "./typings/lib/tsd.d.ts",
         "./typings/test/chai/chai.d.ts",
