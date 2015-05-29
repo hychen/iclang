@@ -2,8 +2,8 @@
   "version": "v4",
   "repo": "borisyankov/DefinitelyTyped",
   "ref": "master",
-  "path": "typings",
-  "bundle": "typings/tsd.d.ts",
+  "path": "../typings/test",
+  "bundle": "../typings/test/tsd.d.ts",
   "installed": {
     "mocha/mocha.d.ts": {
       "commit": "86d1044eb34dfb80b86a7aa181ed1bd95116cbbe"
