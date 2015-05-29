@@ -13,6 +13,7 @@
   },
   "scripts": {
     "tsd": "tsd --config conf/tsd-test.json reinstall",
+    "clean": "rm -r ./built",
     "prepublish": "./node_modules/.bin/tsc --project .",
     "test": "./node_modules/.bin/mocha -R spec built/test"
   },
