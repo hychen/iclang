@@ -12,7 +12,10 @@
     "files": [
         "./src/lib/main.ts",
         "./src/test/bootstrap.ts",
-        "./typings/mocha/mocha.d.ts",
-        "./typings/tsd.d.ts"
+        "./typings/lib/node/node.d.ts",
+        "./typings/lib/tsd.d.ts",
+        "./typings/test/chai/chai.d.ts",
+        "./typings/test/mocha/mocha.d.ts",
+        "./typings/test/tsd.d.ts"
     ]
 }

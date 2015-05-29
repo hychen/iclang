@@ -1,4 +1,4 @@
-/// <reference path="../../typings/mocha/mocha.d.ts" />
+/// <reference path="../../typings/test/tsd.d.ts" />
 describe('2+4', () => {
 
 });
