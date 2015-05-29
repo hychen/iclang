@@ -2,15 +2,17 @@
   "name": "iclang",
   "version": "0.0.1",
   "description": "Yet another coordination language for compositing things of internet.",
-  "main": "index.js",
+  "main": "built/lib/main.js",
   "dependencies": {
     "typescript": "^1.5.0-beta"
   },
   "devDependencies": {
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "mocha-testcheck": "^0.1.2"
   },
   "scripts": {
-    "test": "mocha"
+    "prepublish": "./node_modules/.bin/tsc --project .",
+    "test": "./node_modules/.bin/mocha -R spec built/test"
   },
   "repository": {
     "type": "git",
