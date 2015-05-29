@@ -12,12 +12,14 @@
     ],
     "files": [
         "./src/lib/main.ts",
+        "./src/test/bootstrap-test.d.ts",
         "./src/test/bootstrap.ts",
-        "./src/test/test_syntax.ts",
+        "./src/test/unit/test_syntax.ts",
         "./typings/lib/lib.es6.d.ts",
         "./typings/lib/node/node.d.ts",
         "./typings/lib/tsd.d.ts",
         "./typings/test/chai/chai.d.ts",
+        "./typings/test/mocha-testcheck.d.ts",
         "./typings/test/mocha/mocha.d.ts",
         "./typings/test/tsd.d.ts"
     ]
