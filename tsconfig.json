@@ -11,12 +11,16 @@
         "!./node_modules/**/*.ts"
     ],
     "files": [
+        "./src/lib/component.ts",
         "./src/lib/main.ts",
+        "./src/lib/port.ts",
         "./src/test/bootstrap-test.d.ts",
         "./src/test/bootstrap.ts",
         "./src/test/unit/test_component.ts",
+        "./src/test/unit/test_port.ts",
         "./typings/lib/lib.es6.d.ts",
         "./typings/lib/node/node.d.ts",
+        "./typings/lib/node_zeromq/zmq.d.ts",
         "./typings/lib/tsd.d.ts",
         "./typings/test/chai/chai.d.ts",
         "./typings/test/mocha-testcheck.d.ts",

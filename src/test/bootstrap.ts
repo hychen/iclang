@@ -2,9 +2,15 @@
 
 /* Module Dependency */
 import chai = require('chai');
+import path = require('path');
 
 /* Globals */
 global['expect'] = chai.expect;
 
 import mochaTestCheck = require('mocha-testcheck');
 mochaTestCheck.install();
+
+global['TEST_FIXTURE_ROOT_DIR'] = path.join(__dirname, 'fixtures');
+global['TEST_RUNTIME_ROOT_DIR'] = path.join(global['TEST_FIXTURE_ROOT_DIR'], '.ic');
+global['TEST_RUNTIME_SOCKET_DIR'] = path.join(global['TEST_RUNTIME_ROOT_DIR'], 'socket');
+process.env['RUNTIME_ROOT_DIR'] = global['TEST_RUNTIME_ROOT_DIR'];
