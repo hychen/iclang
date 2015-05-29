@@ -4,7 +4,8 @@
   "description": "Yet another coordination language for compositing things of internet.",
   "main": "built/lib/main.js",
   "dependencies": {
-    "typescript": "^1.5.0-beta"
+    "typescript": "^1.5.0-beta",
+    "zmq": "^2.11.1"
   },
   "devDependencies": {
     "chai": "^2.3.0",
