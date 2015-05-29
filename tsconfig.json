@@ -13,6 +13,7 @@
     "files": [
         "./src/lib/main.ts",
         "./src/test/bootstrap.ts",
+        "./src/test/test_syntax.ts",
         "./typings/lib/lib.es6.d.ts",
         "./typings/lib/node/node.d.ts",
         "./typings/lib/tsd.d.ts",
