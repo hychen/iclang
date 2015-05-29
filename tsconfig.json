@@ -14,7 +14,7 @@
         "./src/lib/main.ts",
         "./src/test/bootstrap-test.d.ts",
         "./src/test/bootstrap.ts",
-        "./src/test/unit/test_syntax.ts",
+        "./src/test/unit/test_component.ts",
         "./typings/lib/lib.es6.d.ts",
         "./typings/lib/node/node.d.ts",
         "./typings/lib/tsd.d.ts",
