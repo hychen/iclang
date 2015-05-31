@@ -7,15 +7,15 @@ import fs = require('fs');
  * @returns {String} - IPC address.
  */
 export function portAddr(id:string){
-  var runtimeDir = process.env.RUNTIME_ROOT_DIR || './.ic';
-  var socketDir = path.join(runtimeDir, 'socket');
-  if(fs.existsSync(runtimeDir)){
-    if(fs.existsSync(socketDir)){
-      return "ipc://" + path.join(socketDir, id);
+    var runtimeDir = process.env.RUNTIME_ROOT_DIR || './.ic';
+    var socketDir = path.join(runtimeDir, 'socket');
+    if(fs.existsSync(runtimeDir)){
+        if(fs.existsSync(socketDir)){
+            return "ipc://" + path.join(socketDir, id);
+        }else{
+            throw new Error("runtime socket directory not exists.");
+        }
     }else{
-      throw new Error("runtime socket directory not exists.");
+        throw new Error("runtime directory not exists.");
     }
-  }else{
-    throw new Error("runtime directory not exists.");
-  }
 }
