@@ -30,7 +30,3 @@ export interface DestinationActComponent extends BaseComponent {
     fn: (inputs, exits) => any;
 }
 
-export var Component : ActComponent
-                     | SourceActComponent
-                     | PipeActComponent
-                     | DestinationActComponent;
