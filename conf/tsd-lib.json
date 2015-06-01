@@ -19,6 +19,9 @@
     },
     "node-uuid/node-uuid.d.ts": {
       "commit": "aae45edc2a66df08c931bd8f104df34aeae6306d"
+    },
+    "winston/winston.d.ts": {
+      "commit": "b0b2e98a205f764b26d7befdfca66a98234f79d0"
     }
   }
 }

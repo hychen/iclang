@@ -4,3 +4,4 @@
 /// <reference path="mkdirp/mkdirp.d.ts" />
 /// <reference path="rimraf/rimraf.d.ts" />
 /// <reference path="node-uuid/node-uuid.d.ts" />
+/// <reference path="winston/winston.d.ts" />

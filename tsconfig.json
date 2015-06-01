@@ -26,6 +26,7 @@
         "./typings/lib/node_zeromq/zmq.d.ts",
         "./typings/lib/rimraf/rimraf.d.ts",
         "./typings/lib/tsd.d.ts",
+        "./typings/lib/winston/winston.d.ts",
         "./typings/test/chai/chai.d.ts",
         "./typings/test/mocha-testcheck.d.ts",
         "./typings/test/mocha/mocha.d.ts",
