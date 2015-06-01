@@ -5,6 +5,7 @@
  */
  import path = require('path');
  import winston = require('winston');
+ import TK = require('./token');
  import PT = require('./port');
  import C = require('./component');
 
@@ -16,10 +17,6 @@ export enum ProcessStatus {
 
 export enum ProcessInquery {
     OutPortAddr
-}
-
-interface Token {
-    [key: string]: any;
 }
 
 interface IncomingQueue {
@@ -242,7 +239,7 @@ export class Process {
         // build exit callbacks from a given component.
         var exits = <C.ExitCallbacks> componentExits(this.component);
         // always flush incoming queue when firing.
-        var token = <Token> this.incoming;
+        var token = <TK.Token> this.incoming;
         this.incoming = {};
         this.fireToken(token, exits);
     }
@@ -253,7 +250,7 @@ export class Process {
      * @returns {any}
      * @throws {Error} when the process is not runnig.
      */
-    public fireToken(token: Token, exits: C.ExitCallbacks) {
+    public fireToken(token: TK.Token, exits: C.ExitCallbacks) {
         this.debug('firing.', token);
         this.ensuredRunning();
         /** Each name of exit callbacks is valid if and only if it is the same
