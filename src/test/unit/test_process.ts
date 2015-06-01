@@ -150,6 +150,23 @@ describe('class Process(name, SourceActComponent)', () => {
                 );
         });
     });
+    describe('#inquery(P.ProcessInquery.OutPortAddr, any)', () => {
+        it('thorws error if out port not exists.', () => {
+            var aProc = new P.Process('Src Act Proc', newSourceActComponent());
+            aProc.start();
+            expect(()=>aProc.inquery(P.ProcessInquery.OutPortAddr, 'oo')).throw(
+                    /Port oo not exists./
+            );
+            aProc.stop();
+        });
+        it('returns a address of a OutPort.', () => {
+            var aProc = new P.Process('Src Act Proc', newSourceActComponent());
+            aProc.start();
+            var addr = aProc.inquery(P.ProcessInquery.OutPortAddr, 'success');
+            expect(addr).match(/ipc:\/\//);
+            aProc.stop();
+        });
+    });
     describe('#fireToken()', () => {
         it('invokes component function', (done) => {
             var proc = new P.Process('Act Proc', newSourceActComponent());
@@ -228,6 +245,24 @@ describe('class Process(name, DestinationActComponent)', () => {
             expect(() => aProc.connect('in', 'other address')).throw(
                 /other addressnot exists./
                 );
+        });
+    });
+    describe('#inquery(P.ProcessInquery.OutPortAddr, any)', () => {
+        it('thorws error if out port not exists.', () => {
+            var aProc = new P.Process('Dest Act Proc', newDestActComponent());
+            aProc.start();
+            expect(()=>aProc.inquery(P.ProcessInquery.OutPortAddr, 'oo')).throw(
+                    /Port oo not exists./
+            );
+            aProc.stop();
+        });
+        it('thorws error if the port is not a OutPort.', () => {
+            var aProc = new P.Process('Dest Act Proc', newDestActComponent());
+            aProc.start();
+            expect(()=>aProc.inquery(P.ProcessInquery.OutPortAddr, 'in')).throw(
+                    /Port in is not an OutPort./
+            );
+            aProc.stop();
         });
     });
     describe('#fireToken()', () => {

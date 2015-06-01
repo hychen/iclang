@@ -14,6 +14,10 @@ export enum ProcessStatus {
     terminating
 };
 
+export enum ProcessInquery {
+    OutPortAddr
+}
+
 interface ExitCallbacks {
     [key: string]: (any) => any;
 }
@@ -282,6 +286,35 @@ export class Process {
         /** returns resuits so we can check it in unit test.  */
         this.debug('fired.', result);
         return result;
+    }
+
+    /* Inquery the property of a process
+     * @param {ProcessInquery} queryName - process inquery name.
+     * @param {any} queryValue - inquery value.
+     * @returns {any}
+     */
+    public inquery(queryId: ProcessInquery, queryValue) {
+        this.ensuredRunning();
+        var queryName = ProcessInquery[queryId];
+        this.debug(`inquerying ${queryName}`, queryValue);
+        if(queryId == ProcessInquery.OutPortAddr){
+            var portName = queryValue;
+            var aPort = this.ports[portName];
+            if(aPort){
+                if(aPort.addr){
+                    return aPort.addr;
+                }else{
+                    var errMsg = `Port ${portName} is not an OutPort.`;
+                    throw new Error(errMsg);
+                }
+            }else{
+                var errMsg = `Port ${portName} not exists.`;
+                throw new Error(errMsg);
+            }
+        }else{
+            var errMsg = `Inquery ${queryName} is not supported`;
+            throw new Error(errMsg);
+       }
     }
 
     /** Ensuresure the process is running.
