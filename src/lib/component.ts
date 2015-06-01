@@ -39,14 +39,14 @@ export interface ActComponent extends BaseComponent {
 }
 
 export interface SourceActComponent extends BaseComponent {
-    defaultExits?: string;
+    defaultExit?: string;
     exits: Object;
     fn: (inputs: TK.Token, exits: ExitCallbacks) => any;
 }
 
 export interface PipeActComponent extends BaseComponent {
     inputs: Object;
-    defaultExits: string;
+    defaultExit?: string;
     exits: Object;
     fn: (inputs:TK.Token, exits: ExitCallbacks) => any;
 }
