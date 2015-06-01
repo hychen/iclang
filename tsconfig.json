@@ -19,6 +19,7 @@
         "./src/test/bootstrap.ts",
         "./src/test/unit/test_component.ts",
         "./src/test/unit/test_port.ts",
+        "./src/test/unit/test_process.ts",
         "./typings/lib/lib.es6.d.ts",
         "./typings/lib/mkdirp/mkdirp.d.ts",
         "./typings/lib/node-uuid/node-uuid.d.ts",
