@@ -3,6 +3,7 @@
  * Copyright (c) 2015 Chen Hsin-Yi
  * MIT License, see LICENSE file for full terms.
  */
+import path = require('path');
 
 /** Takes a process name and returns a ipc address.
  * @param {string}  processName - a process name.
