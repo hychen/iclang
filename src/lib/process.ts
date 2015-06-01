@@ -18,10 +18,6 @@ export enum ProcessInquery {
     OutPortAddr
 }
 
-interface ExitCallbacks {
-    [key: string]: (any) => any;
-}
-
 interface Token {
     [key: string]: any;
 }
@@ -244,7 +240,7 @@ export class Process {
         /** Helpers ends. */
 
         // build exit callbacks from a given component.
-        var exits = <ExitCallbacks> componentExits(this.component);
+        var exits = <C.ExitCallbacks> componentExits(this.component);
         // always flush incoming queue when firing.
         var token = <Token> this.incoming;
         this.incoming = {};
@@ -257,7 +253,7 @@ export class Process {
      * @returns {any}
      * @throws {Error} when the process is not runnig.
      */
-    public fireToken(token: Token, exits: ExitCallbacks) {
+    public fireToken(token: Token, exits: C.ExitCallbacks) {
         this.debug('firing.', token);
         this.ensuredRunning();
         /** Each name of exit callbacks is valid if and only if it is the same

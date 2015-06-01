@@ -3,6 +3,10 @@
  * Copyright (c) 2015 Chen Hsin-Yi
  * MIT License, see LICENSE file for full terms.
  */
+export interface ExitCallbacks {
+    [key: string]: (any) => any;
+}
+
 interface BaseComponent {
     friendlyName: string;
     description?: string;
@@ -15,19 +19,19 @@ export interface ActComponent extends BaseComponent {
 export interface SourceActComponent extends BaseComponent {
     defaultExits?: string;
     exits: Object;
-    fn: (inputs, exits) => any;
+    fn: (inputs, exits: ExitCallbacks) => any;
 }
 
 export interface PipeActComponent extends BaseComponent {
     inputs: Object;
     defaultExits: string;
     exits: Object;
-    fn: (inputs, exits) => any;
+    fn: (inputs, exits: ExitCallbacks) => any;
 }
 
 export interface DestinationActComponent extends BaseComponent {
     inputs: Object;
-    fn: (inputs, exits) => any;
+    fn: (inputs, exits: ExitCallbacks) => any;
 }
 
 export type Component = ActComponent
