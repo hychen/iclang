@@ -55,10 +55,7 @@ export class Process {
     /** Process options */
     protected options: ProcessOptions;
     /** A reference to a instance of Component */
-    protected component: C.ActComponent
-                       | C.SourceActComponent
-                       | C.PipeActComponent
-                       | C.DestinationActComponent
+    protected component: C.Component;
     /** A queue to hold incoming data.*/
     protected incoming: Object;
 

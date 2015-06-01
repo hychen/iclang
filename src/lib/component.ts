@@ -30,3 +30,17 @@ export interface DestinationActComponent extends BaseComponent {
     fn: (inputs, exits) => any;
 }
 
+export type Component = ActComponent
+                    | SourceActComponent
+                    | PipeActComponent
+                    | DestinationActComponent
+
+export function ensuredComponent(component: Component): Component {
+    if(component['inputs'] == null){
+        component['inputs'] = {};
+    }
+    if(component['exits'] == null){
+        component['exits'] = {};
+    }
+    return component;
+}
