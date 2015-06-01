@@ -13,7 +13,7 @@ export interface ActComponent extends BaseComponent {
 }
 
 export interface SourceActComponent extends BaseComponent {
-    defaultExits: string;
+    defaultExits?: string;
     exits: Object;
     fn: (inputs, exits) => any;
 }
