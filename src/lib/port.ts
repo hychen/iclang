@@ -160,6 +160,13 @@ export class InPort extends Port {
     }
 }
 
+export interface AnyPort extends Port {
+    addr?: string;
+    send?(data: Object);
+    connect?(portAddr: string);
+    on?(myevent: string, callback: (any) => any);
+}
+
 export interface Ports {
-    [key: string]: any;
+    [key: string]: AnyPort;
 }
