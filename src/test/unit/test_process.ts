@@ -78,6 +78,15 @@ describe('class Process(name, ActComponent)', () => {
             expect(proc.getStatus()).eq('terminating');
         });
     });
+    describe('#connect()', () =>{
+        it('throws error', () => {
+            var aProc = new P.Process('Act Proc', newActComp());
+            aProc.start();
+            expect(() => aProc.connect('anyport', 'other address')).throw(
+                /source port anyport not exists/
+                );
+        });
+    });
     describe('#fireToken()', () => {
         it('invokes component function', () => {
             var proc = new P.Process('Act Proc', newActComp());
@@ -130,6 +139,15 @@ describe('class Process(name, SourceActComponent)', () => {
             setTimeout(() => {
                 expect(fs.existsSync(sockaddr)).to.not.be.ok;
                 done(); }, 0.0001);
+        });
+    });
+    describe('#connect()', () =>{
+        it('throws error', () => {
+            var aProc = new P.Process('Act Proc', newSourceActComponent());
+            aProc.start();
+            expect(() => aProc.connect('success', 'other address')).throw(
+                /source port success is not a InPort./
+                );
         });
     });
     describe('#fireToken()', () => {
@@ -203,6 +221,15 @@ describe('class Process(name, DestinationActComponent)', () => {
             expect(proc.getStatus()).eq('terminating');
         });
     });
+    describe('#connect()', () =>{
+        it('throws error if target address not exists.', () => {
+            var aProc = new P.Process('Act Proc', newDestActComponent());
+            aProc.start();
+            expect(() => aProc.connect('in', 'other address')).throw(
+                /other addressnot exists./
+                );
+        });
+    });
     describe('#fireToken()', () => {
         it('invokes component function', () => {
             var proc = new P.Process('Dest Act Proc', newDestActComponent());
@@ -227,7 +254,7 @@ describe('class Process(name, DestinationActComponent)', () => {
             setTimeout(() => {
                 aSock.close();
                 aProc.stop();
-            }, 0.01);
+            }, 0.05);
         });
     });
 });

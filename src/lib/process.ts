@@ -164,6 +164,30 @@ export class Process {
         }
     }
 
+    /** Connects a source port to the address of a OutPort.
+     * @praram {string} srcPortName - a inport name.
+     * @param {string} destPortAddr - an ipc address of a outport.
+     * @throws {Error} when the source port not exists.
+     */
+    public connect(srcPortName: string, destPortAddr: string) {
+        this.ensuredRunning();
+        var srcPort = this.ports[srcPortName];
+        if(srcPort){
+            if(!srcPort['addr']){
+                srcPort.connect(destPortAddr);
+                delete this.incoming[srcPortName];
+            }else{
+                var errMsg = `source port ${srcPortName} is not a InPort.`;
+                this.debug(errMsg);
+                throw new Error(errMsg);
+            }
+        }else{
+            var errMsg = `source port ${srcPortName} not exists`;
+            this.debug(errMsg);
+            throw new Error(errMsg);
+        }
+    }
+
     /** Creaet ports
      */
     protected createPorts() {
