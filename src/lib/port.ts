@@ -20,10 +20,10 @@ export function portAddr(id:string){
         if(fs.existsSync(socketDir)){
             return "ipc://" + path.join(socketDir, id);
         }else{
-            throw new Error("runtime socket directory not exists.");
+            throw new Error(`runtime socket directory ${socketDir} not exists.`);
         }
     }else{
-        throw new Error("runtime directory not exists.");
+        throw new Error(`runtime directory ${runtimeDir} not exists.`);
     }
 }
 

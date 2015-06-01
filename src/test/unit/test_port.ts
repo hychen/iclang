@@ -27,14 +27,14 @@ describe('portAddr(id)', () => {
 
     it('raises error if runtime directory not exists', (done) => {
         rimraf(global['TEST_RUNTIME_ROOT_DIR'], () => {
-            expect(() => port.portAddr('yooo')).to.throw('runtime directory not exists.');
+            expect(() => port.portAddr('yooo')).to.throw(/runtime directory.*not exists./);
             done();
         });
     });
 
     it('raises error if runtime socket directory not exists', (done) => {
         rimraf(global['TEST_RUNTIME_SOCKET_DIR'], () => {
-            expect(() => port.portAddr('yooo')).to.throw('runtime socket directory not exists.');
+            expect(() => port.portAddr('yooo')).to.throw(/runtime socket directory.*not exists./);
             done();
         });
     });
