@@ -181,7 +181,14 @@ export class Process {
             var portDef = this.component['inputs'][portName];
             self.ports[portName] = new PT.InPort(portName);
             self.ports[portName].on('data', (data) => {
+                self.debug(`recived data from ${portName}`, data);
                 self.incoming[portName] = data;
+                var numInputs = PT.portsLength(this.component['inputs']);
+                var numCollectedData = PT.portsLength(this.incoming);
+                if(numCollectedData === numInputs){
+                    self.debug('firing rules satisfed, start to fire.');
+                    this.fireStream();
+                }
             });
             this.debug(`created an OutPort '${portName}'.`);
             numOutPorts++;

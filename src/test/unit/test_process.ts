@@ -24,6 +24,25 @@ function newSourceActComponent(){
     }
 }
 
+function newDestActComponent(done?){
+    return {
+        friendlyName: 'DestActComp',
+        inputs: {
+            in: {
+                description: 'an input value.'
+            }
+        },
+        fn: (inputs) => {
+            var res = inputs.in + 1;
+            if(done){
+                done(res);
+            }else{
+                return res;
+            }
+        }
+    }
+}
+
 describe('class Process(name, ActComponent)', () => {
     beforeEach((done) => {
         mkdirp(global['TEST_RUNTIME_ROOT_DIR'], (err) => {
@@ -149,4 +168,66 @@ describe('class Process(name, SourceActComponent)', () => {
     });
 });
 
-
+describe('class Process(name, DestinationActComponent)', () => {
+    beforeEach((done) => {
+        mkdirp(global['TEST_RUNTIME_ROOT_DIR'], (err) => {
+            if(err) throw err;
+            mkdirp(global['TEST_RUNTIME_SOCKET_DIR'], done);
+        });
+    });
+    afterEach((done) => {
+        rimraf(global['TEST_RUNTIME_ROOT_DIR'], () => {
+            rimraf(global['TEST_RUNTIME_SOCKET_DIR'], done);
+        });
+    });
+    describe('#start()', () => {
+        it('does not create ports.', () => {
+            var proc = new P.Process('Dest Act Proc', newDestActComponent());
+            proc.start();
+            expect(proc.ports).not.deep.equal({});
+            proc.stop();
+        });
+        it('changes process status to running', () => {
+            var proc = new P.Process('Dest Act Proc', newDestActComponent());
+            proc.start();
+            expect(proc.isRunning()).to.be.ok;
+            proc.stop();
+        });
+    });
+    describe('#stop()', () => {
+        it('changes process status to terminating', () => {
+            var proc = new P.Process('Dest Act Proc', newDestActComponent());
+            proc.start();
+            proc.stop();
+            expect(proc.isRunning()).to.be.not.ok;
+            expect(proc.getStatus()).eq('terminating');
+        });
+    });
+    describe('#fireToken()', () => {
+        it('invokes component function', () => {
+            var proc = new P.Process('Dest Act Proc', newDestActComponent());
+            proc.start();
+            expect(proc.fireToken({in:1}, {})).to.eq(2);
+            proc.stop();
+        });
+    });
+    describe('#fireStream()', () => {
+        it('invokes component function.', (done) => {
+            var mydone = (res) => {
+                expect(res).to.eq(2);
+                done();
+            }
+            var aProc = new P.Process('Dest Act Proc', newDestActComponent(mydone));
+            aProc.start();
+            var aSock = zmq.socket('push');
+            var sockaddr = 'ipc:///tmp/testdata3';
+            aSock.bindSync(sockaddr);
+            aProc.ports['in'].connect(sockaddr);
+            aSock.send('1');
+            setTimeout(() => {
+                aSock.close();
+                aProc.stop();
+            }, 0.01);
+        });
+    });
+});
