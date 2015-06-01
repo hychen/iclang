@@ -1,4 +1,5 @@
 /// <reference path="../bootstrap-test.d.ts" />
+import fs = require('fs');
 import mkdirp = require('mkdirp');
 import rimraf = require('rimraf');
 import P  = require('../../lib/process');
@@ -48,6 +49,15 @@ describe('class Process(name, ActComponent)', () => {
             proc.stop();
         });
     });
+    describe('#stop()', () => {
+        it('changes process status to terminating', () => {
+            var proc = new P.Process('Act Proc', newActComp());
+            proc.start();
+            proc.stop();
+            expect(proc.isRunning()).to.be.not.ok;
+            expect(proc.getStatus()).eq('terminating');
+        });
+    });
 });
 
 describe('class Process(name, SourceActComponent)', () => {
@@ -74,6 +84,24 @@ describe('class Process(name, SourceActComponent)', () => {
             proc.start();
             expect(proc.isRunning()).to.be.ok;
             proc.stop();
+        });
+    });
+    describe('#stop()', () => {
+        it('changes process status to terminating', () => {
+            var proc = new P.Process('Act Proc', newSourceActComponent());
+            proc.start();
+            proc.stop();
+            expect(proc.isRunning()).to.be.not.ok;
+            expect(proc.getStatus()).eq('terminating');
+        });
+        it('close all ports.', (done) => {
+            var proc = new P.Process('Act Proc', newSourceActComponent());
+            proc.start();
+            proc.stop();
+            var sockaddr = proc.ports['success'].addr.replace('ipc://', '');
+            setTimeout(() => {
+                expect(fs.existsSync(sockaddr)).to.not.be.ok;
+                done(); }, 0.0001);
         });
     });
 });
