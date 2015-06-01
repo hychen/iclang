@@ -154,6 +154,16 @@ export class Process {
         this.debug('stopped.');
     }
 
+    /** Run the process
+     * @returns {void}
+     */
+    public run(){
+        var numInputs = PT.portsLength(this.component['inputs']);
+        if(numInputs == 0) {
+            this.fireStream();
+        }
+    }
+
     /** Creaet ports
      */
     protected createPorts() {
@@ -190,6 +200,37 @@ export class Process {
             this.debug(`close ports. ${aPort.name}`);
         }
         this.debug('destroyed ${numPorts} ports.');
+    }
+
+    /** Fires within token in stream
+     */
+    protected fireStream() {
+        var self = this;
+        this.debug('firing within token in the stream.');
+        /** Helpers */
+
+        /** Takes a component and returns callbacks that sending data
+        * to attached port.
+        * @param {Component} component - a component.
+        * @returns {ExitCallbacks}
+        */
+        var componentExits = (component) => {
+            var callbacks = {};
+            for(var portName in component['exits']){
+                callbacks[portName] = (data) => {
+                    self.ports[portName].send(data);
+                };
+            }
+            return callbacks;
+        }
+        /** Helpers ends. */
+
+        // build exit callbacks from a given component.
+        var exits = <ExitCallbacks> componentExits(this.component);
+        // always flush incoming queue when firing.
+        var token = <Token> this.incoming;
+        this.incoming = {};
+        this.fireToken(token, exits);
     }
 
     /** Fires within token.

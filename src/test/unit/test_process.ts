@@ -2,6 +2,7 @@
 import fs = require('fs');
 import mkdirp = require('mkdirp');
 import rimraf = require('rimraf');
+import zmq = require('zmq');
 import P  = require('../../lib/process');
 
 function newActComp(){
@@ -130,6 +131,20 @@ describe('class Process(name, SourceActComponent)', () => {
                 'the exit callbacks does not contain success callback.');
             proc.stop();
             done();
+        });
+    });
+    describe('#fireStream()', () => {
+        it('send data to attached ports.', (done) => {
+            var proc = new P.Process('Act Proc', newSourceActComponent());
+            proc.start();
+            var aSock = zmq.socket('pull');
+            aSock.on('message', (data) => {
+                expect(data.toString()).to.be.eq('1');
+                proc.stop();
+                done();
+            })
+            aSock.connect(proc.ports['success'].addr);
+            proc.run();
         });
     });
 });
