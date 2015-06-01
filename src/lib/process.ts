@@ -24,6 +24,14 @@ var VALID_PROCESS_STATUSES = [
     return path.join(runtimeDir, 'socket', fname);
  }
 
+interface ExitCallbacks {
+    [key: string]: (any) => any;
+}
+
+interface Token {
+    [key: string]: any;
+}
+
 interface ProcessPorts {
     [key: string]: any;
 }
@@ -186,12 +194,48 @@ export class Process {
         this.debug('destroyed ${numPorts} ports.');
     }
 
+    /** Fires within token.
+     * @param {Token} token - a data token.
+     * @param {ExitCallbacks} - an object of callbacks.
+     * @returns {any}
+     * @throws {Error} when the process is not runnig.
+     */
+    public fireToken(token: Token, exits: ExitCallbacks) {
+        this.debug('firing.', token);
+        if(!this.isRunning()){
+            var errMsg = "the process is not running";
+            throw new Error(errMsg);
+        }
+        /** Each name of exit callbacks is valid if and only if it is the same
+         * as the name defined in the component defintion.
+         */
+         for(var outPortName in this.component['exits']) {
+            var exitFn = exits[outPortName];
+            if(!exitFn){
+                var errMsg = `the exit callbacks does not contain ${outPortName} callback.`;
+                this.debug(errMsg, '');
+                throw new Error(errMsg);
+            }
+         }
+        this.debug('invokes component function.', [token, exits]);
+        var result = this.component.fn(token, exits);
+        /** no matter the component function is executing or is not,
+         * the process is able to fire again.
+         *
+         * [Note] this make the computing results are not in order.
+         */
+        this.setStatus('running');
+        /** returns resuits so we can check it in unit test.  */
+        this.debug('fired.', result);
+        return result;
+    }
+
     /** To log debug messages
      * @param {string} msg - a message.
      * @returns {void}
      */
-    protected debug(msg: string) {
-        this.logger.debug(`PROCESS: ${this.name} : ${msg}`);
+    protected debug(msg: string, meta?: any) {
+        this.logger.debug(`PROCESS: ${this.name} : ${msg}`, meta);
     }
 
     /** To log info messages

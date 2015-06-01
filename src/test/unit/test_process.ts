@@ -7,7 +7,7 @@ import P  = require('../../lib/process');
 function newActComp(){
     return {
         friendlyName: 'ActComp',
-        fn: () => false
+        fn: () => true
     }
 };
 
@@ -58,6 +58,14 @@ describe('class Process(name, ActComponent)', () => {
             expect(proc.getStatus()).eq('terminating');
         });
     });
+    describe('#fireToken()', () => {
+        it('invokes component function', () => {
+            var proc = new P.Process('Act Proc', newActComp());
+            proc.start();
+            expect(proc.fireToken({}, {})).to.be.ok;
+            proc.stop();
+        });
+    });
 });
 
 describe('class Process(name, SourceActComponent)', () => {
@@ -102,6 +110,26 @@ describe('class Process(name, SourceActComponent)', () => {
             setTimeout(() => {
                 expect(fs.existsSync(sockaddr)).to.not.be.ok;
                 done(); }, 0.0001);
+        });
+    });
+    describe('#fireToken()', () => {
+        it('invokes component function', (done) => {
+            var proc = new P.Process('Act Proc', newSourceActComponent());
+            proc.start();
+            var mydone = (result) => {
+                expect(result).to.eq(1);
+                proc.stop();
+                done();
+            }
+            proc.fireToken({}, {success: mydone});
+        });
+        it('thorws error if exit callback signatures are not matched.', (done) => {
+            var proc = new P.Process('Act Proc', newSourceActComponent());
+            proc.start();
+            expect(() => proc.fireToken({}, {})).to.throw(
+                'the exit callbacks does not contain success callback.');
+            proc.stop();
+            done();
         });
     });
 });
