@@ -8,11 +8,28 @@ import fs = require('fs');
 import uuid = require('node-uuid');
 import zmq = require('zmq');
 
+export interface OutPortsDefinition {
+    [key: string]: OutPortDefinition;
+}
+
+export interface OutPortDefinition {
+
+}
+
+export interface InPortsDefinition {
+    [key: string]: InPortDefinition;
+}
+
+export interface InPortDefinition {
+}
+
+export type PortsDefinition = InPortsDefinition | OutPortsDefinition;
+
 /** Takes ports and returns its length.
  * @param {Object} ports - ports.
  * @returns {number}
  */
-export function portsLength(ports: Object): number {
+export function portsLength(ports: PortsDefinition): number {
     return Object.keys(ports).length;
 }
 

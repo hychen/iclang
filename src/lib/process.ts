@@ -23,6 +23,14 @@ interface IncomingQueue {
 
 }
 
+function collectedDataLength(data: IncomingQueue): number {
+    return Object.keys(data).length;
+}
+
+function collectedData(data: IncomingQueue): TK.Token {
+    return <TK.Token> data;
+}
+
 interface ProcessPorts {
     [key: string]: any;
 }
@@ -188,7 +196,7 @@ export class Process {
                 self.debug(`recived data from ${portName}`, data);
                 self.incoming[portName] = data;
                 var numInputs = PT.portsLength(this.component['inputs']);
-                var numCollectedData = PT.portsLength(this.incoming);
+                var numCollectedData = collectedDataLength(this.incoming);
                 if(numCollectedData === numInputs){
                     self.debug('firing rules satisfed, start to fire.');
                     this.fireStream();
@@ -239,7 +247,7 @@ export class Process {
         // build exit callbacks from a given component.
         var exits = <C.ExitCallbacks> componentExits(this.component);
         // always flush incoming queue when firing.
-        var token = <TK.Token> this.incoming;
+        var token = collectedData(this.incoming);
         this.incoming = {};
         this.fireToken(token, exits);
     }
