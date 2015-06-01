@@ -32,6 +32,10 @@ interface Token {
     [key: string]: any;
 }
 
+interface IncomingQueue {
+
+}
+
 interface ProcessPorts {
     [key: string]: any;
 }
@@ -57,7 +61,7 @@ export class Process {
     /** A reference to a instance of Component */
     protected component: C.Component;
     /** A queue to hold incoming data.*/
-    protected incoming: Object;
+    protected incoming: IncomingQueue;
 
     /** Create a Process.
      * @param {string} name - the name of a process.
@@ -65,16 +69,13 @@ export class Process {
      * @param {ProcessOptions} options - process options.
      */
     constructor(name: string,
-                component: C.ActComponent
-                         | C.SourceActComponent
-                         | C.PipeActComponent
-                         | C.DestinationActComponent,
+                component: C.Component,
                 options?: ProcessOptions){
         this.name = name;
         this.status = 'initialzation'
         this.incoming = {};
         this.ports = {};
-        this.component = component;
+        this.component = C.ensuredComponent(component);
         this.options = options || {};
         this.setLogger(this.options);
         this.configure(this.options);
