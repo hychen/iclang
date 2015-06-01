@@ -8,11 +8,11 @@
  import PT = require('./port');
  import C = require('./component');
 
-var VALID_PROCESS_STATUSES = [
-    'initialzation',
-    'running',
-    'terminating'
- ];
+export enum ProcessStatus {
+    initialzation,
+    running,
+    terminating
+};
 
 /** Takes a process name and returns a ipc address.
  * @param {string}  processName - a process name.
@@ -53,7 +53,7 @@ export class Process {
     /** Process options */
     public ports: ProcessPorts;
     /** Process status */
-    protected status: string;
+    protected status: ProcessStatus;
     /** A reference to Winston.LoggerInstance */
     protected logger: winston.LoggerInstance;
     /** Process options */
@@ -72,7 +72,7 @@ export class Process {
                 component: C.Component,
                 options?: ProcessOptions){
         this.name = name;
-        this.status = 'initialzation'
+        this.status = ProcessStatus.initialzation;
         this.incoming = {};
         this.ports = {};
         this.component = C.ensuredComponent(component);
@@ -108,30 +108,27 @@ export class Process {
     /** Get the status
      * @returns {string} process status
      */
-    public getStatus(): string {
+    public getStatus(): ProcessStatus {
         return this.status;
     }
 
     /** Set the status
      * @param {string} status - process status
      */
-    public setStatus(status: string) {
+    public setStatus(status: ProcessStatus) {
         var oldStatus = this.status;
+        var oldStatusLabel = ProcessStatus[oldStatus];
         var newStatus = status;
-        if(VALID_PROCESS_STATUSES.indexOf(newStatus) > -1 ) {
-            this.debug(`Set new status ${oldStatus} to ${newStatus}`);
-            this.status = newStatus;
-        }else{
-            this.debug(`Set new status ${oldStatus} to ${newStatus} - failed.`);
-            throw new Error(`Invalid Status: ${newStatus}`);
-        }
+        var newStatusLabel = ProcessStatus[newStatus];
+        this.debug(`Set new status ${oldStatusLabel} to ${newStatusLabel}`);
+        this.status = newStatus;
     }
 
     /** Check if the process is running.
      * @returns {Boolean}
      */
     public isRunning(): boolean {
-        return this.status === 'running';
+        return this.status === ProcessStatus.running;
     }
 
     /** Start the process.
@@ -140,7 +137,7 @@ export class Process {
     public start(){
         this.debug('starting.');
         this.createPorts();
-        this.setStatus('running');
+        this.setStatus(ProcessStatus.running);
         this.debug('started.');
     }
 
@@ -149,7 +146,7 @@ export class Process {
      */
     public stop(){
         this.debug('stopping.');
-        this.setStatus('terminating');
+        this.setStatus(ProcessStatus.terminating);
         this.destroyPorts();
         this.debug('stopped.');
     }
@@ -291,7 +288,7 @@ export class Process {
          *
          * [Note] this make the computing results are not in order.
          */
-        this.setStatus('running');
+        this.setStatus(ProcessStatus.running);
         /** returns resuits so we can check it in unit test.  */
         this.debug('fired.', result);
         return result;

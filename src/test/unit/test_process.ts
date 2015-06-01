@@ -75,7 +75,7 @@ describe('class Process(name, ActComponent)', () => {
             proc.start();
             proc.stop();
             expect(proc.isRunning()).to.be.not.ok;
-            expect(proc.getStatus()).eq('terminating');
+            expect(proc.getStatus()).eq(P.ProcessStatus.terminating);
         });
     });
     describe('#connect()', () =>{
@@ -129,7 +129,7 @@ describe('class Process(name, SourceActComponent)', () => {
             proc.start();
             proc.stop();
             expect(proc.isRunning()).to.be.not.ok;
-            expect(proc.getStatus()).eq('terminating');
+            expect(proc.getStatus()).eq(P.ProcessStatus.terminating);
         });
         it('close all ports.', (done) => {
             var proc = new P.Process('Act Proc', newSourceActComponent());
@@ -218,7 +218,7 @@ describe('class Process(name, DestinationActComponent)', () => {
             proc.start();
             proc.stop();
             expect(proc.isRunning()).to.be.not.ok;
-            expect(proc.getStatus()).eq('terminating');
+            expect(proc.getStatus()).eq(P.ProcessStatus.terminating);
         });
     });
     describe('#connect()', () =>{
