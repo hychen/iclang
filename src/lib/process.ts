@@ -168,14 +168,10 @@ export class Process {
                 srcPort.connect(destPortAddr);
                 delete this.incoming[srcPortName];
             }else{
-                var errMsg = `source port ${srcPortName} is not a InPort.`;
-                this.debug(errMsg);
-                throw new Error(errMsg);
+                this.error(`source port ${srcPortName} is not a InPort.`);
             }
         }else{
-            var errMsg = `source port ${srcPortName} not exists`;
-            this.debug(errMsg);
-            throw new Error(errMsg);
+            this.error(`source port ${srcPortName} not exists`);
         }
     }
 
@@ -270,9 +266,9 @@ export class Process {
          for(var outPortName in this.component['exits']) {
             var exitFn = exits[outPortName];
             if(!exitFn){
-                var errMsg = `the exit callbacks does not contain ${outPortName} callback.`;
-                this.debug(errMsg, '');
-                throw new Error(errMsg);
+                this.error(
+                    `the exit callbacks does not contain ${outPortName} callback.`
+                    );
             }
          }
         this.debug('invokes component function.', [token, exits]);
@@ -304,16 +300,13 @@ export class Process {
                 if(aPort.addr){
                     return aPort.addr;
                 }else{
-                    var errMsg = `Port ${portName} is not an OutPort.`;
-                    throw new Error(errMsg);
+                    this.error(`Port ${portName} is not an OutPort.`);
                 }
             }else{
-                var errMsg = `Port ${portName} not exists.`;
-                throw new Error(errMsg);
+               this.error(`Port ${portName} not exists.`);
             }
         }else{
-            var errMsg = `Inquery ${queryName} is not supported`;
-            throw new Error(errMsg);
+            this.error(`Inquery ${queryName} is not supported`);
        }
     }
 
@@ -323,8 +316,7 @@ export class Process {
      */
     protected ensuredRunning(){
         if(!this.isRunning()){
-            var errMsg = "the process is not running";
-            throw new Error(errMsg);
+            this.error("the process is not running");
         }
     }
 
@@ -342,5 +334,16 @@ export class Process {
      */
     protected info(msg: string) {
         this.logger.info(`PROCESS: ${this.name} : ${msg}`);
+    }
+
+    /** To throw and log error.
+     * @param {string} msg - a message.
+     * @param {meta} meta - an meta object (optional).
+     * @returns {void}
+     */
+    protected error(msg: string, meta?: any) {
+        var errMsg = `PROCESS ${this.name} : ${msg}`;
+        this.logger.error(errMsg, meta);
+        throw new Error(errMsg);
     }
 }
