@@ -3,7 +3,7 @@
  * Copyright (c) 2015 Chen Hsin-Yi
  * MIT License, see LICENSE file for full terms.
  */
- import TK = require('./token');
+import TK = require('./token');
 
 export interface ExitCallbacks {
     [key: string]: (any) => any;
