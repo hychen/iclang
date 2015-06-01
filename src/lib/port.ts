@@ -13,7 +13,10 @@ export interface OutPortsDefinition {
 }
 
 export interface OutPortDefinition {
-
+    description: string;
+    extendedDescription?: string;
+    datatype?: string;
+    variableName?: string;
 }
 
 export interface InPortsDefinition {
@@ -21,6 +24,18 @@ export interface InPortsDefinition {
 }
 
 export interface InPortDefinition {
+    description: string;
+    extendedDescription?: string;
+    required?: boolean;
+    datatype?: string;
+    example?: any;
+    whereToGet?: WhereToGetDefinition;
+}
+
+export interface WhereToGetDefinition {
+    url: string;
+    description?: string;
+    extendedDescription?: string;
 }
 
 export type PortsDefinition = InPortsDefinition | OutPortsDefinition;
