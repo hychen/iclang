@@ -31,10 +31,6 @@ function collectedData(data: IncomingQueue): TK.Token {
     return <TK.Token> data;
 }
 
-interface ProcessPorts {
-    [key: string]: any;
-}
-
 interface ProcessOptions {
     /** logging level */
     logLevel? : string;
@@ -46,7 +42,7 @@ export class Process {
     /** Process name */
     public name: string;
     /** Process options */
-    public ports: ProcessPorts;
+    public ports: PT.Ports;
     /** Process status */
     protected status: ProcessStatus;
     /** A reference to Winston.LoggerInstance */

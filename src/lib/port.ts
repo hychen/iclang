@@ -159,3 +159,7 @@ export class InPort extends Port {
         });
     }
 }
+
+export interface Ports {
+    [key: string]: any;
+}
