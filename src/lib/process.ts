@@ -248,10 +248,7 @@ export class Process {
      */
     public fireToken(token: Token, exits: ExitCallbacks) {
         this.debug('firing.', token);
-        if(!this.isRunning()){
-            var errMsg = "the process is not running";
-            throw new Error(errMsg);
-        }
+        this.ensuredRunning();
         /** Each name of exit callbacks is valid if and only if it is the same
          * as the name defined in the component defintion.
          */
@@ -274,6 +271,17 @@ export class Process {
         /** returns resuits so we can check it in unit test.  */
         this.debug('fired.', result);
         return result;
+    }
+
+    /** Ensuresure the process is running.
+     * @throws {Error} when the process is not running.
+     * @returns {void}
+     */
+    protected ensuredRunning(){
+        if(!this.isRunning()){
+            var errMsg = "the process is not running";
+            throw new Error(errMsg);
+        }
     }
 
     /** To log debug messages
