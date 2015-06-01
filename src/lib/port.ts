@@ -8,6 +8,14 @@ import fs = require('fs');
 import uuid = require('node-uuid');
 import zmq = require('zmq');
 
+/** Takes ports and returns its length.
+ * @param {Object} ports - ports.
+ * @returns {number}
+ */
+export function portsLength(ports: Object): number {
+    return Object.keys(ports).length;
+}
+
 /**
  * Takes a socket id and returns a port ipc address.
  * @param {String} id - UUID v4 string.
