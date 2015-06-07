@@ -10,6 +10,7 @@
     "typescript": "^1.5.0-beta",
     "uuid": "^2.0.1",
     "winston": "^1.0.0",
+    "zerorpc": "git://github.com/marrs/zerorpc-node.git",
     "zmq": "^2.11.1"
   },
   "devDependencies": {
