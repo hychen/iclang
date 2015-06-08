@@ -85,13 +85,14 @@ export function controlRPCServer(processName: string, methodName: string, ...arg
     // popup the callback function.
     var done: Function;
     done = args[args.length-1];
-    delete(args[args.length]);
+    delete(args[args.length-1]);
     // call remote RPC method.
     var processSockAddr = rpcSocketAddr(processName);
     if(fs.existsSync(processSockAddr)){
         var client = new zerorpc.Client();
         client.connect(`ipc://${processSockAddr}`);
-        client.invoke(...args, (err, res, more) => {
+        //@TODO: check if methodName is valid.
+        client.invoke(methodName, ...args, (err, res, more) => {
             client.close();
             done(err, res, more);
         });
