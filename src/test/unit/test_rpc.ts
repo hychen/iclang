@@ -73,4 +73,17 @@ describe('Process RPC Callbacks', () => {
             });
         });
     });
+    describe('rpcProcessConnectMethod()', () => {
+        it('connect a source port to another port.', (done) => {
+            var process_b = new PS.Process('B', newSourceActComponent());
+            var process_a = new PS.Process('A', newDestActComponent());
+            RPC.controlRPCServer = (...args: any[]) => {
+                return process_b.ports['success'].addr;
+            };
+            var cb = RPC.rpcProcessConnectMethod.bind(process_a);
+            cb('in', 'B', 'success', null, (err, res, more) => {
+                done()
+            });
+        });
+    });
 });
