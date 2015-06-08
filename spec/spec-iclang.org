@@ -229,33 +229,28 @@ should very simliary to this one.
       inputs: {
           apiKey: {
               description: 'The api key to be used.',
-              example: 'foo',
-          }
-      },
-      outputs:{
-          out:{
-              description: ''
               example: 'foo'
           }
-      },
+      }
+    },
     defaultExit: 'success',
-      exits: {
-          success: {
-              example: 'myApiKey',
-              description: 'Returns the API key for your totally fake account'
-          },
-          error: {
-              description: 'Unexpected error occurred.'
-          }
-      },
-      fn: function(inputs, exits) {
+    exits: {
+        success: {
+            example: 'myApiKey',
+            description: 'Returns the API key for your totally fake account'
+        },
+        error: {
+            description: 'Unexpected error occurred.'
+        }
+    },
+    fn: function(inputs, exits) {
           // ...
           // your code here
-      var result = 'foo';
+          var result = 'foo';
           // ...
           // ...and when you're done:
           return exits.success(result);
-      };
+    };
   }
 
   module.exports.provideComponent = function (options){
@@ -288,9 +283,6 @@ Component Definition is a JSON that
           "inputs": {
               "type": "object"
           },
-          "outputs":{
-              "type": "object"
-          },
           "defaultExists": {
               "type": "string"
           },
@@ -317,8 +309,6 @@ TBD
 *** Property: description
 *** Property: inputs
 TBD
-*** Property: outputs
-TBD
 *** Property: defaultExits
 TBD
 *** Property: exits
@@ -332,14 +322,6 @@ Component Function is a function recives two fixed arguments, inputs and exists
 #+BEGIN_SRC javascript
   {
       "apiKey": 'foo'
-  }
-#+END_SRC
-
-- outputs :: [[Tagged Data Token][Tagged Data Token]] will be routed.
-
-#+BEGIN_SRC javascript
-  {
-      "out": "foo"
   }
 #+END_SRC
 
@@ -375,7 +357,6 @@ str|[]--->[]in Read out[]---->[]in Count out[]--->[]status|--->[]in Print out[]
 #+END_SRC
 
 * Tagged Token
-** Input Data Token
 
 It is just a json object that the keys are the source ports name.
 
@@ -383,18 +364,6 @@ It is just a json object that the keys are the source ports name.
   {
       "inport1": "value1",
       "inport2": "value2"
-  }
-#+END_SRC
-
-** Output Data Token
-
-It is just a json object that the keys are the desitination ports name.
-Each value will be route to proper ports after firing.
-
-#+BEGIN_SRC javascript
-  {
-      "outport1": "value1",
-      "outport2": "value2"
   }
 #+END_SRC
 
