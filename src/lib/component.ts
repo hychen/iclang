@@ -70,3 +70,13 @@ export function ensuredComponent(component: Component): Component {
     }
     return component;
 }
+
+export function loadComponent(fpath: string, options?: Object): Component {
+    var mod = require(fpath);
+    //@TODO: ensure mod is valid.
+    if(options){
+        return mod.provideComponent(options);
+    }else{
+        return mod.provideComponent();
+    }
+}
