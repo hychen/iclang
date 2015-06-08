@@ -22,4 +22,10 @@ export function rpcProcessPingMethod(unknown: any, reply: any) {
     reply(null, 'pong');
 }
 
+export function rpcProcessConfigureMethod(options: PS.ProcessOptions, unknown: any, reply: any) {
+    var process: PS.Process;
+    process = this;
+    process.configure(options);
+    reply();
+}
 

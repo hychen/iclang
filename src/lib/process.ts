@@ -31,7 +31,7 @@ function collectedData(data: IncomingQueue): TK.Token {
     return <TK.Token> data;
 }
 
-interface ProcessOptions {
+export interface ProcessOptions {
     /** logging level */
     logLevel? : string;
     /** loggin file path */

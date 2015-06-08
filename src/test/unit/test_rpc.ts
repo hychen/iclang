@@ -64,4 +64,13 @@ describe('Process RPC Callbacks', () => {
             });
         });
     });
+    describe('rpcProcessConfigureMethod()', () => {
+        it('changes process behavior.', (done) => {
+            var process = new PS.Process('A', newActComp());
+            var cb = RPC.rpcProcessConfigureMethod.bind(process);
+            cb({}, null, (err, res, more) => {
+                done();
+            });
+        });
+    });
 });
