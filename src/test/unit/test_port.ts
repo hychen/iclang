@@ -1,23 +1,18 @@
 /// <reference path="../bootstrap-test.d.ts" />
-import port  = require('../../lib/port');
-import mkdirp = require('mkdirp');
 import rimraf = require('rimraf');
 import zmq = require('zmq');
 import uuid = require('node-uuid');
 import mochaTestCheck = require('mocha-testcheck');
+import port  = require('../../lib/port');
+import HELP = require('../helper');
 
 describe('portAddr(id)', () => {
     beforeEach((done) => {
-        mkdirp(global['TEST_RUNTIME_ROOT_DIR'], () => {
-            mkdirp(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.initTestRuntimeEnv(done);
     });
     afterEach((done) => {
-        rimraf(global['TEST_RUNTIME_ROOT_DIR'], () => {
-            rimraf(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.deinitTestRuntimeEnv(done);
     });
-
     it('accepts a uuid v4 string and returns an ipc address.', (done) => {
         var addr = port.portAddr('ggg');
         expect(addr).to.match(/ipc:\/\//);
@@ -42,14 +37,10 @@ describe('portAddr(id)', () => {
 
 describe('OutPort', () => {
     beforeEach((done) => {
-        mkdirp(global['TEST_RUNTIME_ROOT_DIR'], () => {
-            mkdirp(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.initTestRuntimeEnv(done);
     });
     afterEach((done) => {
-        rimraf(global['TEST_RUNTIME_ROOT_DIR'], () => {
-            rimraf(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.deinitTestRuntimeEnv(done);
     });
 
     describe('#constructor(name)', () => {
@@ -63,14 +54,10 @@ describe('OutPort', () => {
 
 describe('InPort', () => {
     beforeEach((done) => {
-        mkdirp(global['TEST_RUNTIME_ROOT_DIR'], () => {
-            mkdirp(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.initTestRuntimeEnv(done);
     });
     afterEach((done) => {
-        rimraf(global['TEST_RUNTIME_ROOT_DIR'], () => {
-            rimraf(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.deinitTestRuntimeEnv(done);
     });
 
     describe('#constructor(name)', () => {

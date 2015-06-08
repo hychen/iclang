@@ -1,8 +1,7 @@
 /// <reference path="../bootstrap-test.d.ts" />
 import fs = require('fs');
-import mkdirp = require('mkdirp');
-import rimraf = require('rimraf');
 import zmq = require('zmq');
+import HELP = require('../helper');
 import P  = require('../../lib/process');
 
 function newActComp(){
@@ -45,15 +44,10 @@ function newDestActComponent(done?){
 
 describe('class Process(name, ActComponent)', () => {
     beforeEach((done) => {
-        mkdirp(global['TEST_RUNTIME_ROOT_DIR'], (err) => {
-            if(err) throw err;
-            mkdirp(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.initTestRuntimeEnv(done);
     });
     afterEach((done) => {
-        rimraf(global['TEST_RUNTIME_ROOT_DIR'], () => {
-            rimraf(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.deinitTestRuntimeEnv(done);
     });
     describe('#start()', () => {
         it('does not create ports.', () => {
@@ -99,15 +93,10 @@ describe('class Process(name, ActComponent)', () => {
 
 describe('class Process(name, SourceActComponent)', () => {
     beforeEach((done) => {
-        mkdirp(global['TEST_RUNTIME_ROOT_DIR'], (err) => {
-            if(err) throw err;
-            mkdirp(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.initTestRuntimeEnv(done);
     });
     afterEach((done) => {
-        rimraf(global['TEST_RUNTIME_ROOT_DIR'], () => {
-            rimraf(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.deinitTestRuntimeEnv(done);
     });
     describe('#start()', () => {
         it('create ports.', () => {
@@ -205,15 +194,10 @@ describe('class Process(name, SourceActComponent)', () => {
 
 describe('class Process(name, DestinationActComponent)', () => {
     beforeEach((done) => {
-        mkdirp(global['TEST_RUNTIME_ROOT_DIR'], (err) => {
-            if(err) throw err;
-            mkdirp(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.initTestRuntimeEnv(done);
     });
     afterEach((done) => {
-        rimraf(global['TEST_RUNTIME_ROOT_DIR'], () => {
-            rimraf(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.deinitTestRuntimeEnv(done);
     });
     describe('#start()', () => {
         it('does not create ports.', () => {

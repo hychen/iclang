@@ -1,6 +1,5 @@
 /// <reference path="../bootstrap-test.d.ts" />
-import mkdirp = require('mkdirp');
-import rimraf = require('rimraf');
+import HELP = require('../helper');
 import RPC  = require('../../lib/rpc');
 import PS  = require('../../lib/process');
 
@@ -44,15 +43,10 @@ function newDestActComponent(done?){
 
 describe('RPC functions', () => {
     beforeEach((done) => {
-        mkdirp(global['TEST_RUNTIME_ROOT_DIR'], (err) => {
-            if(err) throw err;
-            mkdirp(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.initTestRuntimeEnv(done);
     });
     afterEach((done) => {
-        rimraf(global['TEST_RUNTIME_ROOT_DIR'], () => {
-            rimraf(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.deinitTestRuntimeEnv(done);
     });
     describe('createRPCServer()', () => {
         it('creates a rpc server', (done) => {
@@ -89,15 +83,10 @@ describe('RPC functions', () => {
 
 describe('Process RPC Callbacks', () => {
     beforeEach((done) => {
-        mkdirp(global['TEST_RUNTIME_ROOT_DIR'], (err) => {
-            if(err) throw err;
-            mkdirp(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.initTestRuntimeEnv(done);
     });
     afterEach((done) => {
-        rimraf(global['TEST_RUNTIME_ROOT_DIR'], () => {
-            rimraf(global['TEST_RUNTIME_SOCKET_DIR'], done);
-        });
+        HELP.deinitTestRuntimeEnv(done);
     });
     describe('rpcCallbackPingMethod()', () => {
         it('response `pong`.', (done) => {

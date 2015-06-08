@@ -19,6 +19,7 @@
         "./src/lib/token.ts",
         "./src/test/bootstrap-test.d.ts",
         "./src/test/bootstrap.ts",
+        "./src/test/helper.ts",
         "./src/test/unit/test_component.ts",
         "./src/test/unit/test_port.ts",
         "./src/test/unit/test_process.ts",
