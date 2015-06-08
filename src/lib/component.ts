@@ -71,10 +71,16 @@ export function ensuredComponent(component: Component): Component {
     return component;
 }
 
+/** load a component from a component source file.
+ * @param {string} fpath - the path of a source file.
+ * @param {Object} options - options. (optional)
+ * @returns {Component}
+ * @throws {Error} when provideComponent function is not defined in the source file.
+ */
 export function loadComponent(fpath: string, options?: Object): Component {
     var mod = require(fpath);
-    var component;
-    //@TODO: ensure mod is valid.
+    if(typeof mod.provideComponent != 'function')
+        throw new Error('provideComponent function is not defined.');
     if(options){
         return mod.provideComponent(options);
     }else{
