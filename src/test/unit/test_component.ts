@@ -10,7 +10,7 @@ describe('Module Component', () => {
     describe('function loadComponent()', () => {
         describe('loads a component source file in javascript format.', () => {
             it('returns a component.', () => {
-                var fpath = '/Users/hychen/github/iclang/test/fixtures/components/source_component.js';
+                var fpath = '../../fixtures/components/source_component.js';
                 var component = C.loadComponent(fpath);
                 expect(component.friendlyName).to.eq('simplesrc');
             });
