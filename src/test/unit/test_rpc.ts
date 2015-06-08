@@ -73,6 +73,18 @@ describe('RPC functions', () => {
             });
         });
     });
+    describe('controlRPCServer()', () => {
+        it('ping()', (done) => {
+            RPC.createRPCServer('A', newActComp(), {}, (server, process) => {
+                RPC.controlRPCServer('A', 'ping', (err, res) => {
+                    expect(res).to.eq('pong');
+                    process.stop();
+                    server.close();
+                    done();
+                });
+            });
+        });
+    });
 });
 
 describe('Process RPC Callbacks', () => {
