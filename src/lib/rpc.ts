@@ -53,6 +53,34 @@ export function rpcProcessConnectMethod(srcPortName: string, destProcessName: st
     });
 }
 
+/**
+ * @param {string} processName - process name.
+ * @param {Component} component - a component.
+ * @param {ProcessOptions} options - process options.
+ * @param {Function} done - callback.
+ * @throws {Error} when process name is duplicated.
+ */
+export function createRPCServer(processName: string, component: C.Component, options: PS.ProcessOptions, done: Function) {
+    var process = new PS.Process(processName, component, options);
+    var processSockAddr = rpcSocketAddr(processName);
+    /* zerorpc allows multiple rpc server bound on same ipc address
+     * but in our case, each process and rpc server is 1-1 cooresponding.
+     */
+    if(fs.existsSync(processSockAddr)){
+        throw new Error('Duplicated process name.');
+    }
+    var rpcServerAddr = `ipc://${processSockAddr}`;
+    var processRPCContext = {
+        ping: rpcProcessPingMethod,
+        configure: rpcProcessConfigureMethod,
+        connect: rpcProcessConnectMethod
+    };
+    var server = new zerorpc.Server(processRPCContext);
+    server.bind(rpcServerAddr);
+    process.start();
+    done(server, process);
+}
+
 export function controlRPCServer(processName: string, methodName: string, ...args: any[]) {
     // popup the callback function.
     var done: Function;

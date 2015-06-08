@@ -42,6 +42,39 @@ function newDestActComponent(done?){
     }
 }
 
+describe('RPC functions', () => {
+    beforeEach((done) => {
+        mkdirp(global['TEST_RUNTIME_ROOT_DIR'], (err) => {
+            if(err) throw err;
+            mkdirp(global['TEST_RUNTIME_SOCKET_DIR'], done);
+        });
+    });
+    afterEach((done) => {
+        rimraf(global['TEST_RUNTIME_ROOT_DIR'], () => {
+            rimraf(global['TEST_RUNTIME_SOCKET_DIR'], done);
+        });
+    });
+    describe('createRPCServer()', () => {
+        it('creates a rpc server', (done) => {
+            RPC.createRPCServer('A', newActComp(), {}, (server, process) => {
+                expect(process.name).to.eq('A');
+                process.stop();
+                server.close();
+                done();
+            });
+        });
+        it('throws error if process name is duplicated.', (done) => {
+            RPC.createRPCServer('A', newActComp(), {}, (server, process) => {
+                var expect_defer = expect(() => {
+                    RPC.createRPCServer('A', newActComp(), {}, () => done());
+                });
+                expect_defer.throw(/Duplicated process name/);
+                done();
+            });
+        });
+    });
+});
+
 describe('Process RPC Callbacks', () => {
     beforeEach((done) => {
         mkdirp(global['TEST_RUNTIME_ROOT_DIR'], (err) => {
