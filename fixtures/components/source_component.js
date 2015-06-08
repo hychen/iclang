@@ -1,16 +1,16 @@
 var definition = {
     friendlyName: 'simplesrc',
-    description: 'generate a simple string `hello`.',
+    description: 'generate a number `1`.',
     exits: {
         success: {
-            description: 'returns hello.',
+            description: 'returns 1.',
         },
         error: {
             description: 'Unexpected error occurs.'
         }
     },
     fn: function(inputs, exits){
-        exits.success('hello');
+        exits.success(1);
     }
 };
 

@@ -1,9 +1,9 @@
 var definition = {
     friendlyName: 'simpledest',
-    description: 'recieve a simple string `hello`.',
+    description: 'recieve a simple string and print to STDOUT.',
     inputs: {
         in: {
-            description: 'returns hello.',
+            description: 'A number.',
         }
     },
     fn: function(inputs, exits){
