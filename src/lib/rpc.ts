@@ -30,6 +30,17 @@ export function rpcProcessConfigureMethod(options: PS.ProcessOptions, unknown: a
     reply();
 }
 
+export function rpcProcessInqueryMethod(queryId: PS.ProcessInquery, queryValue: any, unknown: any, reply: Function) {
+    var process: PS.Process;
+    process =  this;
+    try{
+        var result = process.inquery(queryId, queryValue);
+        reply(null, result);
+    }catch(error){
+        reply(error);
+    }
+}
+
 export function rpcProcessConnectMethod(srcPortName: string, destProcessName: string, destPortName: string, unknown: any, reply: any){
     var process: PS.Process;
     process = this;
