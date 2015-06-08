@@ -71,9 +71,10 @@ export function createRPCServer(processName: string, component: C.Component, opt
     }
     var rpcServerAddr = `ipc://${processSockAddr}`;
     var processRPCContext = {
-        ping: rpcProcessPingMethod,
-        configure: rpcProcessConfigureMethod,
-        connect: rpcProcessConnectMethod
+        ping: rpcProcessPingMethod.bind(process),
+        configure: rpcProcessConfigureMethod.bind(process),
+        inquery: rpcProcessInqueryMethod.bind(process),
+        connect: rpcProcessConnectMethod.bind(process),
     };
     var server = new zerorpc.Server(processRPCContext);
     server.bind(rpcServerAddr);
