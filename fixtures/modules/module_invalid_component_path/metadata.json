@@ -1,0 +1,7 @@
+{
+    "language": "javascript",
+    "components": [
+        "components/component_a.js",
+        "components/component_b.js"
+    ]
+}

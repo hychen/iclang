@@ -13,6 +13,7 @@
     "files": [
         "./src/lib/component.ts",
         "./src/lib/main.ts",
+        "./src/lib/module.ts",
         "./src/lib/port.ts",
         "./src/lib/process.ts",
         "./src/lib/rpc.ts",
@@ -21,6 +22,7 @@
         "./src/test/bootstrap.ts",
         "./src/test/helper.ts",
         "./src/test/unit/test_component.ts",
+        "./src/test/unit/test_module.ts",
         "./src/test/unit/test_port.ts",
         "./src/test/unit/test_process.ts",
         "./src/test/unit/test_rpc.ts",

@@ -1,0 +1,9 @@
+{
+  "name": "ic-module-test-basic",
+  "version": "0.0.1",
+  "description": "A basic module for IClang.",
+  "main": "index.js",
+  "keywords": [
+    "iclang"
+  ]
+}
