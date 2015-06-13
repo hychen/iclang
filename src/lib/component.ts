@@ -61,6 +61,10 @@ export type Component = ActComponent
                     | PipeActComponent
                     | DestinationActComponent
 
+export interface ComponentSource {
+    provideComponent(options?: Object);
+}
+
 export function ensuredComponent(component: Component): Component {
     if(component['inputs'] == null){
         component['inputs'] = {};
@@ -71,6 +75,18 @@ export function ensuredComponent(component: Component): Component {
     return component;
 }
 
+/** load a component source from a component source file.
+ * @param {string} fpath - the path of a source file.
+ * @returns {ComponentSource}
+ * @throws {Error} when provideComponent function is not defined in the source file.
+ */
+export function loadComponentSource(fpath: string): ComponentSource {
+    var mod = require(fpath);
+    if(typeof mod.provideComponent != 'function')
+        throw new Error('provideComponent function is not defined.');
+    return mod;
+}
+
 /** load a component from a component source file.
  * @param {string} fpath - the path of a source file.
  * @param {Object} options - options. (optional)
@@ -78,9 +94,7 @@ export function ensuredComponent(component: Component): Component {
  * @throws {Error} when provideComponent function is not defined in the source file.
  */
 export function loadComponent(fpath: string, options?: Object): Component {
-    var mod = require(fpath);
-    if(typeof mod.provideComponent != 'function')
-        throw new Error('provideComponent function is not defined.');
+    var mod = loadComponentSource(fpath);
     if(options){
         return mod.provideComponent(options);
     }else{

@@ -7,6 +7,15 @@
 import C  = require('../../lib/component');
 
 describe('Module Component', () => {
+    describe('function loadComponentSource()', () => {
+        describe('loads a component source file in javascript format.', () => {
+            it('returns a component source.', () => {
+                var fpath = '../../fixtures/components/source_component.js';
+                var component = C.loadComponentSource(fpath);
+                expect(component.provideComponent).to.be.ok;
+            });
+        });
+    });
     describe('function loadComponent()', () => {
         describe('loads a component source file in javascript format.', () => {
             it('returns a source component.', () => {
