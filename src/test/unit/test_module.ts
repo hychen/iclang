@@ -10,6 +10,7 @@ describe('Module Module', () => {
     describe('loadModule()', () => {
         it('loads commonjs module.', (done) => {
             var mod = MOD.loadModule('../../fixtures/modules/module_basic/');
+            expect(mod.components.component_a.provideComponent).to.be.ok;
             expect(mod.meta.language).to.eq('javascript');
             expect(mod.meta.components).to.deep.equal([
                     'components/component_a.js',

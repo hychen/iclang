@@ -17,6 +17,7 @@ export interface ModuleMeta {
 export interface Module {
     /* A reference to a json of module metadata. */
     meta: ModuleMeta;
+    components: any;
     /* A commonjs module */
     commonjs?: Object;
 }
@@ -45,8 +46,14 @@ function loadModuleMeta(dabspath: string): ModuleMeta {
 export function loadModule(dpath: string): Module {
     var dabspath = path.resolve(path.join(__dirname, dpath));
     var meta = loadModuleMeta(dabspath);
-    var mod = <Module> {meta: meta};
+    var mod = <Module> {meta: meta, components: {}};
     if(meta.language == 'javascript'){
+        for(var comp_path_idx in meta.components){
+            var comp_path = meta.components[comp_path_idx];
+            var comp_abspath = path.join(dabspath, comp_path);
+            var symbol_name = path.basename(comp_path, '.js');
+            mod.components[symbol_name] = C.loadComponentSource(comp_abspath);
+        }
         mod.commonjs = require(dabspath);
         return mod;
     }else{
