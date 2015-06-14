@@ -1,0 +1,43 @@
+{
+    "properties": {
+        "name": "sequnce"
+    },
+    "import": {
+        "source": "../components/source_component.js",
+        "pipe": "../components/pipe_component.js",
+        "dest": "../components/destination_component.js"
+    },
+    "processes": {
+        "s": {
+            "component": "source",
+        },
+        "p": {
+            "component": "pipe"
+        },
+        "d": {
+            "component": "dest"
+        }
+    },
+    "connections": [
+        {
+            "src": {
+                "process": "s",
+                "port": "success"
+            },
+            "dest": {
+                "process": "d",
+                "port": "in"
+            }
+        },
+        {
+            "src": {
+                "process": "p",
+                "port": "success"
+            },
+            "dest": {
+                "process": "d",
+                "port": "in"
+            }
+        },
+    ]
+}
