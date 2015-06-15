@@ -21,6 +21,7 @@
         "./src/lib/Port/Port.ts",
         "./src/lib/Port/Ports.ts",
         "./src/lib/Port/PortsDefinition.ts",
+        "./src/lib/Process/BaseProcess.ts",
         "./src/lib/Process/Common.ts",
         "./src/lib/Process/IncomingQueue.ts",
         "./src/lib/Process/Process.ts",

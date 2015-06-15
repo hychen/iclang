@@ -12,19 +12,12 @@ import PTS = require('../Port/Ports');
 import IPT = require('../Port/InPort');
 import OPT = require('../Port/OutPort');
 import PSCM = require('./Common');
+import PSBPS = require('./BaseProcess');
 import PSIMQ = require('./IncomingQueue');
 
-export class Process {
-    /** Process name */
-    public name: string;
+export class Process extends PSBPS.BaseProcess {
     /** Process options */
     public ports: PTS.Ports;
-    /** Process status */
-    protected status: PSCM.ProcessStatus;
-    /** A reference to Winston.LoggerInstance */
-    protected logger: winston.LoggerInstance;
-    /** Process options */
-    protected options: PSCM.ProcessOptions;
     /** A reference to a instance of Component */
     protected component: C.Component;
     /** A queue to hold incoming data.*/
@@ -38,64 +31,10 @@ export class Process {
     constructor(name: string,
                 component: C.Component,
                 options?: PSCM.ProcessOptions){
-        this.name = name;
-        this.status = PSCM.ProcessStatus.initialzation;
+        super(name, options);
         this.incoming = {};
         this.ports = {};
         this.component = C.ensuredComponent(component);
-        this.options = options || {};
-        this.setLogger(this.options);
-        this.configure(this.options);
-    }
-
-    /** Set process logger
-     * @param {ProcessOptions}
-     * @returns {void}
-     */
-    protected setLogger(options: PSCM.ProcessOptions) {
-        var defaultLogFile = path.join(process.env.RUNTIME_LOG_DIR,
-                                      `${this.name}.log`);
-
-        var filePath = options['logFile'] ? options['logFile'] : defaultLogFile;
-        var transports = [
-                new winston.transports.File({filename: filePath})
-        ]
-        this.logger = new winston.Logger({transports: transports});
-    }
-
-    /** Takes options and changes process behavior.
-     * @param {ProcessOptions} - process options.
-     * @returns {void}
-     */
-    public configure(options: PSCM.ProcessOptions) {
-        var level = options['logLevel'] ? options['logLevel'] : 'info'
-        this.logger['transports'].file.level = level;
-    }
-
-    /** Get the status
-     * @returns {string} process status
-     */
-    public getStatus(): PSCM.ProcessStatus {
-        return this.status;
-    }
-
-    /** Set the status
-     * @param {string} status - process status
-     */
-    public setStatus(status: PSCM.ProcessStatus) {
-        var oldStatus = this.status;
-        var oldStatusLabel = PSCM.ProcessStatus[oldStatus];
-        var newStatus = status;
-        var newStatusLabel = PSCM.ProcessStatus[newStatus];
-        this.debug(`Set new status ${oldStatusLabel} to ${newStatusLabel}`);
-        this.status = newStatus;
-    }
-
-    /** Check if the process is running.
-     * @returns {Boolean}
-     */
-    public isRunning(): boolean {
-        return this.status === PSCM.ProcessStatus.running;
     }
 
     /** Start the process.
@@ -281,42 +220,5 @@ export class Process {
         }else{
             this.error(`Inquery ${queryName} is not supported`);
        }
-    }
-
-    /** Ensuresure the process is running.
-     * @throws {Error} when the process is not running.
-     * @returns {void}
-     */
-    protected ensuredRunning(){
-        if(!this.isRunning()){
-            this.error("the process is not running");
-        }
-    }
-
-    /** To log debug messages
-     * @param {string} msg - a message.
-     * @returns {void}
-     */
-    protected debug(msg: string, meta?: any) {
-        this.logger.debug(`PROCESS: ${this.name} : ${msg}`, meta);
-    }
-
-    /** To log info messages
-    * @param {string} msg - a message.
-     * @returns {void}
-     */
-    protected info(msg: string) {
-        this.logger.info(`PROCESS: ${this.name} : ${msg}`);
-    }
-
-    /** To throw and log error.
-     * @param {string} msg - a message.
-     * @param {meta} meta - an meta object (optional).
-     * @returns {void}
-     */
-    protected error(msg: string, meta?: any) {
-        var errMsg = `PROCESS ${this.name} : ${msg}`;
-        this.logger.error(errMsg, meta);
-        throw new Error(errMsg);
     }
 }
