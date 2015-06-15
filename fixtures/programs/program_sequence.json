@@ -9,7 +9,7 @@
     },
     "processes": {
         "s": {
-            "component": "source",
+            "component": "source"
         },
         "p": {
             "component": "pipe"
@@ -38,6 +38,6 @@
                 "process": "d",
                 "port": "in"
             }
-        },
+        }
     ]
 }
