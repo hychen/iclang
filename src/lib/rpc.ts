@@ -7,7 +7,7 @@ import path = require('path');
 import zerorpc = require('zerorpc');
 import fs = require('fs');
 import PS = require('./process');
-import C = require('./component');
+import C = require('./Component/Component');
 
 /** Takes a process name and returns a ipc address.
  * @param {string}  processName - a process name.
