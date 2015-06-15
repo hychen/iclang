@@ -5,7 +5,7 @@
  */
 /// <reference path="../../bootstrap-test.d.ts" />
 import OPT  = require('../../../lib/Port/OutPort');
-import HELP = require('../../helper');
+import HELP = require('../../Helper');
 
 describe('class OutPort', () => {
     beforeEach((done) => {

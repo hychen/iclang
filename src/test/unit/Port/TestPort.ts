@@ -6,7 +6,7 @@
 /// <reference path="../../bootstrap-test.d.ts" />
 import rimraf = require('rimraf');
 import PT  = require('../../../lib/Port/Port');
-import HELP = require('../../helper');
+import HELP = require('../../Helper');
 
 describe('function portAddr()', () => {
     beforeEach((done) => {

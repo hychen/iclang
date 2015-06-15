@@ -7,7 +7,7 @@
 import zmq = require('zmq');
 import uuid = require('node-uuid');
 import IPT  = require('../../../lib/Port/InPort');
-import HELP = require('../../helper');
+import HELP = require('../../Helper');
 
 describe('class InPort', () => {
     beforeEach((done) => {

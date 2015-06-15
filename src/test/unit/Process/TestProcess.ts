@@ -6,7 +6,7 @@
 /// <reference path="../../bootstrap-test.d.ts" />
 import fs = require('fs');
 import zmq = require('zmq');
-import HELP = require('../../helper');
+import HELP = require('../../Helper');
 import P  = require('../../../lib/Process/Process');
 import PSINQ  = require('../../../lib/Process/ProcessInquery');
 
