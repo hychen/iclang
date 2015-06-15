@@ -7,7 +7,8 @@
  import winston = require('winston');
  import TK = require('./token');
  import PT = require('./port');
- import C = require('./component');
+ import CM = require('./Common');
+ import C = require('./Component/Component');
 
 export enum ProcessStatus {
     initialzation,
@@ -241,7 +242,7 @@ export class Process {
         /** Helpers ends. */
 
         // build exit callbacks from a given component.
-        var exits = <C.ExitCallbacks> componentExits(this.component);
+        var exits = <CM.ExitCallbacks> componentExits(this.component);
         // always flush incoming queue when firing.
         var token = collectedData(this.incoming);
         this.incoming = {};
@@ -254,7 +255,7 @@ export class Process {
      * @returns {any}
      * @throws {Error} when the process is not runnig.
      */
-    public fireToken(token: TK.Token, exits: C.ExitCallbacks) {
+    public fireToken(token: TK.Token, exits: CM.ExitCallbacks) {
         this.debug('firing.', token);
         this.ensuredRunning();
         /** Each name of exit callbacks is valid if and only if it is the same

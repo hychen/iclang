@@ -5,7 +5,7 @@
  */
 import path = require('path');
 import fs = require('fs');
-import C = require('./component');
+import C = require('./Component/ComponentSource');
 
 export interface ModuleMeta {
     /* the programming language name. */
