@@ -3,34 +3,22 @@
  * Copyright (c) 2015 Chen Hsin-Yi
  * MIT License, see LICENSE file for full terms.
  */
- import path = require('path');
- import winston = require('winston');
- import TK = require('./token');
- import PT = require('./port');
- import CM = require('./Common');
- import C = require('./Component/Component');
+import path = require('path');
+import winston = require('winston');
+import CM = require('../Common');
+import C = require('../Component/Component');
+import PT = require('../Port/Port');
+import PTS = require('../Port/Ports');
+import IPT = require('../Port/InPort');
+import OPT = require('../Port/OutPort');
+import PSINQ = require('./ProcessInquery');
+import PSIMQ = require('./IncomingQueue');
 
 export enum ProcessStatus {
     initialzation,
     running,
     terminating
 };
-
-export enum ProcessInquery {
-    OutPortAddr
-}
-
-interface IncomingQueue {
-
-}
-
-function collectedDataLength(data: IncomingQueue): number {
-    return Object.keys(data).length;
-}
-
-function collectedData(data: IncomingQueue): TK.Token {
-    return <TK.Token> data;
-}
 
 export interface ProcessOptions {
     /** logging level */
@@ -43,7 +31,7 @@ export class Process {
     /** Process name */
     public name: string;
     /** Process options */
-    public ports: PT.Ports;
+    public ports: PTS.Ports;
     /** Process status */
     protected status: ProcessStatus;
     /** A reference to Winston.LoggerInstance */
@@ -53,7 +41,7 @@ export class Process {
     /** A reference to a instance of Component */
     protected component: C.Component;
     /** A queue to hold incoming data.*/
-    protected incoming: IncomingQueue;
+    protected incoming: PSIMQ.IncomingQueue;
 
     /** Create a Process.
      * @param {string} name - the name of a process.
@@ -147,7 +135,7 @@ export class Process {
      * @returns {void}
      */
     public run(){
-        var numInputs = PT.portsLength(this.component['inputs']);
+        var numInputs = PTS.portsLength(this.component['inputs']);
         if(numInputs == 0) {
             this.fireStream();
         }
@@ -182,18 +170,18 @@ export class Process {
         this.debug('creating ports.');
         for(let portName in this.component['exits']){
             var portDef = this.component['exits'][portName];
-            this.ports[portName] = new PT.OutPort(portName);
+            this.ports[portName] = new OPT.OutPort(portName);
             this.debug(`created an InPort '${portName}'`);
             numInPorts++;
         }
         for(var portName in this.component['inputs']){
             var portDef = this.component['inputs'][portName];
-            self.ports[portName] = new PT.InPort(portName);
+            self.ports[portName] = new IPT.InPort(portName);
             self.ports[portName].on('data', (data) => {
                 self.debug(`recived data from ${portName}`, data);
                 self.incoming[portName] = data;
-                var numInputs = PT.portsLength(this.component['inputs']);
-                var numCollectedData = collectedDataLength(this.incoming);
+                var numInputs = PTS.portsLength(this.component['inputs']);
+                var numCollectedData = PSIMQ.collectedDataLength(this.incoming);
                 if(numCollectedData === numInputs){
                     self.debug('firing rules satisfed, start to fire.');
                     this.fireStream();
@@ -244,7 +232,7 @@ export class Process {
         // build exit callbacks from a given component.
         var exits = <CM.ExitCallbacks> componentExits(this.component);
         // always flush incoming queue when firing.
-        var token = collectedData(this.incoming);
+        var token = PSIMQ.collectedData(this.incoming);
         this.incoming = {};
         this.fireToken(token, exits);
     }
@@ -255,7 +243,7 @@ export class Process {
      * @returns {any}
      * @throws {Error} when the process is not runnig.
      */
-    public fireToken(token: TK.Token, exits: CM.ExitCallbacks) {
+    public fireToken(token: CM.Token, exits: CM.ExitCallbacks) {
         this.debug('firing.', token);
         this.ensuredRunning();
         /** Each name of exit callbacks is valid if and only if it is the same
@@ -287,11 +275,11 @@ export class Process {
      * @param {any} queryValue - inquery value.
      * @returns {any}
      */
-    public inquery(queryId: ProcessInquery, queryValue) {
+    public inquery(queryId: PSINQ.ProcessInquery, queryValue) {
         this.ensuredRunning();
-        var queryName = ProcessInquery[queryId];
+        var queryName = PSINQ.ProcessInquery[queryId];
         this.debug(`inquerying ${queryName}`, queryValue);
-        if(queryId == ProcessInquery.OutPortAddr){
+        if(queryId == PSINQ.ProcessInquery.OutPortAddr){
             var portName = queryValue;
             var aPort = this.ports[portName];
             if(aPort){

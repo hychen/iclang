@@ -6,7 +6,8 @@
 import path = require('path');
 import zerorpc = require('zerorpc');
 import fs = require('fs');
-import PS = require('./process');
+import PS = require('./Process/Process');
+import PSINQ = require('./Process/ProcessInquery');
 import C = require('./Component/Component');
 
 /** Takes a process name and returns a ipc address.
@@ -30,7 +31,7 @@ export function rpcProcessConfigureMethod(options: PS.ProcessOptions, unknown: a
     reply();
 }
 
-export function rpcProcessInqueryMethod(queryId: PS.ProcessInquery, queryValue: any, unknown: any, reply: Function) {
+export function rpcProcessInqueryMethod(queryId: PSINQ.ProcessInquery, queryValue: any, unknown: any, reply: Function) {
     var process: PS.Process;
     process =  this;
     try{
@@ -45,7 +46,7 @@ export function rpcProcessConnectMethod(srcPortName: string, destProcessName: st
     var process: PS.Process;
     process = this;
     // get remote out port address.
-    controlRPCServer(destProcessName, 'inquery', PS.ProcessInquery.OutPortAddr, destPortName, (err, destPortAddr) =>{
+    controlRPCServer(destProcessName, 'inquery', PSINQ.ProcessInquery.OutPortAddr, destPortName, (err, destPortAddr) =>{
         if(err)
             reply(err);
         else{

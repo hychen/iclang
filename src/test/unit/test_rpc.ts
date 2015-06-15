@@ -6,7 +6,7 @@
 /// <reference path="../bootstrap-test.d.ts" />
 import HELP = require('../helper');
 import RPC  = require('../../lib/rpc');
-import PS  = require('../../lib/process');
+import PS  = require('../../lib/Process/Process');
 
 function newActComp(){
     return {
