@@ -2,7 +2,7 @@
   "name": "iclang",
   "version": "0.0.1",
   "description": "Yet another coordination language for compositing things of internet.",
-  "main": "built/lib/main.js",
+  "main": "built/lib/Main.js",
   "dependencies": {
     "mkdirp": "^0.5.1",
     "node-uuid": "^1.4.3",
