@@ -1,4 +1,4 @@
-/** Module Module
+/** Module IC.Module
  *
  * Copyright (c) 2015 Chen Hsin-Yi
  * MIT License, see LICENSE file for full terms.
@@ -25,7 +25,7 @@ interface ModuleMeta {
 /**
  * Takes a directory path and returns a module meta.
  * @param {string} dpath - the absolute path of a directory.
- * @returns {ModuleMeta}
+ * @returns {IC.Module.ModuleMeta}
  */
 function loadModuleMeta(dabspath: string): ModuleMeta {
     var metadata_path = path.join(dabspath, 'metadata.json');
@@ -42,7 +42,7 @@ function loadModuleMeta(dabspath: string): ModuleMeta {
 /**
  * Takes a directory path and returns a module.
  * @param {string} dpath - the path of a directory.
- * @returns {Module}
+ * @returns {IC.Module.ModuleMeta}
  * @throws {Error} when a module is not supported.
  */
 export function loadModule(dpath: string): Module {
