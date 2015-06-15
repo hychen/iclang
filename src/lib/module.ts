@@ -7,13 +7,6 @@ import path = require('path');
 import fs = require('fs');
 import C = require('./Component/ComponentSource');
 
-export interface ModuleMeta {
-    /* the programming language name. */
-    language: string;
-    /* path of each components. */
-    components: {[index: number]: string};
-}
-
 export interface Module {
     /* A reference to a json of module metadata. */
     meta: ModuleMeta;
@@ -22,7 +15,15 @@ export interface Module {
     commonjs?: Object;
 }
 
-/** To takes a directory path and returns a module meta.
+interface ModuleMeta {
+    /* the programming language name. */
+    language: string;
+    /* path of each components. */
+    components: {[index: number]: string};
+}
+
+/**
+ * Takes a directory path and returns a module meta.
  * @param {string} dpath - the absolute path of a directory.
  * @returns {ModuleMeta}
  */
@@ -38,7 +39,8 @@ function loadModuleMeta(dabspath: string): ModuleMeta {
     return meta;
 }
 
-/** To takes a directory path and returns a module.
+/**
+ * Takes a directory path and returns a module.
  * @param {string} dpath - the path of a directory.
  * @returns {Module}
  * @throws {Error} when a module is not supported.
