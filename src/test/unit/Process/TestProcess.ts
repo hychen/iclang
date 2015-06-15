@@ -9,7 +9,6 @@ import zmq = require('zmq');
 import HELP = require('../../Helper');
 import P  = require('../../../lib/Process/Process');
 import PSCM  = require('../../../lib/Process/Common');
-import PSINQ  = require('../../../lib/Process/ProcessInquery');
 
 function newActComp(){
     return {
@@ -150,7 +149,7 @@ describe('class Process(name, SourceActComponent)', () => {
         it('thorws error if out port not exists.', () => {
             var aProc = new P.Process('Src Act Proc', newSourceActComponent());
             aProc.start();
-            expect(()=>aProc.inquery(PSINQ.ProcessInquery.OutPortAddr, 'oo')).throw(
+            expect(()=>aProc.inquery(PSCM.ProcessInquery.OutPortAddr, 'oo')).throw(
                     /Port oo not exists./
             );
             aProc.stop();
@@ -158,7 +157,7 @@ describe('class Process(name, SourceActComponent)', () => {
         it('returns a address of a OutPort.', () => {
             var aProc = new P.Process('Src Act Proc', newSourceActComponent());
             aProc.start();
-            var addr = aProc.inquery(PSINQ.ProcessInquery.OutPortAddr, 'success');
+            var addr = aProc.inquery(PSCM.ProcessInquery.OutPortAddr, 'success');
             expect(addr).match(/ipc:\/\//);
             aProc.stop();
         });
@@ -242,7 +241,7 @@ describe('class Process(name, DestinationActComponent)', () => {
         it('thorws error if out port not exists.', () => {
             var aProc = new P.Process('Dest Act Proc', newDestActComponent());
             aProc.start();
-            expect(()=>aProc.inquery(PSINQ.ProcessInquery.OutPortAddr, 'oo')).throw(
+            expect(()=>aProc.inquery(PSCM.ProcessInquery.OutPortAddr, 'oo')).throw(
                     /Port oo not exists./
             );
             aProc.stop();
@@ -250,7 +249,7 @@ describe('class Process(name, DestinationActComponent)', () => {
         it('thorws error if the port is not a OutPort.', () => {
             var aProc = new P.Process('Dest Act Proc', newDestActComponent());
             aProc.start();
-            expect(()=>aProc.inquery(PSINQ.ProcessInquery.OutPortAddr, 'in')).throw(
+            expect(()=>aProc.inquery(PSCM.ProcessInquery.OutPortAddr, 'in')).throw(
                     /Port in is not an OutPort./
             );
             aProc.stop();

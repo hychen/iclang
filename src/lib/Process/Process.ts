@@ -12,7 +12,6 @@ import PTS = require('../Port/Ports');
 import IPT = require('../Port/InPort');
 import OPT = require('../Port/OutPort');
 import PSCM = require('./Common');
-import PSINQ = require('./ProcessInquery');
 import PSIMQ = require('./IncomingQueue');
 
 export class Process {
@@ -263,11 +262,11 @@ export class Process {
      * @param {any} queryValue - inquery value.
      * @returns {any}
      */
-    public inquery(queryId: PSINQ.ProcessInquery, queryValue) {
+    public inquery(queryId: PSCM.ProcessInquery, queryValue) {
         this.ensuredRunning();
-        var queryName = PSINQ.ProcessInquery[queryId];
+        var queryName = PSCM.ProcessInquery[queryId];
         this.debug(`inquerying ${queryName}`, queryValue);
-        if(queryId == PSINQ.ProcessInquery.OutPortAddr){
+        if(queryId == PSCM.ProcessInquery.OutPortAddr){
             var portName = queryValue;
             var aPort = this.ports[portName];
             if(aPort){

@@ -15,3 +15,7 @@ export interface ProcessOptions {
     /** loggin file path */
     logFile? : string;
 }
+
+export enum ProcessInquery {
+    OutPortAddr
+}

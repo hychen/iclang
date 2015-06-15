@@ -24,7 +24,6 @@
         "./src/lib/Process/Common.ts",
         "./src/lib/Process/IncomingQueue.ts",
         "./src/lib/Process/Process.ts",
-        "./src/lib/Process/ProcessInquery.ts",
         "./src/lib/main.ts",
         "./src/lib/module.ts",
         "./src/test/bootstrap-test.d.ts",
