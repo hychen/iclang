@@ -3,6 +3,7 @@
  * Copyright (c) 2015 Chen Hsin-Yi
  * MIT License, see LICENSE file for full terms.
  */
+import path =require('path');
 import mkdirp = require('mkdirp');
 import rimraf = require('rimraf');
 
@@ -23,4 +24,16 @@ export function deinitTestRuntimeEnv(done: (err: Error) => void){
     rimraf(global['TEST_RUNTIME_ROOT_DIR'], () => {
         rimraf(global['TEST_RUNTIME_SOCKET_DIR'], done);
     });
+}
+
+/**
+ * Takes a relative path of a fixture and returns its absolute path.
+ * @param {string} anyPath
+ * @returns {string}
+ */
+export function fixturePath(anyPath: string): string {
+    var fixturesRoot = path.join(path.dirname(__filename),
+                                 '../../',
+                                 'fixtures');
+    return path.join(fixturesRoot, anyPath);
 }

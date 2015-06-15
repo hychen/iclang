@@ -4,11 +4,12 @@
  * MIT License, see LICENSE file for full terms.
  */
 /// <reference path="../bootstrap-test.d.ts" />
+import HELP = require('../Helper');
 import MOD  = require('../../lib/module');
 
 describe('loadModule()', () => {
     it('loads commonjs module.', (done) => {
-        var mod = MOD.loadModule('../../fixtures/modules/module_basic/');
+        var mod = MOD.loadModule(HELP.fixturePath('modules/module_basic/'));
         expect(mod.components.component_a.provideComponent).to.be.ok;
         expect(mod.meta.language).to.eq('javascript');
         expect(mod.meta.components).to.deep.equal([
@@ -20,7 +21,7 @@ describe('loadModule()', () => {
     it('throws error if any component defined in meta inot exists.', () => {
         var e = expect(() => {
             MOD.loadModule(
-                '../../fixtures/modules/module_invalid_component_path/');
+                HELP.fixturePath('modules/module_invalid_component_path/'))
             });
         e.to.throw(Error);
     })

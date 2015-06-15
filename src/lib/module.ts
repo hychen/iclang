@@ -41,12 +41,11 @@ function loadModuleMeta(dabspath: string): ModuleMeta {
 
 /**
  * Takes a directory path and returns a module.
- * @param {string} dpath - the path of a directory.
+ * @param {string} dabspath - the absolute path of a directory.
  * @returns {IC.Module.ModuleMeta}
  * @throws {Error} when a module is not supported.
  */
-export function loadModule(dpath: string): Module {
-    var dabspath = path.resolve(path.join(__dirname, dpath));
+export function loadModule(dabspath: string): Module {
     var meta = loadModuleMeta(dabspath);
     var mod = <Module> {meta: meta, components: {}};
     if(meta.language == 'javascript'){
