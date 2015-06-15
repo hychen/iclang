@@ -11,21 +11,9 @@ import PT = require('../Port/Port');
 import PTS = require('../Port/Ports');
 import IPT = require('../Port/InPort');
 import OPT = require('../Port/OutPort');
+import PSCM = require('./Common');
 import PSINQ = require('./ProcessInquery');
 import PSIMQ = require('./IncomingQueue');
-
-export enum ProcessStatus {
-    initialzation,
-    running,
-    terminating
-};
-
-export interface ProcessOptions {
-    /** logging level */
-    logLevel? : string;
-    /** loggin file path */
-    logFile? : string;
-}
 
 export class Process {
     /** Process name */
@@ -33,11 +21,11 @@ export class Process {
     /** Process options */
     public ports: PTS.Ports;
     /** Process status */
-    protected status: ProcessStatus;
+    protected status: PSCM.ProcessStatus;
     /** A reference to Winston.LoggerInstance */
     protected logger: winston.LoggerInstance;
     /** Process options */
-    protected options: ProcessOptions;
+    protected options: PSCM.ProcessOptions;
     /** A reference to a instance of Component */
     protected component: C.Component;
     /** A queue to hold incoming data.*/
@@ -50,9 +38,9 @@ export class Process {
      */
     constructor(name: string,
                 component: C.Component,
-                options?: ProcessOptions){
+                options?: PSCM.ProcessOptions){
         this.name = name;
-        this.status = ProcessStatus.initialzation;
+        this.status = PSCM.ProcessStatus.initialzation;
         this.incoming = {};
         this.ports = {};
         this.component = C.ensuredComponent(component);
@@ -65,7 +53,7 @@ export class Process {
      * @param {ProcessOptions}
      * @returns {void}
      */
-    protected setLogger(options: ProcessOptions) {
+    protected setLogger(options: PSCM.ProcessOptions) {
         var defaultLogFile = path.join(process.env.RUNTIME_LOG_DIR,
                                       `${this.name}.log`);
 
@@ -80,7 +68,7 @@ export class Process {
      * @param {ProcessOptions} - process options.
      * @returns {void}
      */
-    public configure(options: ProcessOptions) {
+    public configure(options: PSCM.ProcessOptions) {
         var level = options['logLevel'] ? options['logLevel'] : 'info'
         this.logger['transports'].file.level = level;
     }
@@ -88,18 +76,18 @@ export class Process {
     /** Get the status
      * @returns {string} process status
      */
-    public getStatus(): ProcessStatus {
+    public getStatus(): PSCM.ProcessStatus {
         return this.status;
     }
 
     /** Set the status
      * @param {string} status - process status
      */
-    public setStatus(status: ProcessStatus) {
+    public setStatus(status: PSCM.ProcessStatus) {
         var oldStatus = this.status;
-        var oldStatusLabel = ProcessStatus[oldStatus];
+        var oldStatusLabel = PSCM.ProcessStatus[oldStatus];
         var newStatus = status;
-        var newStatusLabel = ProcessStatus[newStatus];
+        var newStatusLabel = PSCM.ProcessStatus[newStatus];
         this.debug(`Set new status ${oldStatusLabel} to ${newStatusLabel}`);
         this.status = newStatus;
     }
@@ -108,7 +96,7 @@ export class Process {
      * @returns {Boolean}
      */
     public isRunning(): boolean {
-        return this.status === ProcessStatus.running;
+        return this.status === PSCM.ProcessStatus.running;
     }
 
     /** Start the process.
@@ -117,7 +105,7 @@ export class Process {
     public start(){
         this.debug('starting.');
         this.createPorts();
-        this.setStatus(ProcessStatus.running);
+        this.setStatus(PSCM.ProcessStatus.running);
         this.debug('started.');
     }
 
@@ -126,7 +114,7 @@ export class Process {
      */
     public stop(){
         this.debug('stopping.');
-        this.setStatus(ProcessStatus.terminating);
+        this.setStatus(PSCM.ProcessStatus.terminating);
         this.destroyPorts();
         this.debug('stopped.');
     }
@@ -264,7 +252,7 @@ export class Process {
          *
          * [Note] this make the computing results are not in order.
          */
-        this.setStatus(ProcessStatus.running);
+        this.setStatus(PSCM.ProcessStatus.running);
         /** returns resuits so we can check it in unit test.  */
         this.debug('fired.', result);
         return result;
