@@ -87,6 +87,65 @@ export class Process extends PSBPS.BaseProcess {
         }
     }
 
+    /* Inquery the property of a process
+     * @param {ProcessInquery} queryName - process inquery name.
+     * @param {any} queryValue - inquery value.
+     * @returns {any}
+     */
+    public inquery(queryId: PSCM.ProcessInquery, queryValue) {
+        this.ensuredRunning();
+        var queryName = PSCM.ProcessInquery[queryId];
+        this.debug(`inquerying ${queryName}`, queryValue);
+        if(queryId == PSCM.ProcessInquery.OutPortAddr){
+            var portName = queryValue;
+            var aPort = this.ports[portName];
+            if(aPort){
+                if(aPort.addr){
+                    return aPort.addr;
+                }else{
+                    this.error(`Port ${portName} is not an OutPort.`);
+                }
+            }else{
+               this.error(`Port ${portName} not exists.`);
+            }
+        }else{
+            this.error(`Inquery ${queryName} is not supported`);
+       }
+    }
+
+    /** Fires within token.
+     * @param {Token} token - a data token.
+     * @param {ExitCallbacks} - an object of callbacks.
+     * @returns {any}
+     * @throws {Error} when the process is not runnig.
+     */
+    public fireToken(token: CM.Token, exits: CM.ExitCallbacks) {
+        this.debug('firing.', token);
+        this.ensuredRunning();
+        /** Each name of exit callbacks is valid if and only if it is the same
+         * as the name defined in the component defintion.
+         */
+         for(var outPortName in this.component['exits']) {
+            var exitFn = exits[outPortName];
+            if(!exitFn){
+                this.error(
+                    `the exit callbacks does not contain ${outPortName} callback.`
+                    );
+            }
+         }
+        this.debug('invokes component function.', [token, exits]);
+        var result = this.component.fn(token, exits);
+        /** no matter the component function is executing or is not,
+         * the process is able to fire again.
+         *
+         * [Note] this make the computing results are not in order.
+         */
+        this.setStatus(PSCM.ProcessStatus.running);
+        /** returns resuits so we can check it in unit test.  */
+        this.debug('fired.', result);
+        return result;
+    }
+
     /** Creaet ports
      */
     protected createPorts() {
@@ -161,64 +220,5 @@ export class Process extends PSBPS.BaseProcess {
         var token = PSIMQ.collectedData(this.incoming);
         this.incoming = {};
         this.fireToken(token, exits);
-    }
-
-    /** Fires within token.
-     * @param {Token} token - a data token.
-     * @param {ExitCallbacks} - an object of callbacks.
-     * @returns {any}
-     * @throws {Error} when the process is not runnig.
-     */
-    public fireToken(token: CM.Token, exits: CM.ExitCallbacks) {
-        this.debug('firing.', token);
-        this.ensuredRunning();
-        /** Each name of exit callbacks is valid if and only if it is the same
-         * as the name defined in the component defintion.
-         */
-         for(var outPortName in this.component['exits']) {
-            var exitFn = exits[outPortName];
-            if(!exitFn){
-                this.error(
-                    `the exit callbacks does not contain ${outPortName} callback.`
-                    );
-            }
-         }
-        this.debug('invokes component function.', [token, exits]);
-        var result = this.component.fn(token, exits);
-        /** no matter the component function is executing or is not,
-         * the process is able to fire again.
-         *
-         * [Note] this make the computing results are not in order.
-         */
-        this.setStatus(PSCM.ProcessStatus.running);
-        /** returns resuits so we can check it in unit test.  */
-        this.debug('fired.', result);
-        return result;
-    }
-
-    /* Inquery the property of a process
-     * @param {ProcessInquery} queryName - process inquery name.
-     * @param {any} queryValue - inquery value.
-     * @returns {any}
-     */
-    public inquery(queryId: PSCM.ProcessInquery, queryValue) {
-        this.ensuredRunning();
-        var queryName = PSCM.ProcessInquery[queryId];
-        this.debug(`inquerying ${queryName}`, queryValue);
-        if(queryId == PSCM.ProcessInquery.OutPortAddr){
-            var portName = queryValue;
-            var aPort = this.ports[portName];
-            if(aPort){
-                if(aPort.addr){
-                    return aPort.addr;
-                }else{
-                    this.error(`Port ${portName} is not an OutPort.`);
-                }
-            }else{
-               this.error(`Port ${portName} not exists.`);
-            }
-        }else{
-            this.error(`Inquery ${queryName} is not supported`);
-       }
     }
 }
